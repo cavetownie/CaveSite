@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>cavefxa: security research</title>
-    <link>http://example.org/</link>
+    <link>http://cavefxa.com/</link>
     <description>Recent content on cavefxa: security research</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Sep 2021 13:04:00 +0200</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 29 Sep 2021 13:04:00 +0200</lastBuildDate><atom:link href="http://cavefxa.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Symbolic Execution with Angr: pt. 2 Usage Introduction</title>
-      <link>http://example.org/posts/angr1/</link>
+      <link>http://cavefxa.com/posts/angr1/</link>
       <pubDate>Wed, 29 Sep 2021 13:04:00 +0200</pubDate>
       
-      <guid>http://example.org/posts/angr1/</guid>
+      <guid>http://cavefxa.com/posts/angr1/</guid>
       <description>Simple usage import angr import claripy When you&amp;rsquo;re playing with angr, inevitably at the beginning you&amp;rsquo;ll have to load a binary of some form, you can do this the following way:
 project_name = angr.Project(&amp;#34;./&amp;lt;binary_name&amp;gt;&amp;#34;) Now angr works by using a lot of states which it steps through and investigates. To load our initial state we use the following command:
 state = proj.factory.entry_state() There are a few ways to load binaries, as one would imagine.</description>
@@ -20,30 +20,30 @@ state = proj.factory.entry_state() There are a few ways to load binaries, as one
     
     <item>
       <title>Symbolic Execution with Angr: pt. 1 Theoretical Introduction</title>
-      <link>http://example.org/posts/angr0/</link>
+      <link>http://cavefxa.com/posts/angr0/</link>
       <pubDate>Wed, 29 Sep 2021 12:09:45 +0200</pubDate>
       
-      <guid>http://example.org/posts/angr0/</guid>
+      <guid>http://cavefxa.com/posts/angr0/</guid>
       <description>What is symbolic execution? One might relate it to symbolic equations from mathematics in school. A few exambles of symbolic equations might be:
 a²+b²=c² E=hf F=ma These are examples of symbolic equations. Values are defined based on symbols we call different things. For the symbols we could define constraints, eg. &amp;ldquo;f&amp;rdquo; must be larger than 0. or &amp;ldquo;a&amp;rdquo; is equal to 9.82 N/kg. Thus minimizing the amount of results or outcomes.</description>
     </item>
     
     <item>
       <title>What is format strings? How do they work?</title>
-      <link>http://example.org/posts/format0/</link>
+      <link>http://cavefxa.com/posts/format0/</link>
       <pubDate>Wed, 08 Sep 2021 15:33:45 +0200</pubDate>
       
-      <guid>http://example.org/posts/format0/</guid>
+      <guid>http://cavefxa.com/posts/format0/</guid>
       <description>Format string: A Mini Study - with challenge This will be a short, and practical walkthrough of the concept &amp;ldquo;format string&amp;rdquo;, with an example of how to solve a format string challenge.
 Research and everything format string Format is a pwn task on HackTheBox revolving around the idea of format strings (eg. %s, %d, %p), which is a C feature, that allows a strings to contain both words and variables in one.</description>
     </item>
     
     <item>
       <title>pwn2win 2021: &#34;Oldschool Adventures - Apple II&#34;</title>
-      <link>http://example.org/posts/oldschool-adventures/</link>
+      <link>http://cavefxa.com/posts/oldschool-adventures/</link>
       <pubDate>Tue, 01 Jun 2021 17:17:45 +0200</pubDate>
       
-      <guid>http://example.org/posts/oldschool-adventures/</guid>
+      <guid>http://cavefxa.com/posts/oldschool-adventures/</guid>
       <description>Oldschool Adventures - Description Dockerfiles: Oldschool_Adventure
 Challenge description:
 We found this Rhiza&amp;rsquo;s Government Server, and we need to access it! It runs an Apple II emulator and accepts codes in Applesoft BASIC. If the result of your code generates a valid QR Code standard (not micro QR), it will be read and the content will be executed as a shell command on the Linux system. A very interesting way to interact with a server, don&amp;rsquo;t you think?</description>
@@ -51,20 +51,20 @@ We found this Rhiza&amp;rsquo;s Government Server, and we need to access it! It 
     
     <item>
       <title>Adventures in Heap: Malloc, Free, and Fastbin Dup</title>
-      <link>http://example.org/posts/heap-adventures0/</link>
+      <link>http://cavefxa.com/posts/heap-adventures0/</link>
       <pubDate>Tue, 25 May 2021 18:20:00 +0200</pubDate>
       
-      <guid>http://example.org/posts/heap-adventures0/</guid>
+      <guid>http://cavefxa.com/posts/heap-adventures0/</guid>
       <description>Heap is like the wild west of binary exploitation in my opinion, or perhaps more like an alien, no one knows what is happening (atleast I don&amp;rsquo;t). A lot of CTF pwn challenges these days are heap exploitations, even the simpler ones, so let&amp;rsquo;s learn some heap. So let&amp;rsquo;s get started.
 Malloc Malloc is a function in C, which can handle the allocation of memory. Which is why it&amp;rsquo;s called m alloc [memory alloc].</description>
     </item>
     
     <item>
       <title>ROPEmporium: badchars 32-bit</title>
-      <link>http://example.org/posts/badchars32/</link>
+      <link>http://cavefxa.com/posts/badchars32/</link>
       <pubDate>Mon, 24 May 2021 19:58:00 +0200</pubDate>
       
-      <guid>http://example.org/posts/badchars32/</guid>
+      <guid>http://cavefxa.com/posts/badchars32/</guid>
       <description>Writeup of bad characters [badchars] on ROPEmporium Prerequisites: Knowledge from previous challs, XOR (Exclusive Or)
  This was a more difficult exploit to create, due to the fact that we had bad characters
 As usual I started checking the security settings on the binary provided
@@ -73,10 +73,10 @@ cave@noobpwn:~/binexp/ROP-emperium/badchars_32$ checksec badchars32 [*] &amp;#39
     
     <item>
       <title>ROPEmporium: write4 32-bit</title>
-      <link>http://example.org/posts/write432/</link>
+      <link>http://cavefxa.com/posts/write432/</link>
       <pubDate>Mon, 24 May 2021 19:41:00 +0200</pubDate>
       
-      <guid>http://example.org/posts/write432/</guid>
+      <guid>http://cavefxa.com/posts/write432/</guid>
       <description>Writeup of write four [write4] on ROPEmporium Prerequisites: Basic knowledge of assembly, disassembling tools, the previous challenges, and calling convention
  We&amp;rsquo;re told the following: &amp;ldquo;A PLT entry for a function named print_file() exists within the challenge binary, simply call it with the name of a file you wish to read (like &amp;lsquo;flag.txt&amp;rsquo;) as the 1st argument. The &amp;lsquo;flag.txt&amp;rsquo; isn&amp;rsquo;t present in the binary&amp;rdquo;
 We need a writeable part of memory, because we need to write the string into the binary.</description>
@@ -84,10 +84,10 @@ We need a writeable part of memory, because we need to write the string into the
     
     <item>
       <title>ROPEmporium: callme 32-bit</title>
-      <link>http://example.org/posts/callme32/</link>
+      <link>http://cavefxa.com/posts/callme32/</link>
       <pubDate>Mon, 24 May 2021 14:57:00 +0200</pubDate>
       
-      <guid>http://example.org/posts/callme32/</guid>
+      <guid>http://cavefxa.com/posts/callme32/</guid>
       <description>Writeup of callme [callme] on ROPEmporium How do you make consecutive calls to a function from your ROP chain that won&amp;rsquo;t crash afterwards? If you keep using the call instructions already present in the binary your chains will eventually fail, especially when exploiting 32 bit binaries. Consider why this might be the case.
 This is the information we&amp;rsquo;re greeted with in the callme challenge.
 What we need to do is call the functions &amp;ldquo;callmeone&amp;rdquo;, &amp;ldquo;callmetwo&amp;rdquo;, &amp;ldquo;callmethree&amp;rdquo; all with the same arguments: 0xdeadbeef, 0xcafebabe, 0xd00df00d.</description>
@@ -95,10 +95,10 @@ What we need to do is call the functions &amp;ldquo;callmeone&amp;rdquo;, &amp;l
     
     <item>
       <title>ROPEmporium: split 32-bit</title>
-      <link>http://example.org/posts/split32/</link>
+      <link>http://cavefxa.com/posts/split32/</link>
       <pubDate>Mon, 24 May 2021 14:38:00 +0200</pubDate>
       
-      <guid>http://example.org/posts/split32/</guid>
+      <guid>http://cavefxa.com/posts/split32/</guid>
       <description>Writeup of split [split] on ROPEmporium Prerequisites: Basic knowledge of assembly, disassembling tools, and having solved ret2win for 32bit
  Let&amp;rsquo;s start this time by checking the security settings of the binary with checksec.
 cave@noobpwn:~/binexp/ROP-emperium/split_32$ checksec split32 [*] &amp;#39;/home/cave/binexp/ROP-emperium/split_32/split32&amp;#39; Arch: i386-32-little RELRO: Partial RELRO Stack: No canary found NX: NX enabled PIE: No PIE (0x8048000) So NX is enabled, this means that we can&amp;rsquo;t just put shellcode on the stack and return to it.</description>
@@ -106,20 +106,20 @@ cave@noobpwn:~/binexp/ROP-emperium/split_32$ checksec split32 [*] &amp;#39;/home
     
     <item>
       <title>ROPEmporium: ret2win 32-bit</title>
-      <link>http://example.org/posts/ret2win32/</link>
+      <link>http://cavefxa.com/posts/ret2win32/</link>
       <pubDate>Mon, 24 May 2021 14:20:00 +0200</pubDate>
       
-      <guid>http://example.org/posts/ret2win32/</guid>
+      <guid>http://cavefxa.com/posts/ret2win32/</guid>
       <description>Writeup of return to win [Ret2win] on ROPEmporium Prerequisites: Basic knowledge of assembly and disassembling tools
 [Note: Main difference between 32-bit and 64-bit is that the arguments are passed on the stack instead of in registers, and that the sizes of 32-bit and 64-bit addresses are in said order, 4 bytes and 8 bytes of size, reason for the sizes being that is that each byte consists of two nibbles each of which has 4 bits.</description>
     </item>
     
     <item>
       <title>What&#39;s a stack, and how does it overflow?</title>
-      <link>http://example.org/posts/stack-overflow/</link>
+      <link>http://cavefxa.com/posts/stack-overflow/</link>
       <pubDate>Sun, 23 May 2021 18:03:05 +0200</pubDate>
       
-      <guid>http://example.org/posts/stack-overflow/</guid>
+      <guid>http://cavefxa.com/posts/stack-overflow/</guid>
       <description>Stack Memory is divided into three regions: Data, Text, and Stack
 In the data segment one usually finds strings or other statically created variables. In a C program, these are variables that reside outside of functions, and therefore are static.
 In the text segment one will find compiled C code turnt into machine code, machine code is not assembly, but directly consiting of binaries which can be executed by the computer, while assembly is a low-level programming language, that first requires assembling to be converted into machine code.</description>
@@ -127,10 +127,10 @@ In the text segment one will find compiled C code turnt into machine code, machi
     
     <item>
       <title></title>
-      <link>http://example.org/about/</link>
+      <link>http://cavefxa.com/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/about/</guid>
+      <guid>http://cavefxa.com/about/</guid>
       <description>Cave&amp;rsquo;s site Hi i&amp;rsquo;m Cave
 This is a personal site, where i go through ctf challenges, or interesting vulnerabilites. There might also be some math, coding, or anything in general i find interesting. Hope you enjoy tagging along</description>
     </item>
