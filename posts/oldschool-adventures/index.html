@@ -206,7 +206,7 @@ which has the hex value 0x21, this becomes 0010 0001</p>
 2FORY=0TO159:Z=PEEK(2054+Y)-32:FORI=0TO5:Q%=Z/2:POKE50,(Q%*2-Z)*192+255:Z=Q%:IFY+I-164THEN?&quot; &quot;;
 4NEXT I,Y:GETA
 </code></pre><p>This yields the following:</p>
-<p><img src="https://cavetownie.github.io/pictures/qrcode.png" alt="QRCodePNG"></p>
+<p><img src="/pictures/qrcode.png" alt="QRCodePNG"></p>
 <p>And this should illustrate that we are indeed right in our hypothesis. There is however one detail worth noting, the endianness is swapped. If we look at the white spaces and actually count the pixels, we&rsquo;ll be able to count 7 white pixels. This is because the &ldquo;!&rdquo; gets turnt into: <code>100 000</code></p>
 <p>Now from the Dockerfile we know the flag is somewhere in:</p>
 <pre tabindex="0"><code>1337/1338/1339/1337/1338
