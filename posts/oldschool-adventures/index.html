@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.92.2" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="http://example.org/posts/oldschool-adventures/" />
+  <link rel="canonical" href="http://example.org/posts/oldschool-adventures/" /><link rel="alternate" type="application/atom+xml" href="http://example.org/index.xml" title="My New Hugo Site">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "http:\/\/example.org\/"
+      },
+      "articleSection" : "posts",
+      "name" : "pwn2win 2021: \u0022Oldschool Adventures - Apple II\u0022",
+      "headline" : "pwn2win 2021: \u0022Oldschool Adventures - Apple II\u0022",
+      "description" : "Oldschool Adventures - Description Dockerfiles: Oldschool_Adventure\nChallenge description:\nWe found this Rhiza\u0026rsquo;s Government Server, and we need to access it! It runs an Apple II emulator and accepts codes in Applesoft BASIC. If the result of your code generates a valid QR Code standard (not micro QR), it will be read and the content will be executed as a shell command on the Linux system. A very interesting way to interact with a server, don\u0026rsquo;t you think?",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2021",
+      "datePublished": "2021-06-01 17:17:45 \u002b0200 CEST",
+      "dateModified" : "2021-06-01 17:17:45 \u002b0200 CEST",
+      "url" : "http:\/\/example.org\/posts\/oldschool-adventures\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>pwn2win 2021: &#34;Oldschool Adventures - Apple II&#34;</title>
+  <meta property="og:title" content="pwn2win 2021: &#34;Oldschool Adventures - Apple II&#34;" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="Oldschool Adventures - Description Dockerfiles: Oldschool_Adventure
+Challenge description:
+We found this Rhiza&amp;rsquo;s Government Server, and we need to access it! It runs an Apple II emulator and accepts codes in Applesoft BASIC. If the result of your code generates a valid QR Code standard (not micro QR), it will be read and the content will be executed as a shell command on the Linux system. A very interesting way to interact with a server, don&amp;rsquo;t you think?" />
+  <meta name="description" content="Oldschool Adventures - Description Dockerfiles: Oldschool_Adventure
+Challenge description:
+We found this Rhiza&amp;rsquo;s Government Server, and we need to access it! It runs an Apple II emulator and accepts codes in Applesoft BASIC. If the result of your code generates a valid QR Code standard (not micro QR), it will be read and the content will be executed as a shell command on the Linux system. A very interesting way to interact with a server, don&amp;rsquo;t you think?" />
+  <meta property="og:locale" content="en-us" /><meta property="og:image" content="" />
+  
+
+  
+    <style>body{font-family:bree serif,sans-serif;-webkit-font-smoothing:antialiased;margin:0 20px}article{max-width:800px;margin-left:auto;margin-right:auto}a{color:#000;text-decoration:none}a:hover{font-weight:600;text-decoration:underline}.post-ads{margin:50px 0}.markdown-body{font-size:18px;max-width:100%}.markdown-body a{text-decoration:underline;text-decoration-color:#000}.markdown-body blockquote{margin:0;padding:0 1em;color:#57606a;border-left:.25em solid #d0d7de}.markdown-body pre{padding:16px;overflow:auto;border-radius:10px}.markdown-body code{padding:.2em .4em;font-size:85%;background-color:#f6f8fa;border-radius:6px}.markdown-body pre>code{padding:0;font-size:100%;background-color:inherit;border:0}.Chinese .markdown-body{line-height:200%}.site-date-catalog{font-size:2rem}.header-title{font-size:2rem;font-weight:700;margin-top:32px;font-family:bungee shade,sans-serif}.header-title a{text-decoration:none}.header-subtitle{color:#666}.header-items{margin:10px 0}.header-item{margin:0 5px}.header-line{width:100%;border-width:2px;border-color:#482936;border-style:solid none none none}.lang-switch{font-weight:600}#posts-list{min-height:600px}.posts-line{font-size:1.2rem;margin:12px 0}.posts-categories{font-size:.8rem;margin:auto;text-align:center}.posts-category{padding:3px 0;border:#000 2px solid;border-radius:5px}.site-footer{margin-top:50px}.site-footer-item{margin-right:12px}.post-content img{max-width:100%;display:block;margin-right:auto;margin-top:12px}.post-header{margin-bottom:50px}.post-title{font-size:2rem;font-weight:600}.post-tags{display:inline;font-weight:600;padding:2px 5px;margin-right:6px;border:#000 2px solid;border-radius:5px}.post-date{font-weight:800;font-style:italic}.post-author{float:right;font-weight:600}.page-content{min-height:60%}.post-content{margin-bottom:50px}.post-content p{hyphens:auto;line-height:1.8;text-justify:ideographic;margin-bottom:1em}.related-content{border-width:3px;border-style:solid;border-color:#000;padding:0 10px;margin-bottom:50px;margin-top:100px}.related-content li{margin:5px 0}.taxonomy-term{font-size:3rem}.gallery-img{text-align:center}.gallery-img span{text-align:center}.gallery-img-desc{font-size:.8em;font-weight:800}#disqus_thread{position:relative}#disqus_thread:after{content:"";display:block;height:55px;width:100%;position:absolute;bottom:0;background:#fff}@media screen and (max-width:600px){.header-title,.header-subtitle,.header-items{text-align:center}.posts-line{font-size:16px}.markdown-body{font-size:16px}.post-title{font-size:2rem}.post-content p{letter-spacing:.05em}}@media screen and (max-width:48em){.posts-category{display:none}}</style>
+  
+  
+    <style>.container,.container-fluid{margin-right:auto;margin-left:auto}.container-fluid{padding-right:2rem;padding-left:2rem}.row{box-sizing:border-box;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:0;-ms-flex:0 1 auto;flex:initial;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-.5rem;margin-left:-.5rem}.row.reverse{-webkit-box-orient:horizontal;-webkit-box-direction:reverse;-ms-flex-direction:row-reverse;flex-direction:row-reverse}.col.reverse{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.col-xs,.col-xs-1,.col-xs-10,.col-xs-11,.col-xs-12,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-offset-0,.col-xs-offset-1,.col-xs-offset-10,.col-xs-offset-11,.col-xs-offset-12,.col-xs-offset-2,.col-xs-offset-3,.col-xs-offset-4,.col-xs-offset-5,.col-xs-offset-6,.col-xs-offset-7,.col-xs-offset-8,.col-xs-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-xs{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-xs-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-xs-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-xs-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-xs-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-xs-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-xs-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-xs-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-xs-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-xs-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-xs-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-xs-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-xs-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-xs-offset-0{margin-left:0}.col-xs-offset-1{margin-left:8.33333333%}.col-xs-offset-2{margin-left:16.66666667%}.col-xs-offset-3{margin-left:25%}.col-xs-offset-4{margin-left:33.33333333%}.col-xs-offset-5{margin-left:41.66666667%}.col-xs-offset-6{margin-left:50%}.col-xs-offset-7{margin-left:58.33333333%}.col-xs-offset-8{margin-left:66.66666667%}.col-xs-offset-9{margin-left:75%}.col-xs-offset-10{margin-left:83.33333333%}.col-xs-offset-11{margin-left:91.66666667%}.start-xs{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-xs{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-xs{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-xs{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-xs{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-xs{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-xs{-ms-flex-pack:distribute;justify-content:space-around}.between-xs{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-xs{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-xs{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}@media only screen and (min-width:48em){.container{width:49rem}.col-sm,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-offset-0,.col-sm-offset-1,.col-sm-offset-10,.col-sm-offset-11,.col-sm-offset-12,.col-sm-offset-2,.col-sm-offset-3,.col-sm-offset-4,.col-sm-offset-5,.col-sm-offset-6,.col-sm-offset-7,.col-sm-offset-8,.col-sm-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-sm{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-sm-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-sm-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-sm-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-sm-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-sm-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-sm-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-sm-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-sm-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-sm-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-sm-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-sm-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-sm-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-sm-offset-0{margin-left:0}.col-sm-offset-1{margin-left:8.33333333%}.col-sm-offset-2{margin-left:16.66666667%}.col-sm-offset-3{margin-left:25%}.col-sm-offset-4{margin-left:33.33333333%}.col-sm-offset-5{margin-left:41.66666667%}.col-sm-offset-6{margin-left:50%}.col-sm-offset-7{margin-left:58.33333333%}.col-sm-offset-8{margin-left:66.66666667%}.col-sm-offset-9{margin-left:75%}.col-sm-offset-10{margin-left:83.33333333%}.col-sm-offset-11{margin-left:91.66666667%}.start-sm{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-sm{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-sm{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-sm{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-sm{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-sm{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-sm{-ms-flex-pack:distribute;justify-content:space-around}.between-sm{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-sm{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-sm{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:64em){.container{width:65rem}.col-md,.col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-offset-0,.col-md-offset-1,.col-md-offset-10,.col-md-offset-11,.col-md-offset-12,.col-md-offset-2,.col-md-offset-3,.col-md-offset-4,.col-md-offset-5,.col-md-offset-6,.col-md-offset-7,.col-md-offset-8,.col-md-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-md{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-md-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-md-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-md-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-md-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-md-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-md-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-md-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-md-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-md-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-md-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-md-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-md-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-md-offset-0{margin-left:0}.col-md-offset-1{margin-left:8.33333333%}.col-md-offset-2{margin-left:16.66666667%}.col-md-offset-3{margin-left:25%}.col-md-offset-4{margin-left:33.33333333%}.col-md-offset-5{margin-left:41.66666667%}.col-md-offset-6{margin-left:50%}.col-md-offset-7{margin-left:58.33333333%}.col-md-offset-8{margin-left:66.66666667%}.col-md-offset-9{margin-left:75%}.col-md-offset-10{margin-left:83.33333333%}.col-md-offset-11{margin-left:91.66666667%}.start-md{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-md{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-md{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-md{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-md{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-md{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-md{-ms-flex-pack:distribute;justify-content:space-around}.between-md{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-md{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-md{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:75em){.container{width:76rem}.col-lg,.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-offset-0,.col-lg-offset-1,.col-lg-offset-10,.col-lg-offset-11,.col-lg-offset-12,.col-lg-offset-2,.col-lg-offset-3,.col-lg-offset-4,.col-lg-offset-5,.col-lg-offset-6,.col-lg-offset-7,.col-lg-offset-8,.col-lg-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-lg{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-lg-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-lg-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-lg-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-lg-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-lg-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-lg-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-lg-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-lg-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-lg-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-lg-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-lg-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-lg-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-lg-offset-0{margin-left:0}.col-lg-offset-1{margin-left:8.33333333%}.col-lg-offset-2{margin-left:16.66666667%}.col-lg-offset-3{margin-left:25%}.col-lg-offset-4{margin-left:33.33333333%}.col-lg-offset-5{margin-left:41.66666667%}.col-lg-offset-6{margin-left:50%}.col-lg-offset-7{margin-left:58.33333333%}.col-lg-offset-8{margin-left:66.66666667%}.col-lg-offset-9{margin-left:75%}.col-lg-offset-10{margin-left:83.33333333%}.col-lg-offset-11{margin-left:91.66666667%}.start-lg{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-lg{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-lg{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-lg{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-lg{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-lg{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-lg{-ms-flex-pack:distribute;justify-content:space-around}.between-lg{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-lg{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-lg{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}</style>
+  
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="My New Hugo Site">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Bungee+Shade" rel="stylesheet">
+  
+  
+
+  
+  
+</head>
+
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="header-title">
+    <a href="/"
+      >cavefx</a
+    >
+  </div>
+  <div class="header-subtitle"></div>
+</header>
+<div class="row end-md center-xs header-items">
+  
+  <div class="header-item">
+    <a href="/about" target="_blank">About Me</a>
+  </div>
+  
+</div>
+<div class="row end-xs">
+   
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">pwn2win 2021: &#34;Oldschool Adventures - Apple II&#34;</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2021-06-01 17:17:45 CEST">
+                01 Jun 2021
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <h1 id="oldschool-adventures---description">Oldschool Adventures - Description</h1>
+<p>Dockerfiles: <a href="https://cavetownie.github.io/chall_files/oldschool_adventures/old_adventure.tar.gz">Oldschool_Adventure</a></p>
+<p>Challenge description:</p>
+<p>We found this Rhiza&rsquo;s Government Server, and we need to access it! It runs an Apple II emulator and accepts codes in Applesoft BASIC. If the result of your code generates a valid QR Code standard (not micro QR), it will be read and the content will be executed as a shell command on the Linux system. A very interesting way to interact with a server, don&rsquo;t you think?</p>
+<p>Follow the directives below:</p>
+<p>Maximum size of the payload: 268 chars (it will be truncated at this point)</p>
+<p>Send the entire payload in one line (only printable chars), replacing line-break with the symbol § (only 1 allowed)</p>
+<p>Only QR Codes are accepted (not micro QR)</p>
+<p>Your code can take up to 50 seconds to be drawn, before the QR Code verification occurs</p>
+<p>If you have any questions, take a look at the source code of the server inside the container</p>
+<hr>
+<h1 id="local-setup-pt-1">Local setup pt. 1</h1>
+<p>To build the dockerfile install docker.io, and docker-compose and run:</p>
+<pre tabindex="0"><code>$ sudo docker-compose up
+$ nc localhost 1337
+</code></pre><p>When netcatting into the localhost, one&rsquo;ll see a line like the following:</p>
+<pre tabindex="0"><code>Send the solution for &quot;hashcash -mb 25 gupwkotuhi&quot;:
+</code></pre><p>The correct solution for that would be:</p>
+<pre tabindex="0"><code>hashcash token: 1:25:210601:gupwkotuhi::yX58UMHvX6PCwSdU:0000001VRsL
+</code></pre><p>Where only the data after &ldquo;hashcash token: &quot; should be sent.</p>
+<h1 id="osint-gang">Osint gang</h1>
+<p>Now we&rsquo;re ready to research.</p>
+<p>We&rsquo;re told that we need to generate a QR code which the server will read. Whatever content is in this QR code will then be executed. On the following link, one can make QR codes with specific text.</p>
+<p><a href="https://qrcode.tec-it.com/en">https://qrcode.tec-it.com/en</a></p>
+<p>Now that we&rsquo;ve got a general idea of how a QR code may look, we need to generate one, or rather draw one, only using Applesoft Basic. So we need an interpreter, where we can check what commands are going to do, the following website provides one:</p>
+<p><a href="https://www.calormen.com/jsbasic/">https://www.calormen.com/jsbasic/</a></p>
+<p>A teammate found the following twitter post:
+<a href="https://twitter.com/AppleIIBot/status/1319004260139294721">https://twitter.com/AppleIIBot/status/1319004260139294721</a></p>
+<p>Where a QR-code for a rickroll is being generated with Applesoft BASIC, now the length is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python3" data-lang="python3"><span style="color:#f92672">&gt;&gt;</span> len(<span style="color:#e6db74">&#34;&#34;&#34;1REM________!L%P__??M]]__7T&gt;1___%U6T__?17%]__W74?___!4%P____7____&#39;$JJ___5?=W___&#34;)(^__7_Q1___7(1^____E#]__&#39;0PF___]]XU__?11R\__74WY___%UP___??=+___&#39;0!M_______________2FORY=0TO159:Z=PEEK(2054+Y)-32:FORI=0TO5:Q%=Z/2:POKE50,(Q%*2-Z)*192+255:Z=Q%:IFY+I-164THEN?&#34; &#34;;4NEXT I,Y:GETA&#34;&#34;&#34;</span>)
+<span style="color:#ae81ff">275</span>
+</code></pre></div><p>Which is just short of the desired length. Running this in the calormen jsbasic website renders following:</p>
+<pre tabindex="0"><code>Unsupported PEEK location: 2054 in line 2
+</code></pre><p>However, we know this is supported Applesoft BASIC, as it renders correctly on the post. Problem is, that the calormen site, doesn&rsquo;t have access to memory, which is what peek does.</p>
+<p>We then found the following site, which uses uploaded local files:
+<a href="https://www.scullinsteel.com/apple2/">https://www.scullinsteel.com/apple2/</a></p>
+<h1 id="local-setup-pt-2">Local setup pt. 2</h1>
+<p>However it&rsquo;s not so straightforward to compile files to use for this site. We ended op using python3, JDK and a tokenizing script. The instructions for compiling are as follows:</p>
+<p>Compiling file: <a href="https://cavetownie.github.io/chall_files/oldschool_adventures/compiling.zip">compiling.zip</a></p>
+<ol>
+<li>Download &amp; Extract &ldquo;compiling.zip&rdquo;</li>
+<li>Install Python3 &amp; JDK</li>
+<li>Edit your Applesoft BASIC source code in src.basic</li>
+<li>Change working directory to compiling/tools/</li>
+<li>Run</li>
+</ol>
+<pre tabindex="0"><code>python3 tokenize.py ../src.basic ../src.bin; cp ../template.dsk .; java -jar ac.jar -p template.dsk HELLO BAS 0x801 &lt; ../src.bin
+</code></pre><ol start="5">
+<li>Go to <a href="https://www.scullinsteel.com/apple2/">https://www.scullinsteel.com/apple2/</a></li>
+<li>Load template.dsk from compiling/tools/</li>
+</ol>
+<hr>
+<p>Now we can use the source code from before, and we&rsquo;ll see a qr-code that when scanned rickrolls us.</p>
+<p>Great, so far so good. Now we can begin reversing how the string works.</p>
+<p>So let&rsquo;s look at it:</p>
+<pre tabindex="0"><code>1REM________!L%P__??M]]__7T&gt;1___%U6T__?17%]__W74?___!4%P____7____'$JJ___5?=W___&quot;)(^__7_Q1___7(1^____E#]__'0PF___]]XU__?11R\__74WY___%UP___??=+___'0!M_______________
+2FORY=0TO159:Z=PEEK(2054+Y)-32:FORI=0TO5:Q%=Z/2:POKE50,(Q%*2-Z)*192+255:Z=Q%:IFY+I-164THEN?&quot; &quot;;
+4NEXT I,Y:GETA
+</code></pre><p>We know from the documentation that &ldquo;REM&rdquo; is comment, but why do we have a comment? A teammate noticed the &ldquo;peek&rdquo; command, seemed to refer to some memory, probably the comment. So it&rsquo;s using the comment as a form of data, but how does this data work? Now through trial and error we figured a few things out, it&rsquo;s using some form of data based on these ascii characters. So let&rsquo;s look at underscore, which is probably pure white, as there&rsquo;s a lot of these, and the picture is mostly white.</p>
+<p>The hex value of &ldquo;_&rdquo; is 0x5f. The byte can be turnt into a lower and upper nibble, which binary data looks like this:</p>
+<pre tabindex="0"><code>5: 0101
+f: 1111
+</code></pre><p>Together: <code>0101 1111</code></p>
+<p>Now through the trial and error, we noted that whatever character we replaced, when we only replaced one, 6 dots where drawed. Meaning that we need to sort this into only 6 bits. We use the 6 LSBs, as 1 = white on the qr-code.</p>
+<p>Now we&rsquo;re left with:</p>
+<p><code>011111</code></p>
+<p>This would then draw one black dot, by our logic - problematic, because we thought &ldquo;_&rdquo; is pure white. We concluded that the math doing by the function, switches the most significant bit with the next one, so that:</p>
+<p><code>0100 0010</code></p>
+<p>Would become:</p>
+<p><code>0010 0010</code></p>
+<p>That means that</p>
+<p><code>0101 1111</code></p>
+<p>Would become:</p>
+<p><code>0011 1111</code></p>
+<p>And as it&rsquo;s only groups of six, it would be:</p>
+<p><code>111 111</code></p>
+<p>Also known as, pure white.</p>
+<p>Let&rsquo;s look at another character, &ldquo;!&rdquo;
+which has the hex value 0x21, this becomes 0010 0001</p>
+<p>This will be become:</p>
+<p><code>0100 0001</code></p>
+<p>Which in groups of six will be:</p>
+<p><code>000 001</code></p>
+<p>Which should just be one dot.</p>
+<p>An illustration of this could be the following program, which doesn&rsquo;t create a QR-code but just tried to show what &ldquo;!&rdquo; and &ldquo;_&rdquo; really does:</p>
+<p>This is the code compiled and uploaded</p>
+<pre tabindex="0"><code>1REM_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!!L!P_!?!C!]_!74&gt;1___%M4T__?1W%]__WW;?___!4%P____9____'!(W___W6$R__?!0&amp;\__W[@&lt;___/Y_V____)P\__'0T%___]U9V__?1A[^__7T0H___%59U__??-B^__'0]/______?
+2FORY=0TO159:Z=PEEK(2054+Y)-32:FORI=0TO5:Q%=Z/2:POKE50,(Q%*2-Z)*192+255:Z=Q%:IFY+I-164THEN?&quot; &quot;;
+4NEXT I,Y:GETA
+</code></pre><p>This yields the following:</p>
+<p><img src="https://cavetownie.github.io/pictures/qrcode.png" alt="QRCodePNG"></p>
+<p>And this should illustrate that we are indeed right in our hypothesis. There is however one detail worth noting, the endianness is swapped. If we look at the white spaces and actually count the pixels, we&rsquo;ll be able to count 7 white pixels. This is because the &ldquo;!&rdquo; gets turnt into: <code>100 000</code></p>
+<p>Now from the Dockerfile we know the flag is somewhere in:</p>
+<pre tabindex="0"><code>1337/1338/1339/1337/1338
+</code></pre><p>So the command we want to encode is &ldquo;cat */*/*/*/*/*/&rdquo;, now we had a solution script for this, but one can also do this manually by counting and hardcoding.</p>
+<h1 id="final-script">Final script</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">imagetomatrix</span>(image):
+    img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(image)
+    matrix_out <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">39</span>):
+        matrix_out<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> range(img<span style="color:#f92672">.</span>size[<span style="color:#ae81ff">1</span>]):
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+            matrix_out<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(img<span style="color:#f92672">.</span>size[<span style="color:#ae81ff">0</span>]):
+            matrix_out<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> img<span style="color:#f92672">.</span>getpixel((x,y)) <span style="color:#f92672">in</span> [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">255</span>] <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>)
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">9</span>):
+            matrix_out<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">32</span>):
+        matrix_out<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)
+
+    <span style="color:#66d9ef">return</span> matrix_out
+
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    <span style="color:#75715e">#cat */*/*/*/*/*</span>
+    m <span style="color:#f92672">=</span> imagetomatrix(<span style="color:#e6db74">&#34;miniqr.png&#34;</span>)
+    ascii <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(m), <span style="color:#ae81ff">6</span>):
+        ascii <span style="color:#f92672">+=</span> chr(int(<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join([str(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> m[i: i<span style="color:#f92672">+</span><span style="color:#ae81ff">6</span>]])[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">2</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">32</span>)
+    print(ascii)
+</code></pre></div>
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        
+          <div class="row">
+            <div class="col-xs-12">
+              
+            </div>
+          </div>
+
+          
+
+
+
+          
+          
+          <div style="height: 50px;"></div>
+          
+        
+
+        <div class="site-footer">
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  
+
+<script>
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>
