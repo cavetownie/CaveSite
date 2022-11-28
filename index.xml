@@ -6,7 +6,18 @@
     <description>Recent content on cavefxa: security research</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Sep 2021 13:04:00 +0200</lastBuildDate><atom:link href="http://cavefxa.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 28 Nov 2022 21:49:35 +0100</lastBuildDate><atom:link href="http://cavefxa.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FE-CTF (HackingFromEstonia): Finals and Quals Writeups</title>
+      <link>http://cavefxa.com/posts/fe-ctf/</link>
+      <pubDate>Mon, 28 Nov 2022 21:49:35 +0100</pubDate>
+      
+      <guid>http://cavefxa.com/posts/fe-ctf/</guid>
+      <description>Qualifiers - Dig1 A lot of older routers, have this thing in settings that allows your to ping routers. This input is usually just smacked directly into bash, and then executed. Knowing this, we can try command injection with something as simple as:
+127.0.0.1; cat /flag flag{do people still use php?}
+Qualifiers - Dig2 This is the same type of challenge, except now we don&amp;rsquo;t have spaces. Googling this issue: https://unix.</description>
+    </item>
+    
     <item>
       <title>Symbolic Execution with Angr: pt. 2 Usage Introduction</title>
       <link>http://cavefxa.com/posts/angr1/</link>
@@ -55,7 +66,7 @@ We found this Rhiza&amp;rsquo;s Government Server, and we need to access it! It 
       <pubDate>Tue, 25 May 2021 18:20:00 +0200</pubDate>
       
       <guid>http://cavefxa.com/posts/heap-adventures0/</guid>
-      <description>Heap is like the wild west of binary exploitation in my opinion, or perhaps more like an alien, no one knows what is happening (atleast I don&amp;rsquo;t). A lot of CTF pwn challenges these days are heap exploitations, even the simpler ones, so let&amp;rsquo;s learn some heap. So let&amp;rsquo;s get started.
+      <description>Heap is like the wild west of binary exploitation in my opinion, or perhaps more like an alien, no one knows what is happening (atleast I don&amp;rsquo;t). A lot of CTF pwn challenges these days are heap exploitations, even the simpler ones, so let&amp;rsquo;s learn some heap. Let&amp;rsquo;s get started.
 Malloc Malloc is a function in C, which can handle the allocation of memory. Which is why it&amp;rsquo;s called m alloc [memory alloc].</description>
     </item>
     

