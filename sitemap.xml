@@ -47,6 +47,9 @@
     <loc>http://cavefxa.com/about/</loc>
     <priority>0</priority>
   </url><url>
+    <loc>http://cavefxa.com/phishing/</loc>
+    <priority>0</priority>
+  </url><url>
     <loc>http://cavefxa.com/categories/</loc>
   </url><url>
     <loc>http://cavefxa.com/tags/</loc>

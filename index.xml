@@ -146,5 +146,14 @@ In the text segment one will find compiled C code turnt into machine code, machi
 This is a personal site, where i go through ctf challenges, or interesting vulnerabilites. There might also be some math, coding, or anything in general i find interesting. Hope you enjoy tagging along</description>
     </item>
     
+    <item>
+      <title></title>
+      <link>http://cavefxa.com/phishing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://cavefxa.com/phishing/</guid>
+      <description>Whoops! Du gik ind på den forkerte side - Whoops! You seem to have come to a wrong site Dansk Phishing er en form for svindel, hvor skadelige aktører forsøger at få adgang til følsomme oplysninger som brugernavne, adgangskoder eller kreditkortoplysninger ved at udgive sig for at være en pålidelig hjemmeside eller enhed. Et eksempel på dette kunne være en ondsindet aktør, der køber et domænenavn, der ligner et legitimt, såsom minid.</description>
+    </item>
+    
   </channel>
 </rss>
