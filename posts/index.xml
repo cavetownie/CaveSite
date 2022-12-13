@@ -6,7 +6,17 @@
     <description>Recent content in Posts on cavefxa: security research</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 Nov 2022 21:49:35 +0100</lastBuildDate><atom:link href="http://cavefxa.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Dec 2022 17:17:45 +0200</lastBuildDate><atom:link href="http://cavefxa.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FE-CTF (HackingFromEstonia) My First BrowserPwn</title>
+      <link>http://cavefxa.com/posts/firstandsecondbpwn/</link>
+      <pubDate>Mon, 12 Dec 2022 17:17:45 +0200</pubDate>
+      
+      <guid>http://cavefxa.com/posts/firstandsecondbpwn/</guid>
+      <description>Introduction &amp;ldquo;My first browser pwn&amp;rdquo;, was a challenge I solved with the team HackingFromEstonia, during the physical on-site finals at Frederiksberg Slot, at the event FE-CTF hosted by FE (Danish Defence Intelligence Service).
+The challenge is created around the JavaScriptCore (JSC). The JSC is the JavaScript engine, used by WebKit implementations such as Safari, BlackBerry browser, Kindle e-book, and more. Note that it&amp;rsquo;s not the same as V8, which is developed by Google, whereas JSC is developed by Apple.</description>
+    </item>
+    
     <item>
       <title>FE-CTF (HackingFromEstonia): Finals and Quals Writeups</title>
       <link>http://cavefxa.com/posts/fe-ctf/</link>

