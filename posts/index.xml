@@ -6,13 +6,22 @@
     <description>Recent content in Posts on cavefxa: security research</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Dec 2022 17:17:45 +0200</lastBuildDate><atom:link href="http://cavefxa.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 Dec 2022 19:49:35 +0100</lastBuildDate><atom:link href="http://cavefxa.com/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>FE-CTF (HackingFromEstonia) My First BrowserPwn</title>
-      <link>http://cavefxa.com/posts/firstandsecondbpwn/</link>
+      <title>PWS_Dashboard - CVE-2022-45291: &#34;badweather&#34;</title>
+      <link>http://cavefxa.com/posts/cve-2022-45291/</link>
+      <pubDate>Tue, 20 Dec 2022 19:49:35 +0100</pubDate>
+      
+      <guid>http://cavefxa.com/posts/cve-2022-45291/</guid>
+      <description>Some weeks ago now, my good friend Mikbrosim, and I were sitting a sunday evening looking for something we could hack. After searching the internet for a while, I found some really old looking site. The site had some webcam, of what looked like a private backyard (publicly exposed of course), and some sort of weather dashboard. Looking around on the site a bit, it seemed really odd, and broken; however nothing was to be found, and we obviously didn&amp;rsquo;t want to pentest something we didn&amp;rsquo;t have permissions to.</description>
+    </item>
+    
+    <item>
+      <title>FE-CTF (HackingFromEstonia) My First Browserpwn</title>
+      <link>http://cavefxa.com/posts/first-browser-pwn/</link>
       <pubDate>Mon, 12 Dec 2022 17:17:45 +0200</pubDate>
       
-      <guid>http://cavefxa.com/posts/firstandsecondbpwn/</guid>
+      <guid>http://cavefxa.com/posts/first-browser-pwn/</guid>
       <description>Introduction &amp;ldquo;My first browser pwn&amp;rdquo;, was a challenge I solved with the team HackingFromEstonia, during the physical on-site finals at Frederiksberg Slot, at the event FE-CTF hosted by FE (Danish Defence Intelligence Service).
 The challenge is created around the JavaScriptCore (JSC). The JSC is the JavaScript engine, used by WebKit implementations such as Safari, BlackBerry browser, Kindle e-book, and more. Note that it&amp;rsquo;s not the same as V8, which is developed by Google, whereas JSC is developed by Apple.</description>
     </item>

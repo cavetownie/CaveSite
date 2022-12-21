@@ -3,12 +3,15 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://cavefxa.com/</loc>
-    <lastmod>2022-12-12T17:17:45+02:00</lastmod>
-  </url><url>
-    <loc>http://cavefxa.com/posts/firstandsecondbpwn/</loc>
-    <lastmod>2022-12-12T17:17:45+02:00</lastmod>
+    <lastmod>2022-12-20T19:49:35+01:00</lastmod>
   </url><url>
     <loc>http://cavefxa.com/posts/</loc>
+    <lastmod>2022-12-20T19:49:35+01:00</lastmod>
+  </url><url>
+    <loc>http://cavefxa.com/posts/cve-2022-45291/</loc>
+    <lastmod>2022-12-20T19:49:35+01:00</lastmod>
+  </url><url>
+    <loc>http://cavefxa.com/posts/first-browser-pwn/</loc>
     <lastmod>2022-12-12T17:17:45+02:00</lastmod>
   </url><url>
     <loc>http://cavefxa.com/posts/fe-ctf/</loc>
